@@ -58,14 +58,15 @@
       </link>
     </model>
 
-    <!-- Road -->
-    <model name="road">
+    <!-- Main Road -->
+    <model name="main_road">
       <static>true</static>
+      <pose>0 0 0.005 0 0 0</pose>
       <link name="link">
         <visual name="visual">
           <geometry>
             <box>
-              <size>50 4 0.01</size>
+              <size>200 6 0.01</size>
             </box>
           </geometry>
           <material>
@@ -76,18 +77,832 @@
         <collision name="collision">
           <geometry>
             <box>
-              <size>50 4 0.01</size>
+              <size>200 6 0.01</size>
             </box>
           </geometry>
         </collision>
       </link>
     </model>
 
-    <!-- Traffic Light 1 (Red) -->
-    <model name="traffic_light_red">
+    <!-- Road Markings - Center Lines -->
+    <model name="center_line_1">
       <static>true</static>
-      <pose>5 2.5 0 0 0 0</pose>
+      <pose>-80 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_2">
+      <static>true</static>
+      <pose>-75 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_3">
+      <static>true</static>
+      <pose>-70 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_4">
+      <static>true</static>
+      <pose>-65 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_5">
+      <static>true</static>
+      <pose>-60 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_6">
+      <static>true</static>
+      <pose>-55 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_7">
+      <static>true</static>
+      <pose>-50 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_8">
+      <static>true</static>
+      <pose>-45 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_9">
+      <static>true</static>
+      <pose>-40 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_10">
+      <static>true</static>
+      <pose>-35 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_11">
+      <static>true</static>
+      <pose>-30 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_12">
+      <static>true</static>
+      <pose>-25 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_13">
+      <static>true</static>
+      <pose>-20 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_14">
+      <static>true</static>
+      <pose>-15 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_15">
+      <static>true</static>
+      <pose>-10 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_16">
+      <static>true</static>
+      <pose>-5 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_17">
+      <static>true</static>
+      <pose>0 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_18">
+      <static>true</static>
+      <pose>5 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_19">
+      <static>true</static>
+      <pose>10 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_20">
+      <static>true</static>
+      <pose>15 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_21">
+      <static>true</static>
+      <pose>20 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_22">
+      <static>true</static>
+      <pose>25 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_23">
+      <static>true</static>
+      <pose>30 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_24">
+      <static>true</static>
+      <pose>35 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_25">
+      <static>true</static>
+      <pose>40 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_26">
+      <static>true</static>
+      <pose>45 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_27">
+      <static>true</static>
+      <pose>50 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_28">
+      <static>true</static>
+      <pose>55 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_29">
+      <static>true</static>
+      <pose>60 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_30">
+      <static>true</static>
+      <pose>65 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_31">
+      <static>true</static>
+      <pose>70 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_32">
+      <static>true</static>
+      <pose>75 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="center_line_33">
+      <static>true</static>
+      <pose>80 0 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.15 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Crosswalk 1 -->
+    <model name="crosswalk_1_stripe_1">
+      <static>true</static>
+      <pose>-30 -2.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_1_stripe_2">
+      <static>true</static>
+      <pose>-30 -1.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_1_stripe_3">
+      <static>true</static>
+      <pose>-30 -0.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_1_stripe_4">
+      <static>true</static>
+      <pose>-30 0.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_1_stripe_5">
+      <static>true</static>
+      <pose>-30 1.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_1_stripe_6">
+      <static>true</static>
+      <pose>-30 2.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Crosswalk 2 -->
+    <model name="crosswalk_2_stripe_1">
+      <static>true</static>
+      <pose>40 -2.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_2_stripe_2">
+      <static>true</static>
+      <pose>40 -1.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_2_stripe_3">
+      <static>true</static>
+      <pose>40 -0.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_2_stripe_4">
+      <static>true</static>
+      <pose>40 0.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_2_stripe_5">
+      <static>true</static>
+      <pose>40 1.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crosswalk_2_stripe_6">
+      <static>true</static>
+      <pose>40 2.5 0.011 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Traffic Light 1 (Intersection 1) - Red -->
+    <model name="traffic_light_1">
+      <static>true</static>
+      <pose>-32 3.5 0 0 0 0</pose>
       <link name="pole">
+        <pose>0 0 1.0 0 0 0</pose>
         <visual name="pole_visual">
           <geometry>
             <cylinder>
@@ -110,7 +925,7 @@
       </link>
       
       <link name="red_light">
-        <pose>0 0 1.3 0 0 0</pose>
+        <pose>0 0 2.3 0 0 0</pose>
         <visual name="red_visual">
           <geometry>
             <sphere>
@@ -126,85 +941,6 @@
       </link>
       
       <link name="yellow_light">
-        <pose>0 0 1.0 0 0 0</pose>
+        <pose>0 0 2.0 0 0 0</pose>
         <visual name="yellow_visual">
           <geometry>
-            <sphere>
-              <radius>0.15</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0 1</ambient>
-            <diffuse>0.3 0.3 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="green_light">
-        <pose>0 0 0.7 0 0 0</pose>
-        <visual name="green_visual">
-          <geometry>
-            <sphere>
-              <radius>0.15</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0 0.3 0 1</ambient>
-            <diffuse>0 0.3 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-
-    <!-- Traffic Light 2 (Green) -->
-    <model name="traffic_light_green">
-      <static>true</static>
-      <pose>15 2.5 0 0 0 0</pose>
-      <link name="pole">
-        <visual name="pole_visual">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>2.0</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="red_light">
-        <pose>0 0 1.3 0 0 0</pose>
-        <visual name="red_visual">
-          <geometry>
-            <sphere>
-              <radius>0.15</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.3 0 0 1</ambient>
-            <diffuse>0.3 0 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="green_light">
-        <pose>0 0 0.7 0 0 0</pose>
-        <visual name="green_visual">
-          <geometry>
-            <sphere>
-              <radius>0.15</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0 1 0 1</ambient>
-            <diffuse>0 1 0 1</diffuse>
-            <emissive>0 1 0 1</emissive>
-          </material>
-        </visual>
-      </link>
-    </model>
-
-  </world>
-</sdf>
