@@ -20,7 +20,11 @@ fi
 ACTUAL_USER=${SUDO_USER:-$USER}
 ACTUAL_HOME=$(eval echo ~$ACTUAL_USER)
 
+# Get the directory where script is run from
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 echo "Running as root, configuring for user: $ACTUAL_USER"
+echo "Workspace directory: $SCRIPT_DIR"
 
 # Detect Ubuntu version
 UBUNTU_VERSION=$(lsb_release -rs)
@@ -77,19 +81,20 @@ apt install -y python3-pip python3-venv
 su - $ACTUAL_USER -c "pip3 install --user --upgrade pip"
 su - $ACTUAL_USER -c "pip3 install --user numpy scipy matplotlib pandas"
 
-# Create workspace directory
-echo "Creating ROS workspace..."
-su - $ACTUAL_USER -c "mkdir -p $ACTUAL_HOME/ros_ws/src"
-cd $ACTUAL_HOME/ros_ws
+# Setup workspace in current directory
+echo "Setting up ROS workspace in current directory..."
+su - $ACTUAL_USER -c "mkdir -p $SCRIPT_DIR/src"
+cd $SCRIPT_DIR
+
 if [ "$UBUNTU_VERSION" == "20.04" ]; then
-    su - $ACTUAL_USER -c "cd $ACTUAL_HOME/ros_ws && catkin_make"
-    echo "source $ACTUAL_HOME/ros_ws/devel/setup.bash" >> $ACTUAL_HOME/.bashrc
+    su - $ACTUAL_USER -c "cd $SCRIPT_DIR && catkin_make"
+    echo "source $SCRIPT_DIR/devel/setup.bash" >> $ACTUAL_HOME/.bashrc
 elif [ "$UBUNTU_VERSION" == "22.04" ]; then
-    su - $ACTUAL_USER -c "cd $ACTUAL_HOME/ros_ws && colcon build"
-    echo "source $ACTUAL_HOME/ros_ws/install/setup.bash" >> $ACTUAL_HOME/.bashrc
+    su - $ACTUAL_USER -c "cd $SCRIPT_DIR && colcon build"
+    echo "source $SCRIPT_DIR/install/setup.bash" >> $ACTUAL_HOME/.bashrc
 fi
 
-chown -R $ACTUAL_USER:$ACTUAL_USER $ACTUAL_HOME/ros_ws
+chown -R $ACTUAL_USER:$ACTUAL_USER $SCRIPT_DIR
 
 # Install robotics tools
 echo "Installing robotics tools..."
@@ -120,5 +125,5 @@ echo "=========================================="
 echo "Setup Complete!"
 echo "=========================================="
 echo "Run: source ~/.bashrc"
-echo "Your ROS workspace: $ACTUAL_HOME/ros_ws"
+echo "Your ROS workspace: $SCRIPT_DIR"
 echo "=========================================="
