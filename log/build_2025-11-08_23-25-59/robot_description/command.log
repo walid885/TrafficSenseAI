@@ -1,0 +1,6 @@
+Invoking command in '/root/robot_ws/build/robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/robot_ws/src/robot_description -DCMAKE_INSTALL_PREFIX=/root/robot_ws/install/robot_description
+Invoked command in '/root/robot_ws/build/robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/robot_ws/src/robot_description -DCMAKE_INSTALL_PREFIX=/root/robot_ws/install/robot_description
+Invoking command in '/root/robot_ws/build/robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/robot_ws/build/robot_description -- -j5 -l5
+Invoked command in '/root/robot_ws/build/robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/robot_ws/build/robot_description -- -j5 -l5
+Invoking command in '/root/robot_ws/build/robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/robot_ws/build/robot_description
+Invoked command in '/root/robot_ws/build/robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/robot_ws/build/robot_description
