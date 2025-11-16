@@ -1,671 +1,36 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <world name="urban_traffic_world">
+  <world name="minimal_traffic_world">
     
-    <!-- Physics -->
     <physics type="ode">
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
     </physics>
 
-    <!-- Lighting -->
     <include>
       <uri>model://sun</uri>
     </include>
 
-    <!-- Ground Plane -->
     <include>
       <uri>model://ground_plane</uri>
     </include>
 
-    <!-- ============================================ -->
-    <!-- MAIN ROAD - Straight Section with Lane Markings -->
-    <!-- ============================================ -->
+    <!-- MAIN ROAD -->
     <model name="main_road">
       <static>true</static>
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.3</radius>
-              <length>0.02</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <link name="border">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.28</radius>
-              <length>0.04</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <pose>-20 5 0 0 0 3.14</pose>
-    </model>
-
-    <!-- Speed Limit 90 Sign -->
-    <model name="speed_limit_90">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.3</radius>
-              <length>0.02</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <link name="border">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.28</radius>
-              <length>0.04</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <pose>5 5 0 0 0 -1.57</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- ADDITIONAL ROADS FOR CIRCUIT -->
-    <!-- ============================================ -->
-    
-    <!-- Connecting Road 1 (Vertical) -->
-    <model name="road_vertical_1">
-      <static>true</static>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>8 30 0.1</size>
+              <size>100 8 0.1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>8 30 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.4 0.4 0.4 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-25 0 0 0 0 0</pose>
-    </model>
-
-    <!-- Connecting Road 2 (Horizontal) -->
-    <model name="road_horizontal_2">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>30 8 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>30 8 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.4 0.4 0.4 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>10 15 0 0 0 0</pose>
-    </model>
-
-    <!-- Connecting Road 3 (Vertical right side) -->
-    <model name="road_vertical_3">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>8 25 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>8 25 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.4 0.4 0.4 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>25 2.5 0 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- INTERSECTION 2 -->
-    <!-- ============================================ -->
-    <model name="intersection_2">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.35 0.35 0.35 1</ambient>
-            <diffuse>0.45 0.45 0.45 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>25 15 0 0 0 0</pose>
-    </model>
-
-    <!-- Crosswalk at Intersection 2 -->
-    <model name="crosswalk_2a">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.5 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>23 20 0.06 0 0 0</pose>
-    </model>
-
-    <model name="crosswalk_2b">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.5 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>23 19 0.06 0 0 0</pose>
-    </model>
-
-    <model name="crosswalk_2c">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.5 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>23 18 0.06 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- INTERSECTION 3 -->
-    <!-- ============================================ -->
-    <model name="intersection_3">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.35 0.35 0.35 1</ambient>
-            <diffuse>0.45 0.45 0.45 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>0 -15 0 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- URBAN ELEMENTS (Buildings, Trees) -->
-    <!-- ============================================ -->
-    
-    <!-- Building 1 -->
-    <model name="building_1">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>8 12 6</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>8 12 6</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.7 0.6 0.5 1</ambient>
-            <diffuse>0.8 0.7 0.6 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3 0 0 0</pose>
-      </link>
-      <pose>-35 -10 0 0 0 0</pose>
-    </model>
-
-    <!-- Building 2 -->
-    <model name="building_2">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>10 10 8</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>10 10 8</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.6 0.6 0.7 1</ambient>
-            <diffuse>0.7 0.7 0.8 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 4 0 0 0</pose>
-      </link>
-      <pose>-35 25 0 0 0 0</pose>
-    </model>
-
-    <!-- Building 3 -->
-    <model name="building_3">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>12 8 5</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>12 8 5</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.75 0.65 0.55 1</ambient>
-            <diffuse>0.85 0.75 0.65 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 2.5 0 0 0</pose>
-      </link>
-      <pose>35 -8 0 0 0 0</pose>
-    </model>
-
-    <!-- Building 4 -->
-    <model name="building_4">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>15 10 7</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>15 10 7</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.65 0.7 0.6 1</ambient>
-            <diffuse>0.75 0.8 0.7 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3.5 0 0 0</pose>
-      </link>
-      <pose>35 25 0 0 0 0</pose>
-    </model>
-
-    <!-- Trees -->
-    <model name="tree_1">
-      <static>true</static>
-      <link name="trunk">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.2</radius>
-              <length>2</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.4 0.25 0.1 1</ambient>
-            <diffuse>0.5 0.35 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1 0 0 0</pose>
-      </link>
-      <link name="foliage">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>1.5</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.1 0.4 0.1 1</ambient>
-            <diffuse>0.2 0.6 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3 0 0 0</pose>
-      </link>
-      <pose>-12 -10 0 0 0 0</pose>
-    </model>
-
-    <model name="tree_2">
-      <static>true</static>
-      <link name="trunk">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.2</radius>
-              <length>2</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.4 0.25 0.1 1</ambient>
-            <diffuse>0.5 0.35 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1 0 0 0</pose>
-      </link>
-      <link name="foliage">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>1.5</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.1 0.4 0.1 1</ambient>
-            <diffuse>0.2 0.6 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3 0 0 0</pose>
-      </link>
-      <pose>-8 10 0 0 0 0</pose>
-    </model>
-
-    <model name="tree_3">
-      <static>true</static>
-      <link name="trunk">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.2</radius>
-              <length>2</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.4 0.25 0.1 1</ambient>
-            <diffuse>0.5 0.35 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1 0 0 0</pose>
-      </link>
-      <link name="foliage">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>1.5</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.1 0.4 0.1 1</ambient>
-            <diffuse>0.2 0.6 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3 0 0 0</pose>
-      </link>
-      <pose>12 -12 0 0 0 0</pose>
-    </model>
-
-    <model name="tree_4">
-      <static>true</static>
-      <link name="trunk">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.2</radius>
-              <length>2</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.4 0.25 0.1 1</ambient>
-            <diffuse>0.5 0.35 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1 0 0 0</pose>
-      </link>
-      <link name="foliage">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>1.5</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.1 0.4 0.1 1</ambient>
-            <diffuse>0.2 0.6 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 3 0 0 0</pose>
-      </link>
-      <pose>15 12 0 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- OBSTACLES FOR TESTING -->
-    <!-- ============================================ -->
-    
-    <model name="obstacle_box_1">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.5 0.5 0.5</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 0.5 0.5</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.8 0.4 0.1 1</ambient>
-            <diffuse>0.9 0.5 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 0.25 0 0 0</pose>
-      </link>
-      <pose>2 -2 0 0 0 0</pose>
-    </model>
-
-    <!-- Additional Camera Light for better visibility -->
-    <light name="user_point_light_0" type="point">
-      <pose>0 0 10 0 0 0</pose>
-      <diffuse>0.8 0.8 0.8 1</diffuse>
-      <specular>0.2 0.2 0.2 1</specular>
-      <attenuation>
-        <range>50</range>
-        <constant>0.5</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <cast_shadows>1</cast_shadows>
-    </light>
-
-    <!-- Additional point lights for traffic lights -->
-    <light name="traffic_light_1_illumination" type="point">
-      <pose>-27 18 3 0 0 0</pose>
-      <diffuse>1 0 0 1</diffuse>
-      <specular>0.5 0 0 1</specular>
-      <attenuation>
-        <range>10</range>
-        <constant>0.8</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <cast_shadows>0</cast_shadows>
-    </light>
-
-    <light name="traffic_light_2_illumination" type="point">
-      <pose>5 -5 3 0 0 0</pose>
-      <diffuse>0 1 0 1</diffuse>
-      <specular>0 0.5 0 1</specular>
-      <attenuation>
-        <range>10</range>
-        <constant>0.8</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <cast_shadows>0</cast_shadows>
-    </light>
-
-    <light name="traffic_light_3_illumination" type="point">
-      <pose>20 5 3 0 0 0</pose>
-      <diffuse>1 1 0 1</diffuse>
-      <specular>0.5 0.5 0 1</specular>
-      <attenuation>
-        <range>10</range>
-        <constant>0.8</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <cast_shadows>0</cast_shadows>
-    </light>
-
-    <!-- Scene properties -->
-    <scene>
-      <ambient>0.5 0.5 0.5 1</ambient>
-      <background>0.7 0.8 1 1</background>
-      <shadows>1</shadows>
-    </scene>
-
-    <!-- GUI Camera Configuration -->
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>-10 -30 25 0 0.6 1.0</pose>
-        <view_controller>orbit</view_controller>
-      </camera>
-    </gui>
-
-  </world>
-</sdf>="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>50 8 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>50 8 0.1</size>
+              <size>100 8 0.1</size>
             </box>
           </geometry>
           <material>
@@ -677,274 +42,8 @@
       <pose>0 0 0 0 0 0</pose>
     </model>
 
-    <!-- Center Line Markings -->
-    <model name="center_line_1">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-20 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_2">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-15 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_3">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-10 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_4">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-5 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_5">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>0 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_6">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>5 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_7">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>10 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_8">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>15 0 0.06 0 0 0</pose>
-    </model>
-
-    <model name="center_line_9">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.15 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>20 0 0.06 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- INTERSECTION 1 -->
-    <!-- ============================================ -->
-    <model name="intersection_1">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>12 12 0.1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.35 0.35 0.35 1</ambient>
-            <diffuse>0.45 0.45 0.45 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-25 15 0 0 0 0</pose>
-    </model>
-
-    <!-- Crosswalk at Intersection 1 -->
-    <model name="crosswalk_1a">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 3 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-25 20 0.06 0 0 0</pose>
-    </model>
-
-    <model name="crosswalk_1b">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 3 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-24 20 0.06 0 0 0</pose>
-    </model>
-
-    <model name="crosswalk_1c">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 3 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-23 20 0.06 0 0 0</pose>
-    </model>
-
-    <model name="crosswalk_1d">
-      <static>true</static>
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 3 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      <pose>-22 20 0.06 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- TRAFFIC LIGHT 1 - RED -->
-    <!-- ============================================ -->
-    <model name="traffic_light_1">
+    <!-- TRAFFIC LIGHT 1 - GREEN at 8m, right edge -->
+    <model name="traffic_light_green">
       <static>true</static>
       <link name="pole">
         <visual name="visual">
@@ -959,14 +58,6 @@
             <diffuse>0.4 0.4 0.4 1</diffuse>
           </material>
         </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>2.5</length>
-            </cylinder>
-          </geometry>
-        </collision>
       </link>
       
       <link name="housing">
@@ -984,7 +75,6 @@
         <pose>0 0 2.8 0 0 0</pose>
       </link>
 
-      <!-- RED Light -->
       <link name="red_light">
         <visual name="visual">
           <geometry>
@@ -993,15 +83,13 @@
             </sphere>
           </geometry>
           <material>
-            <ambient>1 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-            <emissive>0.8 0 0 1</emissive>
+            <ambient>0.2 0 0 1</ambient>
+            <diffuse>0.3 0 0 1</diffuse>
           </material>
         </visual>
         <pose>0.15 0 3.0 0 0 0</pose>
       </link>
 
-      <!-- YELLOW Light (off) -->
       <link name="yellow_light">
         <visual name="visual">
           <geometry>
@@ -1010,108 +98,13 @@
             </sphere>
           </geometry>
           <material>
-            <ambient>0.3 0.3 0 1</ambient>
-            <diffuse>0.4 0.4 0 1</diffuse>
+            <ambient>0.2 0.2 0 1</ambient>
+            <diffuse>0.3 0.3 0 1</diffuse>
           </material>
         </visual>
         <pose>0.15 0 2.8 0 0 0</pose>
       </link>
 
-      <!-- GREEN Light (off) -->
-      <link name="green_light">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>0.12</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0 0.3 0 1</ambient>
-            <diffuse>0 0.4 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0.15 0 2.6 0 0 0</pose>
-      </link>
-
-      <pose>-27 18 0 0 0 0</pose>
-    </model>
-
-    <!-- ============================================ -->
-    <!-- TRAFFIC LIGHT 2 - GREEN -->
-    <!-- ============================================ -->
-    <model name="traffic_light_2">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>2.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.4 0.4 0.4 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>2.5</length>
-            </cylinder>
-          </geometry>
-        </collision>
-      </link>
-      
-      <link name="housing">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.3 0.2 0.8</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.1 0.1 0.1 1</ambient>
-            <diffuse>0.2 0.2 0.2 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 2.8 0 0 0</pose>
-      </link>
-
-      <!-- RED Light (off) -->
-      <link name="red_light">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>0.12</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.3 0 0 1</ambient>
-            <diffuse>0.4 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0.15 0 3.0 0 0 0</pose>
-      </link>
-
-      <!-- YELLOW Light (off) -->
-      <link name="yellow_light">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>0.12</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>0.3 0.3 0 1</ambient>
-            <diffuse>0.4 0.4 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0.15 0 2.8 0 0 0</pose>
-      </link>
-
-      <!-- GREEN Light (ON) -->
       <link name="green_light">
         <visual name="visual">
           <geometry>
@@ -1122,19 +115,17 @@
           <material>
             <ambient>0 1 0 1</ambient>
             <diffuse>0 1 0 1</diffuse>
-            <emissive>0 0.8 0 1</emissive>
+            <emissive>0 0.9 0 1</emissive>
           </material>
         </visual>
         <pose>0.15 0 2.6 0 0 0</pose>
       </link>
 
-      <pose>5 -5 0 0 0 1.57</pose>
+      <pose>8 4.5 0 0 0 0</pose>
     </model>
 
-    <!-- ============================================ -->
-    <!-- TRAFFIC LIGHT 3 - YELLOW -->
-    <!-- ============================================ -->
-    <model name="traffic_light_3">
+    <!-- TRAFFIC LIGHT 2 - YELLOW at 28m, right edge -->
+    <model name="traffic_light_yellow">
       <static>true</static>
       <link name="pole">
         <visual name="visual">
@@ -1149,14 +140,6 @@
             <diffuse>0.4 0.4 0.4 1</diffuse>
           </material>
         </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>2.5</length>
-            </cylinder>
-          </geometry>
-        </collision>
       </link>
       
       <link name="housing">
@@ -1174,7 +157,6 @@
         <pose>0 0 2.8 0 0 0</pose>
       </link>
 
-      <!-- RED Light (off) -->
       <link name="red_light">
         <visual name="visual">
           <geometry>
@@ -1183,14 +165,13 @@
             </sphere>
           </geometry>
           <material>
-            <ambient>0.3 0 0 1</ambient>
-            <diffuse>0.4 0 0 1</diffuse>
+            <ambient>0.2 0 0 1</ambient>
+            <diffuse>0.3 0 0 1</diffuse>
           </material>
         </visual>
         <pose>0.15 0 3.0 0 0 0</pose>
       </link>
 
-      <!-- YELLOW Light (ON) -->
       <link name="yellow_light">
         <visual name="visual">
           <geometry>
@@ -1201,13 +182,12 @@
           <material>
             <ambient>1 1 0 1</ambient>
             <diffuse>1 1 0 1</diffuse>
-            <emissive>0.8 0.8 0 1</emissive>
+            <emissive>0.9 0.9 0 1</emissive>
           </material>
         </visual>
         <pose>0.15 0 2.8 0 0 0</pose>
       </link>
 
-      <!-- GREEN Light (off) -->
       <link name="green_light">
         <visual name="visual">
           <geometry>
@@ -1216,347 +196,147 @@
             </sphere>
           </geometry>
           <material>
-            <ambient>0 0.3 0 1</ambient>
-            <diffuse>0 0.4 0 1</diffuse>
+            <ambient>0 0.2 0 1</ambient>
+            <diffuse>0 0.3 0 1</diffuse>
           </material>
         </visual>
         <pose>0.15 0 2.6 0 0 0</pose>
       </link>
 
-      <pose>20 5 0 0 0 -1.57</pose>
+      <pose>28 4.5 0 0 0 0</pose>
     </model>
 
-    <!-- ============================================ -->
-    <!-- ROAD SIGNS -->
-    <!-- ============================================ -->
-    
-    <!-- STOP Sign -->
-    <model name="stop_sign">
+    <!-- TRAFFIC LIGHT 3 - RED at 48m, right edge -->
+    <model name="traffic_light_red">
       <static>true</static>
       <link name="pole">
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
+              <radius>0.05</radius>
+              <length>2.5</length>
             </cylinder>
           </geometry>
           <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
           </material>
         </visual>
       </link>
       
-      <link name="sign">
+      <link name="housing">
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.6 0.6 0.02</size>
+              <size>0.3 0.2 0.8</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.8 0 0 1</ambient>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="red_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
             <diffuse>1 0 0 1</diffuse>
+            <emissive>0.9 0 0 1</emissive>
           </material>
         </visual>
-        <pose>0 0 1.5 0 0 0.785</pose>
+        <pose>0.15 0 3.0 0 0 0</pose>
       </link>
-      
-      <link name="text">
+
+      <link name="yellow_light">
         <visual name="visual">
           <geometry>
-            <box>
-              <size>0.4 0.15 0.03</size>
-            </box>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
           </geometry>
           <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
+            <ambient>0.2 0.2 0 1</ambient>
+            <diffuse>0.3 0.3 0 1</diffuse>
           </material>
         </visual>
-        <pose>0.05 0 1.5 0 0 0</pose>
+        <pose>0.15 0 2.8 0 0 0</pose>
       </link>
-      
-      <pose>-15 -5 0 0 0 0</pose>
+
+      <link name="green_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0 0.2 0 1</ambient>
+            <diffuse>0 0.3 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>0.15 0 2.6 0 0 0</pose>
+      </link>
+
+      <pose>48 4.5 0 0 0 0</pose>
     </model>
 
-    <!-- Speed Limit 50 Sign -->
-    <model name="speed_limit_50">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.3</radius>
-              <length>0.02</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <link name="border">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.28</radius>
-              <length>0.04</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <pose>-5 -5 0 0 0 0</pose>
-    </model>
+    <!-- Lighting -->
+    <light name="traffic_green_light" type="point">
+      <pose>8 4.5 2.8 0 0 0</pose>
+      <diffuse>0 1 0 1</diffuse>
+      <specular>0 0.5 0 1</specular>
+      <attenuation>
+        <range>2</range>
+        <constant>1.0</constant>
+        <linear>0.3</linear>
+        <quadratic>0.1</quadratic>
+      </attenuation>
+    </light>
 
-    <!-- Speed Limit 30 Sign -->
-    <model name="speed_limit_30">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.3</radius>
-              <length>0.02</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <link name="border">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.28</radius>
-              <length>0.04</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <pose>10 5 0 0 0 3.14</pose>
-    </model>
+    <light name="traffic_yellow_light" type="point">
+      <pose>28 4.5 2.8 0 0 0</pose>
+      <diffuse>1 1 0 1</diffuse>
+      <specular>0.5 0.5 0 1</specular>
+      <attenuation>
+        <range>2</range>
+        <constant>1.0</constant>
+        <linear>0.3</linear>
+        <quadratic>0.1</quadratic>
+      </attenuation>
+    </light>
 
-    <!-- Yield Sign (Cédez le passage) -->
-    <model name="yield_sign">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.7 0.6 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 0 0 0</pose>
-      </link>
-      
-      <link name="border">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.65 0.55 0.03</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 0 0 0</pose>
-      </link>
-      
-      <pose>-10 5 0 0 0 3.14</pose>
-    </model>
+    <light name="traffic_red_light" type="point">
+      <pose>48 4.5 2.8 0 0 0</pose>
+      <diffuse>1 0 0 1</diffuse>
+      <specular>0.5 0 0 1</specular>
+      <attenuation>
+        <range>2</range>
+        <constant>1.0</constant>
+        <linear>0.3</linear>
+        <quadratic>0.1</quadratic>
+      </attenuation>
+    </light>
 
-    <!-- No Entry Sign (Sens interdit) -->
-    <model name="no_entry_sign">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.3</radius>
-              <length>0.02</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.8 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 1.57 0 0</pose>
-      </link>
-      
-      <link name="bar">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.5 0.08 0.03</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0.05 0 1.5 0 0 0</pose>
-      </link>
-      
-      <pose>15 -5 0 0 0 1.57</pose>
-    </model>
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.7 0.8 1 1</background>
+      <shadows>1</shadows>
+    </scene>
 
-    <!-- Dangerous Curve Sign -->
-    <model name="curve_sign">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      <link name="sign">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.6 0.6 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 0.9 0 1</ambient>
-            <diffuse>1 1 0 1</diffuse>
-          </material>
-        </visual>
-        <pose>0 0 1.5 0 0 0.785</pose>
-      </link>
-      
-      <link name="arrow">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.3 0.1 0.03</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0 0 0 1</ambient>
-            <diffuse>0.1 0.1 0.1 1</diffuse>
-          </material>
-        </visual>
-        <pose>0.05 0 1.5 0 0 0.3</pose>
-      </link>
-      
-      <pose>20 -5 0 0 0 0</pose>
-    </model>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>25 -15 10 0 0.4 1.57</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
 
-    <!-- Speed Limit 70 Sign -->
-    <model name="speed_limit_70">
-      <static>true</static>
-      <link name="pole">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.03</radius>
-              <length>1.5</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.6 0.6 0.6 1</diffuse>
-          </material>
-        </visual>
-      </link>
-      
-      
+  </world>
+</sdf>
