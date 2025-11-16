@@ -1,3 +1,4 @@
+/home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/autonomous.launch.py
 /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/gazebo.launch.py
 /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//urdf/robot.urdf.xacro
 /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//worlds/traffic_world.world

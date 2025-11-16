@@ -4,7 +4,7 @@ package_name = 'traffic_light_robot'
 
 setup(
     name=package_name,
-    version='0.0.1',
+    version='0.0.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -13,14 +13,15 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='user',
-    maintainer_email='bettaieb88walid@gmail.com',
-    description='Traffic Light Detection Node',
-    license='MIT',
+    maintainer='raspb',
+    maintainer_email='bettaieb.walid1@gmail.com',
+    description='Traffic light detection',
+    license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'traffic_detector = traffic_light_robot.traffic_detector:main',
+            'detector_node = traffic_light_robot.detector_node:main',
+            'controller_node = traffic_light_robot.controller_node:main',
         ],
     },
 )
