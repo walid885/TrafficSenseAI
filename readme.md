@@ -145,4 +145,7 @@ ros2 topic list
 - robot_state_publisher, joint_state_publisher
 - XACRO, URDF tools
 
-// command to delete from the readme , but to have easier access right now raspb@Raspberry:~/Desktop/TrafficSenseAI$ ros2 launch robot_description gazebo.launch.py 
+## Launching the simulation :
+bashcd ~/Desktop/TrafficSenseAI
+source install/setup.bash
+ros2 launch robot_description gazebo.launch.py
