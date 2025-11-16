@@ -149,3 +149,8 @@ ros2 topic list
 bashcd ~/Desktop/TrafficSenseAI
 source install/setup.bash
 ros2 launch robot_description gazebo.launch.py
+
+
+
+## being able to connect and drive the robot using the keybord.
+sudo apt install ros-humble-teleop-twist-keyboard xterm -y
