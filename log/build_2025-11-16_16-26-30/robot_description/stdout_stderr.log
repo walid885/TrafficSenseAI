@@ -22,6 +22,7 @@
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/gazebo.launch.py
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//urdf/robot.urdf.xacro
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//worlds/traffic_world.world
+-- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/lib/robot_description/azerty_teleop.py
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/ament_index/resource_index/package_run_dependencies/robot_description
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/ament_index/resource_index/parent_prefix_path/robot_description
 -- Symlinking: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description/environment/ament_prefix_path.sh

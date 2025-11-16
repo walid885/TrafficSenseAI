@@ -313,6 +313,9 @@ message(STATUS "Execute custom install script")
 # install(DIRECTORY "launch" "urdf" "worlds" "meshes" "DESTINATION" "share/robot_description/")
 ament_cmake_symlink_install_directory("/home/raspb/Desktop/TrafficSenseAI/src/robot_description" DIRECTORY "launch" "urdf" "worlds" "meshes" "DESTINATION" "share/robot_description/")
 
+# install(PROGRAMS "scripts/azerty_teleop.py" "DESTINATION" "lib/robot_description")
+ament_cmake_symlink_install_programs("/home/raspb/Desktop/TrafficSenseAI/src/robot_description" PROGRAMS "scripts/azerty_teleop.py" "DESTINATION" "lib/robot_description")
+
 # install(FILES "/home/raspb/Desktop/TrafficSenseAI/build/robot_description/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/robot_description" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/raspb/Desktop/TrafficSenseAI/src/robot_description" FILES "/home/raspb/Desktop/TrafficSenseAI/build/robot_description/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/robot_description" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 

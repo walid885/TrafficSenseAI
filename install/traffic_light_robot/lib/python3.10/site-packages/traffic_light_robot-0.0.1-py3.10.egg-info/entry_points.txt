@@ -1,0 +1,3 @@
+[console_scripts]
+traffic_detector = traffic_light_robot.traffic_detector:main
+
