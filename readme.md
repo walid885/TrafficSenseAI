@@ -175,3 +175,6 @@ source ~/Desktop/TrafficSenseAI/install/setup.bash
 ros2 run robot_description azerty_teleop.py
 If azerty_teleop not executable:
 bashchmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleop.py
+
+
+the git issue , testing if it is solved 
