@@ -16,8 +16,7 @@ class TrafficLightVisualizer(Node):
         self.image_sub = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
         
-        self.state_sub = self.create_subscription(
-            String, '/traffic_light_state', self.state_callback, 10)
+        
         
         self.get_logger().info('Visualizer started - Press Q to quit')
         
