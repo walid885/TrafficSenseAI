@@ -13,7 +13,7 @@ class TrafficLightDetector(Node):
         self.bridge = CvBridge()
         
         self.subscription = self.create_subscription(
-            Image, '/camera/image_raw', self.image_callback, 10)
+            Image, '/front_camera/image_raw', self.image_callback, 10)
         
         self.publisher = self.create_publisher(String, '/traffic_light_state', 10)
         self.get_logger().info('Traffic light detector started')

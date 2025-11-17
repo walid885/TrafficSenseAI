@@ -14,7 +14,7 @@ class TrafficLightVisualizer(Node):
         self.current_state = "UNKNOWN"
         
         self.image_sub = self.create_subscription(
-            Image, '/camera/image_raw', self.image_callback, 10)
+            Image, '/front_camera/image_raw', self.image_callback, 10)
         
         self.state_sub = self.create_subscription(
             String, '/traffic_light_state', self.state_callback, 10)
