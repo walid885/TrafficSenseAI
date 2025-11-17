@@ -1,0 +1,354 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="minimal_traffic_world">
+    
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- MAIN ROAD -->
+    <model name="main_road">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>100 8 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>100 8 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- TRAFFIC LIGHT 1 - GREEN at 8m -->
+    <model name="traffic_light_green">
+      <static>true</static>
+      <link name="pole">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.05</radius>
+              <length>2.5</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name="housing">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 0.2 0.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="red_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0.2 0 0 1</ambient>
+            <diffuse>0.3 0 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 3.0 0 0 0</pose>
+      </link>
+
+      <link name="yellow_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0 1</ambient>
+            <diffuse>0.3 0.3 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="green_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.15</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+            <emissive>0 1 0 1</emissive>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.6 0 0 0</pose>
+      </link>
+
+      <pose>8 2 0 0 0 3.14159</pose>
+    </model>
+
+    <!-- TRAFFIC LIGHT 2 - YELLOW at 28m -->
+    <model name="traffic_light_yellow">
+      <static>true</static>
+      <link name="pole">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.05</radius>
+              <length>2.5</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name="housing">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 0.2 0.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="red_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0.2 0 0 1</ambient>
+            <diffuse>0.3 0 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 3.0 0 0 0</pose>
+      </link>
+
+      <link name="yellow_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.15</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <emissive>1 1 0 1</emissive>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="green_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0 0.2 0 1</ambient>
+            <diffuse>0 0.3 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.6 0 0 0</pose>
+      </link>
+
+      <pose>28 2 0 0 0 3.14159</pose>
+    </model>
+
+    <!-- TRAFFIC LIGHT 3 - RED at 48m -->
+    <model name="traffic_light_red">
+      <static>true</static>
+      <link name="pole">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.05</radius>
+              <length>2.5</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name="housing">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 0.2 0.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="red_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.15</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+            <emissive>1 0 0 1</emissive>
+          </material>
+        </visual>
+        <pose>-0.15 0 3.0 0 0 0</pose>
+      </link>
+
+      <link name="yellow_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0 1</ambient>
+            <diffuse>0.3 0.3 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.8 0 0 0</pose>
+      </link>
+
+      <link name="green_light">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.12</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0 0.2 0 1</ambient>
+            <diffuse>0 0.3 0 1</diffuse>
+          </material>
+        </visual>
+        <pose>-0.15 0 2.6 0 0 0</pose>
+      </link>
+
+      <pose>48 2 0 0 0 3.14159</pose>
+    </model>
+
+    <!-- Lighting - NO OVERLAP -->
+    <light name="traffic_green_light" type="point">
+      <pose>8 2 2.8 0 0 0</pose>
+      <diffuse>0 1 0 1</diffuse>
+      <specular>0 0.5 0 1</specular>
+      <attenuation>
+        <range>6</range>
+        <constant>1.0</constant>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <light name="traffic_yellow_light" type="point">
+      <pose>28 2 2.8 0 0 0</pose>
+      <diffuse>1 1 0 1</diffuse>
+      <specular>0.5 0.5 0 1</specular>
+      <attenuation>
+        <range>6</range>
+        <constant>1.0</constant>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <light name="traffic_red_light" type="point">
+      <pose>48 2 2.8 0 0 0</pose>
+      <diffuse>1 0 0 1</diffuse>
+      <specular>0.5 0 0 1</specular>
+      <attenuation>
+        <range>6</range>
+        <constant>1.0</constant>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
+    <scene>
+      <ambient>0.8 0.8 0.8 1</ambient>
+      <background>0.7 0.8 1 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>25 -15 10 0 0.4 1.57</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
+
+
+
+<!-- 
+<range>3</range>           <!-- Max distance light reaches (meters) -->
+<constant>1.0</constant>   <!-- Base intensity (no falloff) -->
+<linear>0.3</linear>       <!-- Linear falloff rate -->
+<quadratic>0.1</quadratic> <!-- Quadratic falloff rate (realistic physics) -->
+-->
