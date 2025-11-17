@@ -109,19 +109,19 @@
         <visual name="visual">
           <geometry>
             <sphere>
-              <radius>0.12</radius>
+              <radius>0.15</radius>
             </sphere>
           </geometry>
           <material>
             <ambient>0 1 0 1</ambient>
             <diffuse>0 1 0 1</diffuse>
-            <emissive>0 0.9 0 1</emissive>
+            <emissive>0 1 0 1</emissive>
           </material>
         </visual>
         <pose>-0.15 0 2.6 0 0 0</pose>
       </link>
 
-      <pose>8 3 0 0 0 3.14159</pose>
+      <pose>8 2 0 0 0 3.14159</pose>
     </model>
 
     <!-- TRAFFIC LIGHT 2 - YELLOW at 28m -->
@@ -176,13 +176,13 @@
         <visual name="visual">
           <geometry>
             <sphere>
-              <radius>0.12</radius>
+              <radius>0.15</radius>
             </sphere>
           </geometry>
           <material>
             <ambient>1 1 0 1</ambient>
             <diffuse>1 1 0 1</diffuse>
-            <emissive>0.9 0.9 0 1</emissive>
+            <emissive>1 1 0 1</emissive>
           </material>
         </visual>
         <pose>-0.15 0 2.8 0 0 0</pose>
@@ -203,7 +203,7 @@
         <pose>-0.15 0 2.6 0 0 0</pose>
       </link>
 
-      <pose>28 3 0 0 0 3.14159</pose>
+      <pose>28 2 0 0 0 3.14159</pose>
     </model>
 
     <!-- TRAFFIC LIGHT 3 - RED at 48m -->
@@ -243,13 +243,13 @@
         <visual name="visual">
           <geometry>
             <sphere>
-              <radius>0.12</radius>
+              <radius>0.15</radius>
             </sphere>
           </geometry>
           <material>
             <ambient>1 0 0 1</ambient>
             <diffuse>1 0 0 1</diffuse>
-            <emissive>0.9 0 0 1</emissive>
+            <emissive>1 0 0 1</emissive>
           </material>
         </visual>
         <pose>-0.15 0 3.0 0 0 0</pose>
@@ -285,64 +285,51 @@
         <pose>-0.15 0 2.6 0 0 0</pose>
       </link>
 
-      <pose>48 3 0 0 0 3.14159</pose>
+      <pose>48 2 0 0 0 3.14159</pose>
     </model>
 
-    <!-- Lighting -->
-        <light name="traffic_red_light" type="point">
-      <pose>48 3 2.8 0 0 0</pose>
-      <diffuse>1 0 0 1</diffuse>
-      <specular>0.5 0 0 1</specular>
-      <attenuation>
-        <range>3</range>
-        <constant>1.0</constant>
-        <linear>0.3</linear>
-        <quadratic>0.1</quadratic>
-      </attenuation>
-      <cast_shadows>false</cast_shadows>
-    </light>
-
+    <!-- Lighting - NO OVERLAP -->
     <light name="traffic_green_light" type="point">
-      <pose>8 3 2.8 0 0 0</pose>
+      <pose>8 2 2.8 0 0 0</pose>
       <diffuse>0 1 0 1</diffuse>
       <specular>0 0.5 0 1</specular>
       <attenuation>
-        <range>3</range>
+        <range>6</range>
         <constant>1.0</constant>
-        <linear>0.3</linear>
-        <quadratic>0.1</quadratic>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
       </attenuation>
       <cast_shadows>false</cast_shadows>
     </light>
 
     <light name="traffic_yellow_light" type="point">
-      <pose>28 3 2.8 0 0 0</pose>
+      <pose>28 2 2.8 0 0 0</pose>
       <diffuse>1 1 0 1</diffuse>
       <specular>0.5 0.5 0 1</specular>
       <attenuation>
-        <range>3</range>
+        <range>6</range>
         <constant>1.0</constant>
-        <linear>0.3</linear>
-        <quadratic>0.1</quadratic>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
       </attenuation>
       <cast_shadows>false</cast_shadows>
     </light>
 
     <light name="traffic_red_light" type="point">
-      <pose>48 3 2.8 0 0 0</pose>
+      <pose>48 2 2.8 0 0 0</pose>
       <diffuse>1 0 0 1</diffuse>
       <specular>0.5 0 0 1</specular>
       <attenuation>
-        <range>3</range>
+        <range>6</range>
         <constant>1.0</constant>
-        <linear>0.3</linear>
-        <quadratic>0.1</quadratic>
+        <linear>0.1</linear>
+        <quadratic>0.05</quadratic>
       </attenuation>
       <cast_shadows>false</cast_shadows>
     </light>
 
     <scene>
-      <ambient>0.7 0.7 0.7 1</ambient>
+      <ambient>0.8 0.8 0.8 1</ambient>
       <background>0.7 0.8 1 1</background>
       <shadows>true</shadows>
     </scene>
@@ -356,6 +343,7 @@
 
   </world>
 </sdf>
+
 
 
 <!-- 

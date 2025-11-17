@@ -15,3 +15,4 @@ test/test_pep257.py
 traffic_light_robot/__init__.py
 traffic_light_robot/controller_node.py
 traffic_light_robot/detector_node.py
+traffic_light_robot/visualizer_node.py
