@@ -36,25 +36,18 @@ class TrafficLightDetector(Node):
     def detect(self, img):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         
-        # Red mask (two ranges for hue wrap-around)
         red1 = cv2.inRange(hsv, (0, 100, 100), (10, 255, 255))
         red2 = cv2.inRange(hsv, (170, 100, 100), (180, 255, 255))
         red_mask = red1 | red2
-        
-        # Green mask
         green_mask = cv2.inRange(hsv, (40, 50, 50), (80, 255, 255))
-        
-        # Yellow mask
         yellow_mask = cv2.inRange(hsv, (20, 100, 100), (30, 255, 255))
         
-        # Count pixels
         red_pixels = cv2.countNonZero(red_mask)
         green_pixels = cv2.countNonZero(green_mask)
         yellow_pixels = cv2.countNonZero(yellow_mask)
         
-        threshold = 500
+        threshold = 50  # Changed from 500 to 50
         
-        # Priority: RED > YELLOW > GREEN
         if red_pixels > threshold:
             return "RED"
         elif yellow_pixels > threshold:
@@ -63,7 +56,6 @@ class TrafficLightDetector(Node):
             return "GREEN"
         
         return "UNKNOWN"
-
 def main():
     rclpy.init()
     node = TrafficLightDetector()

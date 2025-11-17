@@ -6,6 +6,8 @@ from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+from collections import deque
 
 class TrafficLightVisualizer(Node):
     def __init__(self):
@@ -13,12 +15,20 @@ class TrafficLightVisualizer(Node):
         self.bridge = CvBridge()
         self.current_state = "UNKNOWN"
         
+        # Data logging
+        self.red_history = deque(maxlen=1000)
+        self.green_history = deque(maxlen=1000)
+        self.yellow_history = deque(maxlen=1000)
+        self.timestamps = deque(maxlen=1000)
+        self.frame_count = 0
+        
         self.image_sub = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
         
+        self.state_sub = self.create_subscription(
+            String, '/traffic_light_state', self.state_callback, 10)
         
-        
-        self.get_logger().info('Visualizer started - Press Q to quit')
+        self.get_logger().info('Visualizer started - Press Q to quit and generate plot')
         
     def state_callback(self, msg):
         self.current_state = msg.data
@@ -39,16 +49,23 @@ class TrafficLightVisualizer(Node):
         green_pixels = cv2.countNonZero(green_mask)
         yellow_pixels = cv2.countNonZero(yellow_mask)
         
+        # Log data
+        self.red_history.append(red_pixels)
+        self.green_history.append(green_pixels)
+        self.yellow_history.append(yellow_pixels)
+        self.timestamps.append(self.frame_count)
+        self.frame_count += 1
+        
         # Visualization
         h, w = cv_image.shape[:2]
         
         # Overlay masks
         red_overlay = cv2.cvtColor(red_mask, cv2.COLOR_GRAY2BGR)
-        red_overlay[:,:,1:] = 0  # Keep only red channel
+        red_overlay[:,:,1:] = 0
         green_overlay = cv2.cvtColor(green_mask, cv2.COLOR_GRAY2BGR)
-        green_overlay[:,:,[0,2]] = 0  # Keep only green channel
+        green_overlay[:,:,[0,2]] = 0
         yellow_overlay = cv2.cvtColor(yellow_mask, cv2.COLOR_GRAY2BGR)
-        yellow_overlay[:,:,2] = 0  # Remove blue channel
+        yellow_overlay[:,:,2] = 0
         
         combined = cv2.addWeighted(cv_image, 0.7, red_overlay, 0.3, 0)
         combined = cv2.addWeighted(combined, 1.0, green_overlay, 0.3, 0)
@@ -80,7 +97,56 @@ class TrafficLightVisualizer(Node):
         
         # Show
         cv2.imshow("Traffic Light Detection", combined)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
+        
+        if key == ord('q') or key == ord('Q'):
+            self.generate_plot()
+            raise KeyboardInterrupt
+    
+    def generate_plot(self):
+        if len(self.timestamps) == 0:
+            self.get_logger().warn('No data to plot')
+            return
+        
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+        
+        # Time series plot
+        ax1.plot(list(self.timestamps), list(self.red_history), 'r-', label='Red', linewidth=1.5)
+        ax1.plot(list(self.timestamps), list(self.green_history), 'g-', label='Green', linewidth=1.5)
+        ax1.plot(list(self.timestamps), list(self.yellow_history), 'y-', label='Yellow', linewidth=1.5)
+        ax1.axhline(y=500, color='white', linestyle='--', label='Threshold', linewidth=2)
+        ax1.set_xlabel('Frame Number')
+        ax1.set_ylabel('Pixel Count')
+        ax1.set_title('Traffic Light Color Detection Over Time')
+        ax1.legend()
+        ax1.grid(True, alpha=0.3)
+        ax1.set_facecolor('#1a1a1a')
+        
+        # Histogram/Distribution
+        ax2.hist([list(self.red_history), list(self.green_history), list(self.yellow_history)], 
+                 bins=50, label=['Red', 'Green', 'Yellow'], 
+                 color=['red', 'green', 'yellow'], alpha=0.7)
+        ax2.axvline(x=500, color='white', linestyle='--', label='Threshold', linewidth=2)
+        ax2.set_xlabel('Pixel Count')
+        ax2.set_ylabel('Frequency')
+        ax2.set_title('Color Pixel Count Distribution')
+        ax2.legend()
+        ax2.grid(True, alpha=0.3)
+        ax2.set_facecolor('#1a1a1a')
+        
+        # Statistics
+        stats_text = f"""Statistics:
+Red   - Mean: {np.mean(self.red_history):.0f}, Max: {np.max(self.red_history):.0f}, Std: {np.std(self.red_history):.0f}
+Green - Mean: {np.mean(self.green_history):.0f}, Max: {np.max(self.green_history):.0f}, Std: {np.std(self.green_history):.0f}
+Yellow- Mean: {np.mean(self.yellow_history):.0f}, Max: {np.max(self.yellow_history):.0f}, Std: {np.std(self.yellow_history):.0f}"""
+        
+        fig.text(0.02, 0.02, stats_text, fontsize=10, family='monospace',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        
+        plt.tight_layout()
+        plt.savefig('traffic_light_analysis.png', dpi=150, facecolor='white')
+        self.get_logger().info('Plot saved: traffic_light_analysis.png')
+        plt.show()
 
 def main():
     rclpy.init()

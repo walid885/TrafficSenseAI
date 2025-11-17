@@ -184,9 +184,8 @@ bash cd ~/Desktop/TrafficSenseAI
 colcon build --packages-select traffic_light_robot
 source install/setup.bash
 Run:
-bashros2 launch robot_description autonomous.launch.py
+bash
+ros2 launch robot_description autonomous.launch.py
 # New terminal:
 
-
-
-ros2 run traffic_light_robot visualizer_node2 
+ros2 run traffic_light_robot visualizer_node
