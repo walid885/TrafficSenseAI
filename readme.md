@@ -154,3 +154,24 @@ ros2 launch robot_description gazebo.launch.py
 
 ## being able to connect and drive the robot using the keybord.
 sudo apt install ros-humble-teleop-twist-keyboard xterm -y
+
+
+
+
+
+# < commands to be able to run the different type of simulations that we can use to develop  this project here >
+# Build the packages first:
+bashcd ~/Desktop/TrafficSenseAI
+colcon build --symlink-install
+source install/setup.bash
+Autonomous mode:
+bashros2 launch robot_description autonomous.launch.py
+Teleop mode (AZERTY script):
+bash# Terminal 1 - Launch Gazebo:
+ros2 launch robot_description gazebo.launch.py
+
+# Terminal 2 - Run teleop:
+source ~/Desktop/TrafficSenseAI/install/setup.bash
+ros2 run robot_description azerty_teleop.py
+If azerty_teleop not executable:
+bashchmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleop.py
