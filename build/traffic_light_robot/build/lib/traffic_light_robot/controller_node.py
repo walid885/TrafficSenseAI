@@ -27,7 +27,11 @@ class AutonomousController(Node):
         self.get_logger().info('Autonomous controller started')
         
     def light_callback(self, msg):
+        old_light = self.current_light
         self.current_light = msg.data
+        
+        if old_light != self.current_light and self.current_light != "UNKNOWN":
+            self.get_logger().info(f'Light changed: {old_light} -> {self.current_light}')
         
     def control_loop(self):
         cmd = Twist()
@@ -36,7 +40,7 @@ class AutonomousController(Node):
             self.state = State.STOPPED
         elif self.current_light == "YELLOW":
             self.state = State.SLOWING
-        elif self.current_light == "GREEN":
+        elif self.current_light == "GREEN" or self.current_light == "UNKNOWN":
             self.state = State.MOVING
         
         if self.state == State.MOVING:

@@ -4,7 +4,7 @@ package_name = 'traffic_light_robot'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.0.1',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -14,9 +14,9 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='raspb',
-    maintainer_email='bettaieb.walid1@gmail.com',
-    description='Traffic light detection',
-    license='Apache-2.0',
+    maintainer_email='raspb@todo.todo',
+    description='Traffic light detection robot',
+    license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [

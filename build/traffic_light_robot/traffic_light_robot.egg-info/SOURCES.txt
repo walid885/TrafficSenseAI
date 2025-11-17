@@ -9,13 +9,9 @@ setup.py
 ../../build/traffic_light_robot/traffic_light_robot.egg-info/top_level.txt
 ../../build/traffic_light_robot/traffic_light_robot.egg-info/zip-safe
 resource/traffic_light_robot
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
 traffic_light_robot/__init__.py
 traffic_light_robot/controller_node.py
 traffic_light_robot/detector_node.py
-traffic_light_robot.egg-info/PKG-INFO
-traffic_light_robot.egg-info/SOURCES.txt
-traffic_light_robot.egg-info/dependency_links.txt
-traffic_light_robot.egg-info/entry_points.txt
-traffic_light_robot.egg-info/requires.txt
-traffic_light_robot.egg-info/top_level.txt
-traffic_light_robot.egg-info/zip-safe

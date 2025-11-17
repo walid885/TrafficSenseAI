@@ -16,41 +16,52 @@ class TrafficLightDetector(Node):
             Image, '/camera/image_raw', self.image_callback, 10)
         
         self.publisher = self.create_publisher(String, '/traffic_light_state', 10)
+        self.get_logger().info('Traffic light detector started')
         
     def image_callback(self, msg):
-        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        state = self.detect(cv_image)
-        
-        msg_out = String()
-        msg_out.data = state
-        self.publisher.publish(msg_out)
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+            state = self.detect(cv_image)
+            
+            msg_out = String()
+            msg_out.data = state
+            self.publisher.publish(msg_out)
+            
+            if state != "UNKNOWN":
+                self.get_logger().info(f'Detected: {state}')
+                
+        except Exception as e:
+            self.get_logger().error(f'Error: {str(e)}')
         
     def detect(self, img):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         
-        # Red (traffic light)
-        red1 = cv2.inRange(hsv, (0,100,100), (10,255,255))
-        red2 = cv2.inRange(hsv, (170,100,100), (180,255,255))
+        # Red mask (two ranges for hue wrap-around)
+        red1 = cv2.inRange(hsv, (0, 100, 100), (10, 255, 255))
+        red2 = cv2.inRange(hsv, (170, 100, 100), (180, 255, 255))
         red_mask = red1 | red2
         
-        # Green
-        green_mask = cv2.inRange(hsv, (40,50,50), (80,255,255))
+        # Green mask
+        green_mask = cv2.inRange(hsv, (40, 50, 50), (80, 255, 255))
         
-        # Yellow
-        yellow_mask = cv2.inRange(hsv, (20,100,100), (30,255,255))
+        # Yellow mask
+        yellow_mask = cv2.inRange(hsv, (20, 100, 100), (30, 255, 255))
         
+        # Count pixels
         red_pixels = cv2.countNonZero(red_mask)
         green_pixels = cv2.countNonZero(green_mask)
         yellow_pixels = cv2.countNonZero(yellow_mask)
         
         threshold = 500
         
+        # Priority: RED > YELLOW > GREEN
         if red_pixels > threshold:
             return "RED"
-        elif green_pixels > threshold:
-            return "GREEN"
         elif yellow_pixels > threshold:
             return "YELLOW"
+        elif green_pixels > threshold:
+            return "GREEN"
+        
         return "UNKNOWN"
 
 def main():

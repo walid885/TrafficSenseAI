@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
 Name: traffic-light-robot
-Version: 0.0.0
-Summary: Traffic light detection
+Version: 0.0.1
+Summary: Traffic light detection robot
 Home-page: UNKNOWN
 Maintainer: raspb
-Maintainer-email: bettaieb.walid1@gmail.com
-License: Apache-2.0
+Maintainer-email: raspb@todo.todo
+License: Apache License 2.0
 Platform: UNKNOWN
 
 UNKNOWN
