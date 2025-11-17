@@ -178,3 +178,15 @@ bashchmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleo
 
 
 the git issue , testing if it is solved 
+
+Rebuild:
+bash cd ~/Desktop/TrafficSenseAI
+colcon build --packages-select traffic_light_robot
+source install/setup.bash
+Run:
+bashros2 launch robot_description autonomous.launch.py
+# New terminal:
+
+
+
+ros2 run traffic_light_robot visualizer_node2 
