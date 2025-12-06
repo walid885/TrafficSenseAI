@@ -2,10 +2,12 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__init__.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/rviz_visu.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/detector_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/__init__.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/visualizer_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/controller_node.cpython-310.pyc
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/rviz_visu.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/share/ament_index/resource_index/packages/traffic_light_robot
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/share/traffic_light_robot/package.xml
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info/top_level.txt
@@ -17,4 +19,5 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info/SOURCES.txt
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/rviz_visu
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/visualizer_node

@@ -19,10 +19,11 @@ setup(
     license='Apache License 2.0',
     tests_require=['pytest'],
 entry_points={
-        'console_scripts': [
-            'detector_node = traffic_light_robot.detector_node:main',
-            'controller_node = traffic_light_robot.controller_node:main',
-            'visualizer_node = traffic_light_robot.visualizer_node:main',
-        ],
-    },
+    'console_scripts': [
+        'detector_node = traffic_light_robot.detector_node:main',
+        'controller_node = traffic_light_robot.controller_node:main',
+        'visualizer_node = traffic_light_robot.visualizer_node:main',
+        'rviz_visu = traffic_light_robot.rviz_visu:main',
+    ],
+},
 )
