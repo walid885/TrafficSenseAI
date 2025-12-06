@@ -1,32 +1,24 @@
 #!/bin/bash
 
 PROJECT_DIR="$HOME/Desktop/TrafficSenseAI"
+export QT_QPA_PLATFORM=xcb
 
 cd "$PROJECT_DIR"
 colcon build --packages-select traffic_light_robot
 source install/setup.bash
 
-# Launch main with visible output
-ros2 launch robot_description autonomous.launch.py &
-LAUNCH_PID=$!
+gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 launch robot_description autonomous.launch.py; exec bash" 2>/dev/null
 
-sleep 5
+sleep 3
 
-# Check if topics exist
-if ! ros2 topic list | grep -q "/front_camera"; then
-    echo "ERROR: Main launch failed - no camera topic"
-    kill $LAUNCH_PID 2>/dev/null
-    exit 1
-fi
-
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot visualizer_node; exec bash"
+gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot visualizer_node; exec bash" 2>/dev/null
 
 sleep 2
 
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && rviz2; exec bash"
+gnome-terminal -- bash -c "export QT_QPA_PLATFORM=xcb && cd $PROJECT_DIR && source install/setup.bash && rviz2; exec bash" 2>/dev/null
 
-sleep 2
+sleep 1
 
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot rviz_visu; exec bash"
+#gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot rviz_visu; exec bash" 2>/dev/null
 
 echo "Launch complete"
