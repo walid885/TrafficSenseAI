@@ -190,3 +190,11 @@ ros2 launch robot_description autonomous.launch.py
 # New terminal:
 
 ros2 run traffic_light_robot visualizer_node
+
+
+
+
+# launching the controlla-Tunaa 
+cd ~/Desktop/TrafficSenseAI
+colcon build --packages-select traffic_light_robot
+./auto_tune.sh

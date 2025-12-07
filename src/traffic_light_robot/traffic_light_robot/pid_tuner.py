@@ -235,6 +235,7 @@ class PIDTuner(Node):
         
         # 6. Metrics summary
         axes[2, 1].axis('off')
+        settling_str = f"{settling_time:.2f}s" if settling_time else "N/A"
         metrics_text = f"""PID TUNING RESULTS
         
 Parameters:
@@ -248,7 +249,7 @@ Performance Metrics:
   Max Error:     {max_error:.4f} m/s
   Speed Var:     {speed_variance:.6f}
   Overshoot:     {overshoot:.4f} m/s
-  Settling Time: {settling_time:.2f}s if settling_time else 'N/A'
+  Settling Time: {settling_str}
   
 Score: {self.calculate_score(mae, rmse, speed_variance, overshoot, settling_time):.2f}
 """
