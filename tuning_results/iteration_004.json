@@ -1,0 +1,13 @@
+{
+  "iteration": 4,
+  "kp": 0.3,
+  "ki": 0.05,
+  "kd": 0.05,
+  "mae": 0.7316483850018468,
+  "rmse": 0.7316659141037722,
+  "max_error": 0.787,
+  "speed_variance": 2.5650585498134144e-05,
+  "overshoot": 0.0,
+  "settling_time": null,
+  "score": 21.29275509084996
+}
