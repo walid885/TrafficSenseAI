@@ -13,7 +13,7 @@ class State(Enum):
 
 class PIDController:
     """PID Controller for velocity control with derivative filtering"""
-    def __init__(self, kp, ki, kd, output_min=0.0, output_max=1.0):
+    def __init__(self, kp, ki, kd, output_min=0.0, output_max=1.5):
         self.kp = kp
         self.ki = ki
         self.kd = kd
@@ -23,7 +23,7 @@ class PIDController:
         self.prev_error = 0.0
         self.integral = 0.0
         self.prev_time = None
-        self.filtered_derivative = 0.0  # For derivative filtering
+        self.filtered_derivative = 0.0
         
     def compute(self, setpoint, current_value):
         """Compute PID output with derivative filtering"""
@@ -39,16 +39,13 @@ class PIDController:
         
         error = setpoint - current_value
         
-        # Proportional term
         p_term = self.kp * error
         
-        # Integral term with anti-windup
         self.integral += error * dt
         max_integral = 1.0
         self.integral = max(-max_integral, min(max_integral, self.integral))
         i_term = self.ki * self.integral
         
-        # Derivative term with low-pass filter (alpha = 0.1 for heavy filtering)
         raw_derivative = (error - self.prev_error) / dt
         self.filtered_derivative = 0.1 * raw_derivative + 0.9 * self.filtered_derivative
         d_term = self.kd * self.filtered_derivative
@@ -73,10 +70,10 @@ class AutonomousController(Node):
     def __init__(self):
         super().__init__('autonomous_controller')
         
-        # Tuned parameters for smoother response
-        self.declare_parameter('kp', 0.8)  # Increased for faster response
-        self.declare_parameter('ki', 0.15) # Increased for steady-state
-        self.declare_parameter('kd', 0.02)
+        # Optimized PID parameters from tuning
+        self.declare_parameter('kp', 0.3)
+        self.declare_parameter('ki', 0.3)
+        self.declare_parameter('kd', 0.03)
         self.declare_parameter('control_rate', 50.0)
         
         kp = self.get_parameter('kp').value
@@ -87,13 +84,13 @@ class AutonomousController(Node):
         self.state = State.MOVING
         self.current_light = "UNKNOWN"
         self.current_speed = 0.0
-        self.target_speed = 1.0
+        self.target_speed = 1.3
         
-        self.pid = PIDController(kp=kp, ki=ki, kd=kd, output_min=0.0, output_max=1.0)
+        self.pid = PIDController(kp=kp, ki=ki, kd=kd, output_min=0.0, output_max=1.5)
         
         self.speed_targets = {
-            State.MOVING: 1.0,
-            State.SLOWING: 0.2,
+            State.MOVING: 1.3,
+            State.SLOWING: 0.3,
             State.STOPPED: 0.0
         }
         
@@ -128,7 +125,6 @@ class AutonomousController(Node):
         
         output, p_term, i_term, d_term = self.pid.compute(self.target_speed, self.current_speed)
         
-        # Increased smoothing factor from 0.3 to 0.6 for smoother dynamics
         alpha = 0.6
         self.current_speed = alpha * output + (1 - alpha) * self.current_speed
         
