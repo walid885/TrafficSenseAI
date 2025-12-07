@@ -486,15 +486,15 @@ Total Duration:          {times[-1]:.1f} seconds
 Total Frames Processed:  {self.frame_count}
 Average Frame Rate:      {self.frame_count/times[-1]:.1f} FPS
 """
-    ax8.text(0.5, 0.5, stats_text, fontsize=11, family='monospace',
-            verticalalignment='center', horizontalalignment='center',
-            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.9, pad=1))
-    
-    plt.tight_layout()
-    plt.savefig('analytics_8_summary_report.png', dpi=200, facecolor='white')
-    plt.close()
-    
-    self.get_logger().info('Analytics saved: 8 separate plots generated')
+        ax8.text(0.5, 0.5, stats_text, fontsize=11, family='monospace',
+                verticalalignment='center', horizontalalignment='center',
+                bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.9, pad=1))
+        
+        plt.tight_layout()
+        plt.savefig('analytics_8_summary_report.png', dpi=200, facecolor='white')
+        plt.close()
+        
+        self.get_logger().info('Analytics saved: 8 separate plots generated')
 def main():
     rclpy.init()
     node = TrafficLightVisualizer()
@@ -505,7 +505,7 @@ def main():
     finally:
         cv2.destroyAllWindows()
         node.destroy_node()
-    rclpy.shutdown()
-    if name == 'main':
-        main()
-
+    rclpy.shutdown() 
+    
+if __name__ == '__main__':
+    main()
