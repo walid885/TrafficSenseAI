@@ -34,7 +34,6 @@ class TrafficLightVisualizer(Node):
         self.last_state_change = None
         self.state_change_speed = None
         
-        # Plot history for real-time graph
         self.plot_window = 100
         self.plot_red = deque(maxlen=self.plot_window)
         self.plot_green = deque(maxlen=self.plot_window)
@@ -73,25 +72,21 @@ class TrafficLightVisualizer(Node):
         cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
         hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
         
-        # HSV ranges
         red1 = cv2.inRange(hsv, (0, 120, 70), (10, 255, 255))
         red2 = cv2.inRange(hsv, (170, 120, 70), (180, 255, 255))
         red_mask = red1 | red2
         green_mask = cv2.inRange(hsv, (45, 100, 70), (75, 255, 255))
         yellow_mask = cv2.inRange(hsv, (20, 120, 70), (30, 255, 255))
         
-        # Normalized percentages
         total_pixels = cv_image.shape[0] * cv_image.shape[1]
         red_ratio = (cv2.countNonZero(red_mask) / total_pixels) * 100
         green_ratio = (cv2.countNonZero(green_mask) / total_pixels) * 100
         yellow_ratio = (cv2.countNonZero(yellow_mask) / total_pixels) * 100
         
-        # Confidence
         ratios = [red_ratio, green_ratio, yellow_ratio]
         sorted_ratios = sorted(ratios, reverse=True)
         confidence = sorted_ratios[0] / (sorted_ratios[1] + 0.01)
         
-        # Target speed
         if self.current_state == "GREEN":
             self.target_speed = 0.5
         elif self.current_state == "YELLOW":
@@ -104,7 +99,6 @@ class TrafficLightVisualizer(Node):
         speed_error = abs(self.current_speed - self.target_speed)
         elapsed = time.time() - self.start_time
         
-        # Log all data
         self.red_history.append(red_ratio)
         self.green_history.append(green_ratio)
         self.yellow_history.append(yellow_ratio)
@@ -115,7 +109,6 @@ class TrafficLightVisualizer(Node):
         self.speed_error_history.append(speed_error)
         self.detection_confidence.append(confidence)
         
-        # Plot data (recent window)
         self.plot_red.append(red_ratio)
         self.plot_green.append(green_ratio)
         self.plot_yellow.append(yellow_ratio)
@@ -123,16 +116,13 @@ class TrafficLightVisualizer(Node):
         
         self.frame_count += 1
         
-        # === VISUALIZATION ===
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
         
-        # Camera feed with enhanced overlays
         cam_h, cam_w = 600, 800
         cam_x, cam_y = 50, 50
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
-        # Apply color masks
         red_overlay = cv2.resize(red_mask, (cam_w, cam_h))
         green_overlay = cv2.resize(green_mask, (cam_w, cam_h))
         yellow_overlay = cv2.resize(yellow_mask, (cam_w, cam_h))
@@ -149,26 +139,22 @@ class TrafficLightVisualizer(Node):
         cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, green_bgr, 0.4, 0)
         cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, yellow_bgr, 0.4, 0)
         
-        # Border around camera
         cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_with_overlay
         
-        # Title above camera
         cv2.putText(canvas, "CAMERA FEED + COLOR DETECTION", (cam_x, cam_y-15), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         
-        # === REAL-TIME PLOT ===
         plot_x, plot_y = 900, 50
         plot_w, plot_h = 950, 350
         
-        # Plot background
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
         
-        # Title
         cv2.putText(canvas, "COLOR DETECTION TIMELINE (Last 100 frames)", 
                     (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
+        max_val = 1.0
         if len(self.plot_red) > 1:
             plot_data = [
                 (list(self.plot_red), (0, 0, 255)),
@@ -189,11 +175,9 @@ class TrafficLightVisualizer(Node):
                     for i in range(len(points)-1):
                         cv2.line(canvas, points[i], points[i+1], color, 2)
         
-        # Axis labels
         cv2.putText(canvas, "0%", (plot_x-40, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
         cv2.putText(canvas, f"{max_val:.1f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
         
-        # Legend
         legend_y = plot_y + plot_h + 20
         cv2.rectangle(canvas, (plot_x, legend_y), (plot_x+20, legend_y+20), (0, 0, 255), -1)
         cv2.putText(canvas, "Red", (plot_x+30, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
@@ -202,7 +186,6 @@ class TrafficLightVisualizer(Node):
         cv2.rectangle(canvas, (plot_x+260, legend_y), (plot_x+280, legend_y+20), (0, 255, 0), -1)
         cv2.putText(canvas, "Green", (plot_x+290, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
         
-        # === STATE PANEL ===
         state_x = 50
         state_y = cam_y + cam_h + 80
         
@@ -218,7 +201,6 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, self.current_state, (state_x+70, state_y+90), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1.8, state_color, 4)
         
-        # === COLOR METRICS ===
         metrics_x = 470
         metrics_y = state_y
         
@@ -234,7 +216,6 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, f"G: {green_ratio:5.2f}%", (metrics_x+20, metrics_y+110), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         
-        # === SPEED PANEL ===
         speed_x = 900
         speed_y = 450
         
@@ -252,7 +233,6 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+160), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 100, 100), 2)
         
-        # Speed bar visualization
         bar_x = speed_x + 550
         bar_w = 350
         bar_h = 100
@@ -268,11 +248,9 @@ class TrafficLightVisualizer(Node):
         if current_bar > 0:
             cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+current_bar, bar_y+bar_h), speed_color, -1)
         
-        # Target line
         target_x = bar_x + target_bar
         cv2.line(canvas, (target_x, bar_y), (target_x, bar_y+bar_h), (255, 0, 0), 4)
         
-        # Bottom info bar
         info_y = display_h - 50
         cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
         cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.2f} | Press Q for Detailed Analytics", 
@@ -292,7 +270,6 @@ class TrafficLightVisualizer(Node):
         
         times = np.array(list(self.timestamps))
         
-        # Plot 1: Speed Control Performance
         fig1, ax1 = plt.subplots(figsize=(14, 6))
         ax1.plot(times, list(self.speed_history), 'b-', label='Actual Speed', linewidth=2.5)
         ax1.plot(times, list(self.target_speed_history), 'r--', label='Target Speed', linewidth=2.5)
@@ -310,7 +287,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_1_speed_control.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 2: Color Detection Timeline
         fig2, ax2 = plt.subplots(figsize=(14, 6))
         ax2.plot(times, list(self.red_history), 'r-', label='Red Light', alpha=0.8, linewidth=2.5)
         ax2.plot(times, list(self.green_history), 'g-', label='Green Light', alpha=0.8, linewidth=2.5)
@@ -328,7 +304,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_2_color_detection.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 3: Speed Tracking Error
         fig3, ax3 = plt.subplots(figsize=(14, 6))
         ax3.plot(times, list(self.speed_error_history), 'orange', linewidth=2)
         ax3.fill_between(times, 0, list(self.speed_error_history), alpha=0.3, color='orange')
@@ -347,7 +322,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_3_speed_error.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 4: Detection Confidence
         fig4, ax4 = plt.subplots(figsize=(14, 6))
         ax4.plot(times, list(self.detection_confidence), 'cyan', linewidth=2)
         ax4.axhline(y=2.0, color='red', linestyle='--', linewidth=2, label='Confidence Threshold')
@@ -364,7 +338,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_4_detection_confidence.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 5: Speed Variance
         fig5, ax5 = plt.subplots(figsize=(14, 6))
         window = 50
         if len(self.speed_history) > window:
@@ -384,7 +357,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_5_speed_variance.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 6: Speed Distribution by Traffic State
         fig6, ax6 = plt.subplots(figsize=(10, 6))
         states = ['RED', 'YELLOW', 'GREEN']
         speeds_by_state = {s: [] for s in states}
@@ -419,7 +391,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_6_speed_by_state.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Plot 7: Reaction Times
         fig7, ax7 = plt.subplots(figsize=(10, 6))
         if self.reaction_times:
             ax7.hist(self.reaction_times, bins=20, color='blue', alpha=0.7, edgecolor='black')
@@ -441,7 +412,6 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_7_reaction_times.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Summary statistics
         fig8, ax8 = plt.subplots(figsize=(10, 8))
         ax8.axis('off')
         
@@ -467,34 +437,28 @@ Red Light:
 Yellow Light:
   Mean Detection:        {np.mean(self.yellow_history):.2f}%
   Std Deviation:         {np.std(self.yellow_history):.2f}%
-Peak Detection:        {np.max(self.yellow_history):.2f}%
+  Peak Detection:        {np.max(self.yellow_history):.2f}%
+
 Green Light:
-Mean Detection:        {np.mean(self.green_history):.2f}%
-Std Deviation:         {np.std(self.green_history):.2f}%
-Peak Detection:        {np.max(self.green_history):.2f}%
+  Mean Detection:        {np.mean(self.green_history):.2f}%
+  Std Deviation:         {np.std(self.green_history):.2f}%
+  Peak Detection:        {np.max(self.green_history):.2f}%
+
 Average Confidence:      {np.mean(self.detection_confidence):.2f}
+
 ══════════════════════════════════════════════════════
 RESPONSE CHARACTERISTICS
 ══════════════════════════════════════════════════════
 Reaction Time Samples:   {len(self.reaction_times)} measurements
 Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-Reaction Time StdDev:    {np.std(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-══════════════════════════════════════════════════════
+Reaction Time StdDev: {np.std(self.reaction_times) if self.reaction_times else 0:.2f} seconds
 SESSION INFORMATION
 ══════════════════════════════════════════════════════
 Total Duration:          {times[-1]:.1f} seconds
 Total Frames Processed:  {self.frame_count}
 Average Frame Rate:      {self.frame_count/times[-1]:.1f} FPS
 """
-        ax8.text(0.5, 0.5, stats_text, fontsize=11, family='monospace',
-                verticalalignment='center', horizontalalignment='center',
-                bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.9, pad=1))
-        
-        plt.tight_layout()
-        plt.savefig('analytics_8_summary_report.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        self.get_logger().info('Analytics saved: 8 separate plots generated')
+
 def main():
     rclpy.init()
     node = TrafficLightVisualizer()
@@ -505,7 +469,6 @@ def main():
     finally:
         cv2.destroyAllWindows()
         node.destroy_node()
-    rclpy.shutdown() 
-    
+        rclpy.shutdown()
 if __name__ == '__main__':
     main()
