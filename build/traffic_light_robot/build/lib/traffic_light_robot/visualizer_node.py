@@ -505,7 +505,7 @@ def main():
     finally:
         cv2.destroyAllWindows()
         node.destroy_node()
-    rclpy.shutdown()
-    if name == 'main':
-        main()
-
+    rclpy.shutdown() 
+    
+if __name__ == '__main__':
+    main()

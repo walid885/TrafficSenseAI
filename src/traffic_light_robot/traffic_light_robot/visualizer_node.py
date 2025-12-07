@@ -169,6 +169,7 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, "COLOR DETECTION TIMELINE (Last 100 frames)", 
                     (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
+        max_val = 1.0
         if len(self.plot_red) > 1:
             plot_data = [
                 (list(self.plot_red), (0, 0, 255)),
@@ -465,47 +466,4 @@ Red Light:
   Peak Detection:        {np.max(self.red_history):.2f}%
 
 Yellow Light:
-  Mean Detection:        {np.mean(self.yellow_history):.2f}%
-  Std Deviation:         {np.std(self.yellow_history):.2f}%
-Peak Detection:        {np.max(self.yellow_history):.2f}%
-Green Light:
-Mean Detection:        {np.mean(self.green_history):.2f}%
-Std Deviation:         {np.std(self.green_history):.2f}%
-Peak Detection:        {np.max(self.green_history):.2f}%
-Average Confidence:      {np.mean(self.detection_confidence):.2f}
-══════════════════════════════════════════════════════
-RESPONSE CHARACTERISTICS
-══════════════════════════════════════════════════════
-Reaction Time Samples:   {len(self.reaction_times)} measurements
-Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-Reaction Time StdDev:    {np.std(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-══════════════════════════════════════════════════════
-SESSION INFORMATION
-══════════════════════════════════════════════════════
-Total Duration:          {times[-1]:.1f} seconds
-Total Frames Processed:  {self.frame_count}
-Average Frame Rate:      {self.frame_count/times[-1]:.1f} FPS
-"""
-        ax8.text(0.5, 0.5, stats_text, fontsize=11, family='monospace',
-                verticalalignment='center', horizontalalignment='center',
-                bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.9, pad=1))
-        
-        plt.tight_layout()
-        plt.savefig('analytics_8_summary_report.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        self.get_logger().info('Analytics saved: 8 separate plots generated')
-def main():
-    rclpy.init()
-    node = TrafficLightVisualizer()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        cv2.destroyAllWindows()
-        node.destroy_node()
-    rclpy.shutdown() 
-    
-if __name__ == '__main__':
-    main()
+  Mean Detection:        {np.mean(self.yellow_history):.
