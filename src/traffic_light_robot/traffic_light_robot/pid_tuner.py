@@ -80,6 +80,8 @@ class PIDTuner(Node):
         self.current_light = "UNKNOWN"
         self.current_speed = 0.0
         self.target_speed = 1.0
+        self.red_detected_time = None
+        self.stopped_confirmed = False
         
         self.pid = PIDController(kp=kp, ki=ki, kd=kd, output_min=0.0, output_max=1.0)
         
@@ -115,6 +117,7 @@ class PIDTuner(Node):
         if old_light != self.current_light and self.current_light != "UNKNOWN":
             if self.current_light == "RED":
                 self.state = State.STOPPED
+                self.red_detected_time = time.time()
             elif self.current_light == "YELLOW":
                 self.state = State.SLOWING
             elif self.current_light == "GREEN":
@@ -122,6 +125,14 @@ class PIDTuner(Node):
         
     def control_loop(self):
         elapsed = time.time() - self.start_time
+        
+        # Early exit if RED detected and robot stopped for 2 seconds
+        if self.red_detected_time and not self.stopped_confirmed:
+            if self.current_speed < 0.01 and (time.time() - self.red_detected_time) > 2.0:
+                self.get_logger().info('RED detected and stopped. Test complete.')
+                self.stopped_confirmed = True
+                self.finalize()
+                raise KeyboardInterrupt
         
         if elapsed > self.test_duration:
             self.finalize()
