@@ -1,6 +1,7 @@
 [console_scripts]
 controller_node = traffic_light_robot.controller_node:main
 detector_node = traffic_light_robot.detector_node:main
+pid_tuner = traffic_light_robot.pid_tuner:main
 rviz_visu = traffic_light_robot.rviz_visu:main
 visualizer_node = traffic_light_robot.visualizer_node:main
 

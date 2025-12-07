@@ -4,7 +4,7 @@ PROJECT_DIR="$HOME/Desktop/TrafficSenseAI"
 export QT_QPA_PLATFORM=xcb
 
 # Create results directory
-mkdir -p tuning_results
+mkdir -p "$PROJECT_DIR/tuning_results"
 
 # PID parameter ranges
 KP_VALUES=(0.3 0.5 0.7 0.9 1.1 1.3)
@@ -26,6 +26,8 @@ echo "Ki values: ${KI_VALUES[@]}"
 echo "Kd values: ${KD_VALUES[@]}"
 echo "=============================="
 
+trap cleanup INT TERM
+
 cleanup() {
     echo "Cleaning up processes..."
     pkill -f "ros2 launch robot_description"
@@ -35,15 +37,21 @@ cleanup() {
     sleep 3
 }
 
+# Build first
+echo "Building project..."
+cd "$PROJECT_DIR"
+colcon build --packages-select traffic_light_robot
+source install/setup.bash
+
 start_simulation() {
     echo "Starting Gazebo simulation..."
     cd "$PROJECT_DIR"
     source install/setup.bash
     
-    ros2 launch robot_description autonomous.launch.py > /dev/null 2>&1 &
+    gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 launch robot_description autonomous.launch.py; exec bash" 2>/dev/null &
     LAUNCH_PID=$!
     
-    sleep 8  # Wait for Gazebo to fully load
+    sleep 10  # Wait for Gazebo to fully load
     echo "Simulation ready"
 }
 
@@ -59,6 +67,10 @@ run_tuning_test() {
     source install/setup.bash
     
     timeout 35s ros2 run traffic_light_robot pid_tuner $kp $ki $kd $iter
+    
+    if [ $? -eq 124 ]; then
+        echo "  Test timed out (normal)"
+    fi
     
     sleep 2
 }
@@ -83,15 +95,23 @@ echo "=== Tuning Complete ==="
 echo "Analyzing results..."
 
 # Generate summary report
+cd "$PROJECT_DIR"
 python3 << 'EOF'
 import json
 import glob
 import numpy as np
+import os
+
+os.chdir('tuning_results')
 
 results = []
-for file in glob.glob('tuning_results/iteration_*.json'):
+for file in glob.glob('iteration_*.json'):
     with open(file) as f:
         results.append(json.load(f))
+
+if not results:
+    print("No results found!")
+    exit(1)
 
 results.sort(key=lambda x: x['score'])
 
@@ -99,7 +119,7 @@ print("\n=== TOP 10 PID CONFIGURATIONS ===\n")
 print(f"{'Rank':<5} {'Kp':<7} {'Ki':<7} {'Kd':<7} {'Score':<10} {'MAE':<10} {'RMSE':<10} {'Variance':<12}")
 print("-" * 80)
 
-for i, r in enumerate(results[:10], 1):
+for i, r in enumerate(results[:min(10, len(results))], 1):
     print(f"{i:<5} {r['kp']:<7.3f} {r['ki']:<7.3f} {r['kd']:<7.3f} "
           f"{r['score']:<10.2f} {r['mae']:<10.4f} {r['rmse']:<10.4f} {r['speed_variance']:<12.6f}")
 
@@ -117,7 +137,7 @@ print(f"  Overshoot:     {best['overshoot']:.4f} m/s")
 print(f"  Settling Time: {best['settling_time']:.2f}s" if best['settling_time'] else "  Settling Time: N/A")
 
 # Save best config
-with open('tuning_results/BEST_CONFIG.json', 'w') as f:
+with open('BEST_CONFIG.json', 'w') as f:
     json.dump(best, f, indent=2)
 
 print("\nResults saved in tuning_results/")
@@ -126,4 +146,4 @@ EOF
 
 echo ""
 echo "All plots saved in tuning_results/"
-echo "Review plots and use best configuration in autonomous_controller.py"
+echo "Review plots and use best configuration in controller_node.py"
