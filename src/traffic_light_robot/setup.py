@@ -23,7 +23,7 @@ entry_points={
         'detector_node = traffic_light_robot.detector_node:main',
         'controller_node = traffic_light_robot.controller_node:main',
         'visualizer_node = traffic_light_robot.visualizer_node:main',
-        #'rviz_visu = traffic_light_robot.rviz_visu:main',
+        'rviz_visu = traffic_light_robot.rviz_visu:main',
     ],
 },
 )
