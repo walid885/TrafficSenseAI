@@ -198,3 +198,6 @@ ros2 run traffic_light_robot visualizer_node
 cd ~/Desktop/TrafficSenseAI
 colcon build --packages-select traffic_light_robot
 ./auto_tune.sh
+
+
+#implmenting a custom build gazebo data set collector, trainer , and implmentation
