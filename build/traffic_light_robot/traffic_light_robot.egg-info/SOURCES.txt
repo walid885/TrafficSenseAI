@@ -14,6 +14,7 @@ test/test_flake8.py
 test/test_pep257.py
 traffic_light_robot/__init__.py
 traffic_light_robot/controller_node.py
+traffic_light_robot/dataset_collector.py
 traffic_light_robot/detector_node.py
 traffic_light_robot/pid_tuner.py
 traffic_light_robot/rviz_visu.py

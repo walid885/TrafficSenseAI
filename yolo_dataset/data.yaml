@@ -1,0 +1,6 @@
+path: /home/raspb/Desktop/TrafficSenseAI/yolo_dataset
+train: images/train
+val: images/val
+
+nc: 3
+names: ['red', 'yellow', 'green']
