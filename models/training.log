@@ -1,0 +1,17 @@
+ GPU isn't used 
+ OpenCV version: 4.5.4
+Darknet error location: ./src/detector.c, train_detector(), line #37
+Error!: No such file or directory
+backtrace (8 entries)
+1/8: ./darknet(log_backtrace+0x38) [0x614692814db8]
+2/8: ./darknet(error+0x3d) [0x614692814e9d]
+3/8: ./darknet(train_detector+0x347b) [0x61469289d0eb]
+4/8: ./darknet(run_detector+0xa32) [0x61469289e4f2]
+5/8: ./darknet(main+0x2e3) [0x6146927d4e73]
+6/8: /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7eb45fa29d90]
+7/8: /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7eb45fa29e40]
+8/8: ./darknet(_start+0x25) [0x6146927d52d5]
+
+ Error: There is no /home/raspb/Desktop/TrafficSenseAI/yolo_dataset/val.txt file for mAP calculation!
+ Don't use -map flag.
+ Or set valid=/home/raspb/Desktop/TrafficSenseAI/yolo_dataset/train.txt in your data/traffic_light.data file. 
