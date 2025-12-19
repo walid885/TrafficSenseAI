@@ -180,6 +180,7 @@ bashchmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleo
 the git issue , testing if it is solved 
 
 Rebuild:
+
 bash 
 cd ~/Desktop/TrafficSenseAI
 colcon build --packages-select traffic_light_robot
@@ -201,3 +202,13 @@ colcon build --packages-select traffic_light_robot
 
 
 #implmenting a custom build gazebo data set collector, trainer , and implmentation
+
+
+New work planification : 
+1/ implmentation of the Yolo small version of this system 
+2/ testing the yolo of this system 
+3/ implmenting the hybrid version YOLO +HSV 
+4/ adding those walking person for the world implemntation 
+5/ refactoring the world into a slighlty better version 
+6/ setting up the rapport of the system + documenting the different iterations of this sysetm 
+
