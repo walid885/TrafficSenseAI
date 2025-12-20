@@ -21,8 +21,8 @@ class YOLOTrafficLightVisualizer(Node):
         
         # Load YOLOv4-tiny
         self.net = cv2.dnn.readNetFromDarknet(
-            '/path/to/yolov4-tiny.cfg',
-            '/path/to/yolov4-tiny.weights'
+    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.cfg',
+    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.weights'
         )
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
