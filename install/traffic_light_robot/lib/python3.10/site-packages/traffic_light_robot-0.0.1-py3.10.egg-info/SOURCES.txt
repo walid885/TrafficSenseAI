@@ -19,5 +19,6 @@ traffic_light_robot/dataset_collector.py
 traffic_light_robot/detector_node.py
 traffic_light_robot/pid_tuner.py
 traffic_light_robot/rviz_visu.py
+traffic_light_robot/vis_node_Hyb.py
 traffic_light_robot/visualizer_node.py
 traffic_light_robot/visualizer_node_HSVuINIT.py
