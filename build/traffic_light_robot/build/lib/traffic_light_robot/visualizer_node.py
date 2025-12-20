@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
@@ -83,9 +84,14 @@ class TrafficLightVisualizer(Node):
         green_ratio = (cv2.countNonZero(green_mask) / total_pixels) * 100
         yellow_ratio = (cv2.countNonZero(yellow_mask) / total_pixels) * 100
         
+        # Fixed confidence calculation
         ratios = [red_ratio, green_ratio, yellow_ratio]
         max_ratio = max(ratios)
-        sorted_ratios = sorted(ratios, reverse=True)
+        avg_ratio = sum(ratios) / 3
+        
+        # Signal-to-noise confidence (0-100 scale)
+        confidence = (max_ratio / (avg_ratio + 0.1)) * 10
+        confidence = min(confidence, 100.0)
         
         if self.current_state == "GREEN":
             self.target_speed = 0.5
@@ -253,7 +259,7 @@ class TrafficLightVisualizer(Node):
         
         info_y = display_h - 50
         cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
-        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.2f} | Press Q for Detailed Analytics", 
+        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.1f}% | Press Q for Analytics", 
                     (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
         cv2.imshow("Traffic Light Detection", canvas)
@@ -324,14 +330,15 @@ class TrafficLightVisualizer(Node):
         
         fig4, ax4 = plt.subplots(figsize=(14, 6))
         ax4.plot(times, list(self.detection_confidence), 'cyan', linewidth=2)
-        ax4.axhline(y=2.0, color='red', linestyle='--', linewidth=2, label='Confidence Threshold')
+        ax4.axhline(y=20.0, color='red', linestyle='--', linewidth=2, label='Good Confidence (20%)')
+        ax4.axhline(y=50.0, color='green', linestyle='--', linewidth=2, label='Excellent (50%)')
         ax4.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax4.set_ylabel('Confidence Ratio', fontsize=12, fontweight='bold')
-        ax4.set_title('Traffic Light Detection Confidence\nRatio of strongest signal to second strongest', 
+        ax4.set_ylabel('Confidence (%)', fontsize=12, fontweight='bold')
+        ax4.set_title('Traffic Light Detection Confidence\nSignal-to-noise ratio (0-100% scale)', 
                      fontsize=14, fontweight='bold', pad=20)
         ax4.legend(fontsize=11)
         ax4.grid(True, alpha=0.3)
-        ax4.text(0.02, 0.98, 'Values >2.0 indicate clear, unambiguous detection', 
+        ax4.text(0.02, 0.98, 'Higher = clearer detection. >20% is good, >50% is excellent', 
                 transform=ax4.transAxes, fontsize=10, verticalalignment='top',
                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
         plt.tight_layout()
@@ -437,7 +444,6 @@ Red Light:
 Yellow Light:
   Mean Detection:        {np.mean(self.yellow_history):.2f}%
   Std Deviation:         {np.std(self.yellow_history):.2f}%
-  Peak Detection:        {np.max(self.yellow_history):.2f}%
 
 Green Light:
   Mean Detection:        {np.mean(self.green_history):.2f}%
