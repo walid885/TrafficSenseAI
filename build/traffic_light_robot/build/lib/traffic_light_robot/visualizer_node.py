@@ -35,12 +35,12 @@ class HybridTrafficLightVisualizer(Node):
         self.TL_YELLOW = 1
         self.TL_GREEN = 2
         
-        self.conf_threshold = 0.5
-        self.nms_threshold = 0.4
+        self.conf_threshold = 0.3
+        self.nms_threshold = 0.3
         
         # Hybrid weights
-        self.yolo_weight = 0.6
-        self.hsv_weight = 0.4
+        self.yolo_weight = 0.7
+        self.hsv_weight = 0.3
         
         # History buffers
         self.red_history = deque(maxlen=2000)
@@ -66,7 +66,7 @@ class HybridTrafficLightVisualizer(Node):
         self.last_state_change = None
         self.state_change_speed = None
         
-        self.plot_window = 100
+        self.plot_window = 150
         self.plot_red = deque(maxlen=self.plot_window)
         self.plot_green = deque(maxlen=self.plot_window)
         self.plot_yellow = deque(maxlen=self.plot_window)
@@ -75,6 +75,8 @@ class HybridTrafficLightVisualizer(Node):
         self.image_sub = self.create_subscription(Image, '/front_camera/image_raw', self.image_callback, 10)
         self.state_sub = self.create_subscription(String, '/traffic_light_state', self.state_callback, 10)
         self.cmd_sub = self.create_subscription(Twist, '/cmd_vel', self.cmd_callback, 10)
+        
+        self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         
         cv2.namedWindow("Hybrid Traffic Light Detection", cv2.WINDOW_NORMAL)
         cv2.setWindowProperty("Hybrid Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
@@ -149,26 +151,29 @@ class HybridTrafficLightVisualizer(Node):
         
         # Create mask for ROI based on YOLO detections
         roi_mask = np.zeros(image.shape[:2], dtype=np.uint8)
+        has_detections = False
+        
         if yolo_detections:
             for color in ['red', 'yellow', 'green']:
                 for (x, y, w, h), _ in yolo_detections[color]:
-                    # Expand ROI by 20%
-                    x_exp = max(0, x - int(w * 0.2))
-                    y_exp = max(0, y - int(h * 0.2))
-                    w_exp = min(image.shape[1] - x_exp, int(w * 1.4))
-                    h_exp = min(image.shape[0] - y_exp, int(h * 1.4))
+                    has_detections = True
+                    # Expand ROI by 30%
+                    x_exp = max(0, x - int(w * 0.3))
+                    y_exp = max(0, y - int(h * 0.3))
+                    w_exp = min(image.shape[1] - x_exp, int(w * 1.6))
+                    h_exp = min(image.shape[0] - y_exp, int(h * 1.6))
                     roi_mask[y_exp:y_exp+h_exp, x_exp:x_exp+w_exp] = 255
         
-        # If no YOLO detections, use full image
-        if cv2.countNonZero(roi_mask) == 0:
-            roi_mask[:] = 255
+        # If no YOLO detections, use top half of image
+        if not has_detections:
+            roi_mask[:image.shape[0]//2, :] = 255
         
-        # HSV color detection
-        red1 = cv2.inRange(hsv, (0, 120, 70), (10, 255, 255))
-        red2 = cv2.inRange(hsv, (170, 120, 70), (180, 255, 255))
+        # HSV color detection with wider ranges
+        red1 = cv2.inRange(hsv, (0, 100, 50), (10, 255, 255))
+        red2 = cv2.inRange(hsv, (170, 100, 50), (180, 255, 255))
         red_mask = (red1 | red2) & roi_mask
-        green_mask = cv2.inRange(hsv, (45, 100, 70), (75, 255, 255)) & roi_mask
-        yellow_mask = cv2.inRange(hsv, (20, 120, 70), (30, 255, 255)) & roi_mask
+        green_mask = cv2.inRange(hsv, (40, 80, 50), (80, 255, 255)) & roi_mask
+        yellow_mask = cv2.inRange(hsv, (15, 100, 50), (35, 255, 255)) & roi_mask
         
         total_roi_pixels = cv2.countNonZero(roi_mask)
         if total_roi_pixels > 0:
@@ -195,10 +200,10 @@ class HybridTrafficLightVisualizer(Node):
         hybrid_yellow = (self.yolo_weight * yolo_yellow_norm) + (self.hsv_weight * hsv_yellow)
         hybrid_green = (self.yolo_weight * yolo_green_norm) + (self.hsv_weight * hsv_green)
         
-        # Determine state
+        # Determine state with lower threshold
         max_score = max(hybrid_red, hybrid_yellow, hybrid_green)
         
-        if max_score < 5.0:  # Threshold for detection
+        if max_score < 2.0:  # Lower threshold
             return "UNKNOWN", (hybrid_red, hybrid_yellow, hybrid_green), 0.0
         
         if hybrid_red == max_score:
@@ -213,6 +218,11 @@ class HybridTrafficLightVisualizer(Node):
         confidence = sorted_scores[0] / (sorted_scores[1] + 0.01)
         
         return state, (hybrid_red, hybrid_yellow, hybrid_green), confidence
+    
+    def publish_speed(self, speed):
+        cmd = Twist()
+        cmd.linear.x = speed
+        self.cmd_pub.publish(cmd)
     
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
@@ -232,15 +242,30 @@ class HybridTrafficLightVisualizer(Node):
                 self.state_change_speed = self.current_speed
             self.current_state = detected_state
         
-        # Set target speed
+        # Set target speed with more variation
         if self.current_state == "GREEN":
-            self.target_speed = 0.5
+            self.target_speed = 0.6
         elif self.current_state == "YELLOW":
-            self.target_speed = 0.2
+            self.target_speed = 0.3
         elif self.current_state == "RED":
             self.target_speed = 0.0
         else:
-            self.target_speed = 0.5
+            self.target_speed = 0.4
+        
+        # Smooth speed control with acceleration
+        speed_diff = self.target_speed - self.current_speed
+        accel_rate = 0.05  # Acceleration per frame
+        
+        if abs(speed_diff) > accel_rate:
+            if speed_diff > 0:
+                self.current_speed += accel_rate
+            else:
+                self.current_speed -= accel_rate
+        else:
+            self.current_speed = self.target_speed
+        
+        self.current_speed = max(0.0, min(0.6, self.current_speed))
+        self.publish_speed(self.current_speed)
         
         speed_error = abs(self.current_speed - self.target_speed)
         elapsed = time.time() - self.start_time
@@ -290,9 +315,9 @@ class HybridTrafficLightVisualizer(Node):
                 y1 = int(y * scale_y)
                 x2 = int((x + w) * scale_x)
                 y2 = int((y + h) * scale_y)
-                cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 2)
+                cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 3)
                 cv2.putText(cam_resized, f"Y:{conf:.2f}", (x1, y1-10),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.4, box_color, 1)
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, box_color, 2)
         
         # Add HSV overlay
         red_overlay = cv2.resize(hsv_masks[0], (cam_w, cam_h))
@@ -307,9 +332,9 @@ class HybridTrafficLightVisualizer(Node):
         yellow_bgr[:,:,1] = yellow_overlay
         yellow_bgr[:,:,2] = yellow_overlay
         
-        cam_with_overlay = cv2.addWeighted(cam_resized, 0.7, red_bgr, 0.3, 0)
-        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, green_bgr, 0.3, 0)
-        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, yellow_bgr, 0.3, 0)
+        cam_with_overlay = cv2.addWeighted(cam_resized, 0.6, red_bgr, 0.4, 0)
+        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, green_bgr, 0.4, 0)
+        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, yellow_bgr, 0.4, 0)
         
         cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_with_overlay
@@ -322,7 +347,7 @@ class HybridTrafficLightVisualizer(Node):
         
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "HYBRID DETECTION TIMELINE (Last 100 frames)", 
+        cv2.putText(canvas, f"HYBRID DETECTION TIMELINE (Last {self.plot_window} frames)", 
                     (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
         max_val = 1.0
@@ -344,10 +369,10 @@ class HybridTrafficLightVisualizer(Node):
                 
                 if len(points) > 1:
                     for i in range(len(points)-1):
-                        cv2.line(canvas, points[i], points[i+1], color, 2)
+                        cv2.line(canvas, points[i], points[i+1], color, 3)
         
         cv2.putText(canvas, "0%", (plot_x-40, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
-        cv2.putText(canvas, f"{max_val:.1f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        cv2.putText(canvas, f"{max_val:.0f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
         
         legend_y = plot_y + plot_h + 20
         cv2.rectangle(canvas, (plot_x, legend_y), (plot_x+20, legend_y+20), (0, 0, 255), -1)
@@ -446,7 +471,7 @@ class HybridTrafficLightVisualizer(Node):
         info_y = display_h - 50
         cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
         yolo_count = len(yolo_detections['red']) + len(yolo_detections['yellow']) + len(yolo_detections['green'])
-        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | YOLO Detections: {yolo_count} | Confidence: {confidence:.2f} | Press Q for Analytics", 
+        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | YOLO: {yolo_count} | Conf: {confidence:.2f} | Threshold: 2.0 | Press Q for Analytics", 
                     (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
         cv2.imshow("Hybrid Traffic Light Detection", canvas)
@@ -627,7 +652,7 @@ class HybridTrafficLightVisualizer(Node):
         corr_green = np.corrcoef(yolo_green_arr, hsv_green_arr)[0,1] if len(yolo_green_arr) > 1 else 0
         
         stats_text = f"""HYBRID TRAFFIC LIGHT DETECTION - COMPREHENSIVE REPORT
-Fusion: YOLO (60%) + HSV (40%)
+Fusion: YOLO (70%) + HSV (30%)
 
 ══════════════════════════════════════════════════════
 SPEED CONTROL METRICS
@@ -686,8 +711,10 @@ FUSION PARAMETERS
 ══════════════════════════════════════════════════════
 YOLO Weight:             {self.yolo_weight}
 HSV Weight:              {self.hsv_weight}
-Detection Threshold:     5.0%
+Detection Threshold:     2.0%
 Confidence Threshold:    2.0
+YOLO Conf Threshold:     {self.conf_threshold}
+NMS Threshold:           {self.nms_threshold}
 """
         ax8.text(0.05, 0.95, stats_text, transform=ax8.transAxes, 
                 fontsize=9, verticalalignment='top', family='monospace',
