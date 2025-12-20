@@ -12,6 +12,7 @@ resource/traffic_light_robot
 test/test_copyright.py
 test/test_flake8.py
 test/test_pep257.py
+traffic_light_robot/Viusl_node_yolo_only.py
 traffic_light_robot/__init__.py
 traffic_light_robot/controller_node.py
 traffic_light_robot/dataset_collector.py

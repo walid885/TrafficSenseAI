@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 from collections import deque
 import time
 
-class YOLOTrafficLightVisualizer(Node):
+class HybridTrafficLightVisualizer(Node):
     def __init__(self):
-        super().__init__('yolo_traffic_light_visualizer')
+        super().__init__('hybrid_traffic_light_visualizer')
         self.bridge = CvBridge()
         self.current_state = "UNKNOWN"
         self.current_speed = 0.0
@@ -21,8 +21,8 @@ class YOLOTrafficLightVisualizer(Node):
         
         # Load YOLOv4-tiny
         self.net = cv2.dnn.readNetFromDarknet(
-    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.cfg',
-    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.weights'
+            '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.cfg',
+            '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.weights'
         )
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
@@ -30,7 +30,7 @@ class YOLOTrafficLightVisualizer(Node):
         self.layer_names = self.net.getLayerNames()
         self.output_layers = [self.layer_names[i - 1] for i in self.net.getUnconnectedOutLayers()]
         
-        # Traffic light class IDs (adjust based on your trained model)
+        # YOLO class IDs
         self.TL_RED = 0
         self.TL_YELLOW = 1
         self.TL_GREEN = 2
@@ -38,10 +38,21 @@ class YOLOTrafficLightVisualizer(Node):
         self.conf_threshold = 0.5
         self.nms_threshold = 0.4
         
+        # Hybrid weights
+        self.yolo_weight = 0.6
+        self.hsv_weight = 0.4
+        
         # History buffers
         self.red_history = deque(maxlen=2000)
         self.green_history = deque(maxlen=2000)
         self.yellow_history = deque(maxlen=2000)
+        self.yolo_red_history = deque(maxlen=2000)
+        self.yolo_green_history = deque(maxlen=2000)
+        self.yolo_yellow_history = deque(maxlen=2000)
+        self.hsv_red_history = deque(maxlen=2000)
+        self.hsv_green_history = deque(maxlen=2000)
+        self.hsv_yellow_history = deque(maxlen=2000)
+        self.hybrid_confidence = deque(maxlen=2000)
         self.speed_history = deque(maxlen=2000)
         self.target_speed_history = deque(maxlen=2000)
         self.timestamps = deque(maxlen=2000)
@@ -65,10 +76,10 @@ class YOLOTrafficLightVisualizer(Node):
         self.state_sub = self.create_subscription(String, '/traffic_light_state', self.state_callback, 10)
         self.cmd_sub = self.create_subscription(Twist, '/cmd_vel', self.cmd_callback, 10)
         
-        cv2.namedWindow("YOLO Traffic Light Detection", cv2.WINDOW_NORMAL)
-        cv2.setWindowProperty("YOLO Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.namedWindow("Hybrid Traffic Light Detection", cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty("Hybrid Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         
-        self.get_logger().info('YOLO Visualizer - Press Q for analytics')
+        self.get_logger().info('Hybrid YOLO+HSV Visualizer - Press Q for analytics')
         
     def state_callback(self, msg):
         if self.current_state != msg.data and self.current_state != "UNKNOWN":
@@ -86,10 +97,8 @@ class YOLOTrafficLightVisualizer(Node):
                     self.reaction_times.append(reaction_time)
                 self.last_state_change = None
     
-    def detect_traffic_lights(self, image):
+    def detect_yolo(self, image):
         height, width = image.shape[:2]
-        
-        # YOLO preprocessing
         blob = cv2.dnn.blobFromImage(image, 1/255.0, (416, 416), swapRB=True, crop=False)
         self.net.setInput(blob)
         outputs = self.net.forward(self.output_layers)
@@ -116,7 +125,6 @@ class YOLOTrafficLightVisualizer(Node):
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
         
-        # NMS
         indices = cv2.dnn.NMSBoxes(boxes, confidences, self.conf_threshold, self.nms_threshold)
         
         detections = {'red': [], 'yellow': [], 'green': []}
@@ -130,31 +138,98 @@ class YOLOTrafficLightVisualizer(Node):
                 elif class_ids[i] == self.TL_GREEN:
                     detections['green'].append((boxes[i], confidences[i]))
         
-        return detections
-    
-    def image_callback(self, msg):
-        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        detections = self.detect_traffic_lights(cv_image)
-        
-        # Calculate confidence scores
         red_conf = max([c for _, c in detections['red']], default=0.0)
         yellow_conf = max([c for _, c in detections['yellow']], default=0.0)
         green_conf = max([c for _, c in detections['green']], default=0.0)
         
-        # Determine state
-        max_conf = max(red_conf, yellow_conf, green_conf)
-        if max_conf > 0:
-            if red_conf == max_conf:
-                detected_state = "RED"
-            elif yellow_conf == max_conf:
-                detected_state = "YELLOW"
-            else:
-                detected_state = "GREEN"
+        return detections, (red_conf, yellow_conf, green_conf)
+    
+    def detect_hsv(self, image, yolo_detections):
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        
+        # Create mask for ROI based on YOLO detections
+        roi_mask = np.zeros(image.shape[:2], dtype=np.uint8)
+        if yolo_detections:
+            for color in ['red', 'yellow', 'green']:
+                for (x, y, w, h), _ in yolo_detections[color]:
+                    # Expand ROI by 20%
+                    x_exp = max(0, x - int(w * 0.2))
+                    y_exp = max(0, y - int(h * 0.2))
+                    w_exp = min(image.shape[1] - x_exp, int(w * 1.4))
+                    h_exp = min(image.shape[0] - y_exp, int(h * 1.4))
+                    roi_mask[y_exp:y_exp+h_exp, x_exp:x_exp+w_exp] = 255
+        
+        # If no YOLO detections, use full image
+        if cv2.countNonZero(roi_mask) == 0:
+            roi_mask[:] = 255
+        
+        # HSV color detection
+        red1 = cv2.inRange(hsv, (0, 120, 70), (10, 255, 255))
+        red2 = cv2.inRange(hsv, (170, 120, 70), (180, 255, 255))
+        red_mask = (red1 | red2) & roi_mask
+        green_mask = cv2.inRange(hsv, (45, 100, 70), (75, 255, 255)) & roi_mask
+        yellow_mask = cv2.inRange(hsv, (20, 120, 70), (30, 255, 255)) & roi_mask
+        
+        total_roi_pixels = cv2.countNonZero(roi_mask)
+        if total_roi_pixels > 0:
+            red_ratio = (cv2.countNonZero(red_mask) / total_roi_pixels) * 100
+            green_ratio = (cv2.countNonZero(green_mask) / total_roi_pixels) * 100
+            yellow_ratio = (cv2.countNonZero(yellow_mask) / total_roi_pixels) * 100
         else:
-            detected_state = self.current_state
+            red_ratio = green_ratio = yellow_ratio = 0.0
+        
+        return (red_mask, green_mask, yellow_mask), (red_ratio, green_ratio, yellow_ratio)
+    
+    def hybrid_fusion(self, yolo_scores, hsv_scores):
+        # Normalize YOLO scores (0-1) to percentage scale
+        yolo_red, yolo_yellow, yolo_green = yolo_scores
+        yolo_red_norm = yolo_red * 100
+        yolo_yellow_norm = yolo_yellow * 100
+        yolo_green_norm = yolo_green * 100
+        
+        # HSV scores already in percentage
+        hsv_red, hsv_yellow, hsv_green = hsv_scores
+        
+        # Weighted fusion
+        hybrid_red = (self.yolo_weight * yolo_red_norm) + (self.hsv_weight * hsv_red)
+        hybrid_yellow = (self.yolo_weight * yolo_yellow_norm) + (self.hsv_weight * hsv_yellow)
+        hybrid_green = (self.yolo_weight * yolo_green_norm) + (self.hsv_weight * hsv_green)
+        
+        # Determine state
+        max_score = max(hybrid_red, hybrid_yellow, hybrid_green)
+        
+        if max_score < 5.0:  # Threshold for detection
+            return "UNKNOWN", (hybrid_red, hybrid_yellow, hybrid_green), 0.0
+        
+        if hybrid_red == max_score:
+            state = "RED"
+        elif hybrid_yellow == max_score:
+            state = "YELLOW"
+        else:
+            state = "GREEN"
+        
+        # Calculate confidence
+        sorted_scores = sorted([hybrid_red, hybrid_yellow, hybrid_green], reverse=True)
+        confidence = sorted_scores[0] / (sorted_scores[1] + 0.01)
+        
+        return state, (hybrid_red, hybrid_yellow, hybrid_green), confidence
+    
+    def image_callback(self, msg):
+        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+        
+        # Run both detectors
+        yolo_detections, yolo_scores = self.detect_yolo(cv_image)
+        hsv_masks, hsv_scores = self.detect_hsv(cv_image, yolo_detections)
+        
+        # Hybrid fusion
+        detected_state, hybrid_scores, confidence = self.hybrid_fusion(yolo_scores, hsv_scores)
+        hybrid_red, hybrid_yellow, hybrid_green = hybrid_scores
         
         # Update state
-        if detected_state != self.current_state:
+        if detected_state != "UNKNOWN":
+            if self.current_state != detected_state and self.current_state != "UNKNOWN":
+                self.last_state_change = time.time()
+                self.state_change_speed = self.current_speed
             self.current_state = detected_state
         
         # Set target speed
@@ -167,17 +242,20 @@ class YOLOTrafficLightVisualizer(Node):
         else:
             self.target_speed = 0.5
         
-        # Calculate confidence ratio
-        confs = sorted([red_conf, yellow_conf, green_conf], reverse=True)
-        confidence = confs[0] / (confs[1] + 0.01) if len(confs) > 1 else 1.0
-        
         speed_error = abs(self.current_speed - self.target_speed)
         elapsed = time.time() - self.start_time
         
-        # Store history (convert confidence to percentage scale for compatibility)
-        self.red_history.append(red_conf * 100)
-        self.green_history.append(green_conf * 100)
-        self.yellow_history.append(yellow_conf * 100)
+        # Store history
+        self.red_history.append(hybrid_red)
+        self.green_history.append(hybrid_green)
+        self.yellow_history.append(hybrid_yellow)
+        self.yolo_red_history.append(yolo_scores[0] * 100)
+        self.yolo_yellow_history.append(yolo_scores[1] * 100)
+        self.yolo_green_history.append(yolo_scores[2] * 100)
+        self.hsv_red_history.append(hsv_scores[0])
+        self.hsv_yellow_history.append(hsv_scores[1])
+        self.hsv_green_history.append(hsv_scores[2])
+        self.hybrid_confidence.append(confidence)
         self.speed_history.append(self.current_speed)
         self.target_speed_history.append(self.target_speed)
         self.timestamps.append(elapsed)
@@ -185,26 +263,27 @@ class YOLOTrafficLightVisualizer(Node):
         self.speed_error_history.append(speed_error)
         self.detection_confidence.append(confidence)
         
-        self.plot_red.append(red_conf * 100)
-        self.plot_green.append(green_conf * 100)
-        self.plot_yellow.append(yellow_conf * 100)
+        self.plot_red.append(hybrid_red)
+        self.plot_green.append(hybrid_green)
+        self.plot_yellow.append(hybrid_yellow)
         self.plot_times.append(elapsed)
         
         self.frame_count += 1
         
-        # Visualization
+        # === VISUALIZATION ===
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
         
+        # Camera feed with YOLO boxes
         cam_h, cam_w = 600, 800
         cam_x, cam_y = 50, 50
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
-        # Draw detections on resized frame
+        # Draw YOLO detections
         scale_x = cam_w / cv_image.shape[1]
         scale_y = cam_h / cv_image.shape[0]
         
-        for color, dets in detections.items():
+        for color, dets in yolo_detections.items():
             box_color = (0, 0, 255) if color == 'red' else (0, 255, 255) if color == 'yellow' else (0, 255, 0)
             for (x, y, w, h), conf in dets:
                 x1 = int(x * scale_x)
@@ -212,21 +291,38 @@ class YOLOTrafficLightVisualizer(Node):
                 x2 = int((x + w) * scale_x)
                 y2 = int((y + h) * scale_y)
                 cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 2)
-                cv2.putText(cam_resized, f"{color.upper()} {conf:.2f}", (x1, y1-10),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, box_color, 2)
+                cv2.putText(cam_resized, f"Y:{conf:.2f}", (x1, y1-10),
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.4, box_color, 1)
+        
+        # Add HSV overlay
+        red_overlay = cv2.resize(hsv_masks[0], (cam_w, cam_h))
+        green_overlay = cv2.resize(hsv_masks[1], (cam_w, cam_h))
+        yellow_overlay = cv2.resize(hsv_masks[2], (cam_w, cam_h))
+        
+        red_bgr = np.zeros((cam_h, cam_w, 3), dtype=np.uint8)
+        red_bgr[:,:,2] = red_overlay
+        green_bgr = np.zeros((cam_h, cam_w, 3), dtype=np.uint8)
+        green_bgr[:,:,1] = green_overlay
+        yellow_bgr = np.zeros((cam_h, cam_w, 3), dtype=np.uint8)
+        yellow_bgr[:,:,1] = yellow_overlay
+        yellow_bgr[:,:,2] = yellow_overlay
+        
+        cam_with_overlay = cv2.addWeighted(cam_resized, 0.7, red_bgr, 0.3, 0)
+        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, green_bgr, 0.3, 0)
+        cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, yellow_bgr, 0.3, 0)
         
         cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
-        canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_resized
-        cv2.putText(canvas, "YOLO TRAFFIC LIGHT DETECTION", (cam_x, cam_y-15), 
+        canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_with_overlay
+        cv2.putText(canvas, "HYBRID: YOLO (BOXES) + HSV (OVERLAY)", (cam_x, cam_y-15), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         
-        # Plot area
+        # Timeline plot
         plot_x, plot_y = 900, 50
         plot_w, plot_h = 950, 350
         
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "DETECTION CONFIDENCE TIMELINE (Last 100 frames)", 
+        cv2.putText(canvas, "HYBRID DETECTION TIMELINE (Last 100 frames)", 
                     (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
         max_val = 1.0
@@ -276,20 +372,39 @@ class YOLOTrafficLightVisualizer(Node):
         cv2.putText(canvas, self.current_state, (state_x+70, state_y+90), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1.8, state_color, 4)
         
-        # Metrics
+        # Metrics comparison
         metrics_x = 470
         metrics_y = state_y
         
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (255, 255, 255), 2)
-        cv2.putText(canvas, "YOLO CONFIDENCE", (metrics_x+90, metrics_y+30), 
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+240), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+240), (255, 255, 255), 2)
+        
+        cv2.putText(canvas, "HYBRID SCORES", (metrics_x+100, metrics_y+30), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, f"R: {red_conf:.3f}", (metrics_x+20, metrics_y+60), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        cv2.putText(canvas, f"Y: {yellow_conf:.3f}", (metrics_x+20, metrics_y+85), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        cv2.putText(canvas, f"G: {green_conf:.3f}", (metrics_x+20, metrics_y+110), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        
+        y_offset = metrics_y + 60
+        cv2.putText(canvas, f"R: {hybrid_red:5.2f}%", (metrics_x+20, y_offset), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255), 2)
+        cv2.putText(canvas, f"Y={yolo_scores[0]*100:.1f} H={hsv_scores[0]:.1f}", 
+                    (metrics_x+190, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (150, 150, 150), 1)
+        
+        y_offset += 40
+        cv2.putText(canvas, f"Y: {hybrid_yellow:5.2f}%", (metrics_x+20, y_offset), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 255), 2)
+        cv2.putText(canvas, f"Y={yolo_scores[1]*100:.1f} H={hsv_scores[1]:.1f}", 
+                    (metrics_x+190, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (150, 150, 150), 1)
+        
+        y_offset += 40
+        cv2.putText(canvas, f"G: {hybrid_green:5.2f}%", (metrics_x+20, y_offset), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
+        cv2.putText(canvas, f"Y={yolo_scores[2]*100:.1f} H={hsv_scores[2]:.1f}", 
+                    (metrics_x+190, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (150, 150, 150), 1)
+        
+        y_offset += 50
+        cv2.putText(canvas, f"Confidence: {confidence:.2f}", (metrics_x+70, y_offset), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 200, 100), 2)
+        cv2.putText(canvas, f"Weights: Y={self.yolo_weight} H={self.hsv_weight}", 
+                    (metrics_x+50, y_offset+30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (180, 180, 180), 1)
         
         # Speed control
         speed_x = 900
@@ -330,10 +445,11 @@ class YOLOTrafficLightVisualizer(Node):
         # Info bar
         info_y = display_h - 50
         cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
-        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Detections: R:{len(detections['red'])} Y:{len(detections['yellow'])} G:{len(detections['green'])} | Press Q for Analytics", 
+        yolo_count = len(yolo_detections['red']) + len(yolo_detections['yellow']) + len(yolo_detections['green'])
+        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | YOLO Detections: {yolo_count} | Confidence: {confidence:.2f} | Press Q for Analytics", 
                     (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
-        cv2.imshow("YOLO Traffic Light Detection", canvas)
+        cv2.imshow("Hybrid Traffic Light Detection", canvas)
         key = cv2.waitKey(1)
         
         if key == ord('q') or key == ord('Q'):
@@ -347,77 +463,106 @@ class YOLOTrafficLightVisualizer(Node):
         
         times = np.array(list(self.timestamps))
         
-        # Speed control plot
+        # Speed control
         fig1, ax1 = plt.subplots(figsize=(14, 6))
         ax1.plot(times, list(self.speed_history), 'b-', label='Actual Speed', linewidth=2.5)
         ax1.plot(times, list(self.target_speed_history), 'r--', label='Target Speed', linewidth=2.5)
         ax1.fill_between(times, list(self.speed_history), list(self.target_speed_history), alpha=0.2, color='gray')
         ax1.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
         ax1.set_ylabel('Speed (m/s)', fontsize=12, fontweight='bold')
-        ax1.set_title('Robot Speed Control Performance', fontsize=14, fontweight='bold', pad=20)
+        ax1.set_title('Robot Speed Control Performance - Hybrid System', fontsize=14, fontweight='bold', pad=20)
         ax1.legend(fontsize=11, loc='upper right')
         ax1.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('analytics_1_speed_control.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_1_speed_control.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Detection confidence plot
-        fig2, ax2 = plt.subplots(figsize=(14, 6))
-        ax2.plot(times, list(self.red_history), 'r-', label='Red Light', alpha=0.8, linewidth=2.5)
-        ax2.plot(times, list(self.green_history), 'g-', label='Green Light', alpha=0.8, linewidth=2.5)
-        ax2.plot(times, list(self.yellow_history), 'y-', label='Yellow Light', alpha=0.8, linewidth=2.5)
-        ax2.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax2.set_ylabel('YOLO Confidence Score (%)', fontsize=12, fontweight='bold')
-        ax2.set_title('YOLO Traffic Light Detection Confidence', fontsize=14, fontweight='bold', pad=20)
-        ax2.legend(fontsize=11, loc='upper right')
-        ax2.grid(True, alpha=0.3)
+        # Hybrid detection comparison
+        fig2, (ax2a, ax2b, ax2c) = plt.subplots(3, 1, figsize=(14, 12))
+        
+        ax2a.plot(times, list(self.red_history), 'r-', label='Hybrid Red', linewidth=2.5)
+        ax2a.plot(times, list(self.yolo_red_history), 'r--', alpha=0.6, label='YOLO Red', linewidth=1.5)
+        ax2a.plot(times, list(self.hsv_red_history), 'r:', alpha=0.6, label='HSV Red', linewidth=1.5)
+        ax2a.set_ylabel('Red Detection (%)', fontsize=11, fontweight='bold')
+        ax2a.set_title('Hybrid vs YOLO vs HSV - Red Light Detection', fontsize=13, fontweight='bold')
+        ax2a.legend(fontsize=10)
+        ax2a.grid(True, alpha=0.3)
+        
+        ax2b.plot(times, list(self.yellow_history), 'y-', label='Hybrid Yellow', linewidth=2.5)
+        ax2b.plot(times, list(self.yolo_yellow_history), 'y--', alpha=0.6, label='YOLO Yellow', linewidth=1.5)
+        ax2b.plot(times, list(self.hsv_yellow_history), 'y:', alpha=0.6, label='HSV Yellow', linewidth=1.5)
+        ax2b.set_ylabel('Yellow Detection (%)', fontsize=11, fontweight='bold')
+        ax2b.set_title('Hybrid vs YOLO vs HSV - Yellow Light Detection', fontsize=13, fontweight='bold')
+        ax2b.legend(fontsize=10)
+        ax2b.grid(True, alpha=0.3)
+        
+        ax2c.plot(times, list(self.green_history), 'g-', label='Hybrid Green', linewidth=2.5)
+        ax2c.plot(times, list(self.yolo_green_history), 'g--', alpha=0.6, label='YOLO Green', linewidth=1.5)
+        ax2c.plot(times, list(self.hsv_green_history), 'g:', alpha=0.6, label='HSV Green', linewidth=1.5)
+        ax2c.set_xlabel('Time (seconds)', fontsize=11, fontweight='bold')
+        ax2c.set_ylabel('Green Detection (%)', fontsize=11, fontweight='bold')
+        ax2c.set_title('Hybrid vs YOLO vs HSV - Green Light Detection', fontsize=13, fontweight='bold')
+        ax2c.legend(fontsize=10)
+        ax2c.grid(True, alpha=0.3)
+        
         plt.tight_layout()
-        plt.savefig('analytics_2_yolo_detection.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_2_detection_comparison.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Speed error plot
+        # Speed error
         fig3, ax3 = plt.subplots(figsize=(14, 6))
         ax3.plot(times, list(self.speed_error_history), 'orange', linewidth=2)
         ax3.fill_between(times, 0, list(self.speed_error_history), alpha=0.3, color='orange')
         ax3.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
         ax3.set_ylabel('Speed Error (m/s)', fontsize=12, fontweight='bold')
-        ax3.set_title('Speed Tracking Error', fontsize=14, fontweight='bold', pad=20)
+        ax3.set_title('Speed Tracking Error - Hybrid System', fontsize=14, fontweight='bold', pad=20)
         ax3.grid(True, alpha=0.3)
         mean_error = np.mean(self.speed_error_history)
         ax3.axhline(mean_error, color='red', linestyle='--', linewidth=2, label=f'Mean Error: {mean_error:.3f} m/s')
         ax3.legend(fontsize=11)
         plt.tight_layout()
-        plt.savefig('analytics_3_speed_error.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_3_speed_error.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Detection confidence ratio
+        # Hybrid confidence
         fig4, ax4 = plt.subplots(figsize=(14, 6))
-        ax4.plot(times, list(self.detection_confidence), 'cyan', linewidth=2)
+        ax4.plot(times, list(self.hybrid_confidence), 'cyan', linewidth=2)
+        ax4.axhline(y=2.0, color='red', linestyle='--', linewidth=2, label='Confidence Threshold')
         ax4.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
         ax4.set_ylabel('Confidence Ratio', fontsize=12, fontweight='bold')
-        ax4.set_title('YOLO Detection Confidence Ratio', fontsize=14, fontweight='bold', pad=20)
+        ax4.set_title('Hybrid Detection Confidence Over Time', fontsize=14, fontweight='bold', pad=20)
+        ax4.legend(fontsize=11)
         ax4.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('analytics_4_detection_confidence.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_4_confidence.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Speed variance
-        fig5, ax5 = plt.subplots(figsize=(14, 6))
-        window = 50
-        if len(self.speed_history) > window:
-            variances = [np.std(list(self.speed_history)[max(0, i-window):i+1]) 
-                        for i in range(len(self.speed_history))]
-            ax5.plot(times, variances, 'purple', linewidth=2)
-            ax5.fill_between(times, 0, variances, alpha=0.3, color='purple')
-        ax5.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax5.set_ylabel('Standard Deviation (m/s)', fontsize=12, fontweight='bold')
-        ax5.set_title('Speed Stability', fontsize=14, fontweight='bold', pad=20)
-        ax5.grid(True, alpha=0.3)
+        # Method correlation analysis
+        fig5, axes = plt.subplots(1, 3, figsize=(16, 5))
+        
+        axes[0].scatter(self.yolo_red_history, self.hsv_red_history, alpha=0.5, c='red', s=10)
+        axes[0].set_xlabel('YOLO Red Score', fontsize=10, fontweight='bold')
+        axes[0].set_ylabel('HSV Red Score', fontsize=10, fontweight='bold')
+        axes[0].set_title('Red Light: YOLO vs HSV Correlation', fontsize=11, fontweight='bold')
+        axes[0].grid(True, alpha=0.3)
+        
+        axes[1].scatter(self.yolo_yellow_history, self.hsv_yellow_history, alpha=0.5, c='yellow', s=10)
+        axes[1].set_xlabel('YOLO Yellow Score', fontsize=10, fontweight='bold')
+        axes[1].set_ylabel('HSV Yellow Score', fontsize=10, fontweight='bold')
+        axes[1].set_title('Yellow Light: YOLO vs HSV Correlation', fontsize=11, fontweight='bold')
+        axes[1].grid(True, alpha=0.3)
+        
+        axes[2].scatter(self.yolo_green_history, self.hsv_green_history, alpha=0.5, c='green', s=10)
+        axes[2].set_xlabel('YOLO Green Score', fontsize=10, fontweight='bold')
+        axes[2].set_ylabel('HSV Green Score', fontsize=10, fontweight='bold')
+        axes[2].set_title('Green Light: YOLO vs HSV Correlation', fontsize=11, fontweight='bold')
+        axes[2].grid(True, alpha=0.3)
+        
         plt.tight_layout()
-        plt.savefig('analytics_5_speed_variance.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_5_correlation.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Speed by state boxplot
+        # Speed by state
         fig6, ax6 = plt.subplots(figsize=(10, 6))
         states = ['RED', 'YELLOW', 'GREEN']
         speeds_by_state = {s: [] for s in states}
@@ -442,10 +587,10 @@ class YOLOTrafficLightVisualizer(Node):
                 patch.set_alpha(0.6)
         ax6.set_ylabel('Speed (m/s)', fontsize=12, fontweight='bold')
         ax6.set_xlabel('Traffic Light State', fontsize=12, fontweight='bold')
-        ax6.set_title('Speed Distribution by Traffic Light State', fontsize=14, fontweight='bold', pad=20)
+        ax6.set_title('Speed Distribution by Traffic Light State - Hybrid', fontsize=14, fontweight='bold', pad=20)
         ax6.grid(True, alpha=0.3, axis='y')
         plt.tight_layout()
-        plt.savefig('analytics_6_speed_by_state.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_6_speed_by_state.png', dpi=200, facecolor='white')
         plt.close()
         
         # Reaction times
@@ -456,20 +601,33 @@ class YOLOTrafficLightVisualizer(Node):
             ax7.axvline(mean_rt, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_rt:.2f}s')
             ax7.set_xlabel('Reaction Time (seconds)', fontsize=12, fontweight='bold')
             ax7.set_ylabel('Frequency', fontsize=12, fontweight='bold')
-            ax7.set_title('Robot Reaction Time Distribution', fontsize=14, fontweight='bold', pad=20)
+            ax7.set_title('Robot Reaction Time Distribution - Hybrid System', fontsize=14, fontweight='bold', pad=20)
             ax7.legend(fontsize=11)
         else:
             ax7.text(0.5, 0.5, 'No reaction time data', transform=ax7.transAxes, fontsize=14, ha='center')
         ax7.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('analytics_7_reaction_times.png', dpi=200, facecolor='white')
+        plt.savefig('hybrid_analytics_7_reaction_times.png', dpi=200, facecolor='white')
         plt.close()
         
-        # Summary stats
-        fig8, ax8 = plt.subplots(figsize=(10, 8))
+        # Summary report
+        fig8, ax8 = plt.subplots(figsize=(12, 10))
         ax8.axis('off')
         
-        stats_text = f"""YOLO TRAFFIC LIGHT DETECTION - PERFORMANCE REPORT
+        # Calculate correlation coefficients
+        yolo_red_arr = np.array(list(self.yolo_red_history))
+        hsv_red_arr = np.array(list(self.hsv_red_history))
+        yolo_yellow_arr = np.array(list(self.yolo_yellow_history))
+        hsv_yellow_arr = np.array(list(self.hsv_yellow_history))
+        yolo_green_arr = np.array(list(self.yolo_green_history))
+        hsv_green_arr = np.array(list(self.hsv_green_history))
+        
+        corr_red = np.corrcoef(yolo_red_arr, hsv_red_arr)[0,1] if len(yolo_red_arr) > 1 else 0
+        corr_yellow = np.corrcoef(yolo_yellow_arr, hsv_yellow_arr)[0,1] if len(yolo_yellow_arr) > 1 else 0
+        corr_green = np.corrcoef(yolo_green_arr, hsv_green_arr)[0,1] if len(yolo_green_arr) > 1 else 0
+        
+        stats_text = f"""HYBRID TRAFFIC LIGHT DETECTION - COMPREHENSIVE REPORT
+Fusion: YOLO (60%) + HSV (40%)
 
 ══════════════════════════════════════════════════════
 SPEED CONTROL METRICS
@@ -481,40 +639,69 @@ RMSE:                    {np.sqrt(np.mean(np.array(self.speed_error_history)**2)
 Max Speed:               {np.max(self.speed_history):.3f} m/s
 
 ══════════════════════════════════════════════════════
-YOLO DETECTION STATISTICS
+HYBRID DETECTION STATISTICS
 ══════════════════════════════════════════════════════
-Red Light:
-  Mean Confidence:       {np.mean(self.red_history):.2f}%
+Red Light (Hybrid):
+  Mean Score:            {np.mean(self.red_history):.2f}%
   Std Deviation:         {np.std(self.red_history):.2f}%
-  Peak Confidence:       {np.max(self.red_history):.2f}%
+  Peak Score:            {np.max(self.red_history):.2f}%
+  YOLO Contribution:     {np.mean(self.yolo_red_history):.2f}%
+  HSV Contribution:      {np.mean(self.hsv_red_history):.2f}%
+  Correlation (Y-H):     {corr_red:.3f}
 
-Yellow Light:
-  Mean Confidence:       {np.mean(self.yellow_history):.2f}%
+Yellow Light (Hybrid):
+  Mean Score:            {np.mean(self.yellow_history):.2f}%
   Std Deviation:         {np.std(self.yellow_history):.2f}%
-  Peak Confidence:       {np.max(self.yellow_history):.2f}%
+  Peak Score:            {np.max(self.yellow_history):.2f}%
+  YOLO Contribution:     {np.mean(self.yolo_yellow_history):.2f}%
+  HSV Contribution:      {np.mean(self.hsv_yellow_history):.2f}%
+  Correlation (Y-H):     {corr_yellow:.3f}
 
-Green Light:
-  Mean Confidence:       {np.mean(self.green_history):.2f}%
-  Std 
-  Deviation:         {np.std(self.green_history):.2f}%
-Peak Confidence:       {np.max(self.green_history):.2f}%
-Average Confidence Ratio: {np.mean(self.detection_confidence):.2f}
+Green Light (Hybrid):
+  Mean Score:            {np.mean(self.green_history):.2f}%
+  Std Deviation:         {np.std(self.green_history):.2f}%
+  Peak Score:            {np.max(self.green_history):.2f}%
+  YOLO Contribution:     {np.mean(self.yolo_green_history):.2f}%
+  HSV Contribution:      {np.mean(self.hsv_green_history):.2f}%
+  Correlation (Y-H):     {corr_green:.3f}
+
+Average Confidence:      {np.mean(self.hybrid_confidence):.2f}
+
 ══════════════════════════════════════════════════════
 RESPONSE CHARACTERISTICS
 ══════════════════════════════════════════════════════
 Reaction Samples:        {len(self.reaction_times)}
 Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f}s
 Reaction StdDev:         {np.std(self.reaction_times) if self.reaction_times else 0:.2f}s
+
 ══════════════════════════════════════════════════════
-SESSION INFO
+SESSION INFORMATION
 ══════════════════════════════════════════════════════
 Duration:                {times[-1]:.1f}s
 Frames Processed:        {self.frame_count}
 Average FPS:             {self.frame_count/times[-1]:.1f}
+
+══════════════════════════════════════════════════════
+FUSION PARAMETERS
+══════════════════════════════════════════════════════
+YOLO Weight:             {self.yolo_weight}
+HSV Weight:              {self.hsv_weight}
+Detection Threshold:     5.0%
+Confidence Threshold:    2.0
 """
+        ax8.text(0.05, 0.95, stats_text, transform=ax8.transAxes, 
+                fontsize=9, verticalalignment='top', family='monospace',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
+        
+        plt.tight_layout()
+        plt.savefig('hybrid_analytics_8_summary.png', dpi=200, facecolor='white')
+        plt.close()
+        
+        self.get_logger().info('Analytics saved: 8 PNG files generated')
+
 def main():
     rclpy.init()
-    node = YOLOTrafficLightVisualizer()
+    node = HybridTrafficLightVisualizer()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -523,5 +710,6 @@ def main():
         cv2.destroyAllWindows()
         node.destroy_node()
         rclpy.shutdown()
+
 if __name__ == '__main__':
     main()
