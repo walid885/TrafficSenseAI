@@ -9,9 +9,6 @@ setup.py
 ../../build/traffic_light_robot/traffic_light_robot.egg-info/top_level.txt
 ../../build/traffic_light_robot/traffic_light_robot.egg-info/zip-safe
 resource/traffic_light_robot
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py
 traffic_light_robot/Viusl_node_yolo_only.py
 traffic_light_robot/__init__.py
 traffic_light_robot/camera_debug.py
@@ -26,3 +23,10 @@ traffic_light_robot/rviz_visu.py
 traffic_light_robot/vis_node_Hyb.py
 traffic_light_robot/visualizer_node.py
 traffic_light_robot/visualizer_node_HSVuINIT.py
+traffic_light_robot.egg-info/PKG-INFO
+traffic_light_robot.egg-info/SOURCES.txt
+traffic_light_robot.egg-info/dependency_links.txt
+traffic_light_robot.egg-info/entry_points.txt
+traffic_light_robot.egg-info/requires.txt
+traffic_light_robot.egg-info/top_level.txt
+traffic_light_robot.egg-info/zip-safe

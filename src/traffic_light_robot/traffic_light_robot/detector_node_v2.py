@@ -15,20 +15,20 @@ class TrafficLightDetectorV2(Node):
         
         self.load_optimized_params()
         
-        self.roi = {'y_start': 0.3, 'y_end': 0.7, 'x_start': 0.3, 'x_end': 0.7}
-        self.detection_threshold = 0.001  # LOWERED from 0.003
+        self.detection_threshold = 0.0001  # ULTRA LOW
         self.confidence_history = {'RED': [], 'YELLOW': [], 'GREEN': []}
-        self.max_history = 5  # REDUCED from 10
+        self.max_history = 3
         
         self.last_state = "UNKNOWN"
         self.state_persistence = 0
-        self.persistence_threshold = 2  # REDUCED from 3
+        self.persistence_threshold = 1
         
         self.subscription = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
         
         self.state_publisher = self.create_publisher(String, '/traffic_light_state', 10)
         
+        self.frame_count = 0
         self.get_logger().info('Traffic Light Detector v2 started')
         self.get_logger().info(f'Detection threshold: {self.detection_threshold}')
         
@@ -44,47 +44,26 @@ class TrafficLightDetectorV2(Node):
                 
                 self.get_logger().info('Loaded optimized HSV parameters')
                 return
-        except FileNotFoundError:
-            self.get_logger().warn('No optimized params found, using defaults')
-        except Exception as e:
-            self.get_logger().error(f'Error loading params: {e}')
+        except:
+            pass
         
+        # ULTRA RELAXED
         self.red_ranges = {
-            'h1': [0, 10], 's1': [80, 255], 'v1': [80, 255],
-            'h2': [170, 180], 's2': [80, 255], 'v2': [80, 255]
+            'h1': [0, 15], 's1': [20, 255], 'v1': [20, 255],
+            'h2': [165, 180], 's2': [20, 255], 'v2': [20, 255]
         }
-        self.yellow_ranges = {'h': [15, 35], 's': [80, 255], 'v': [80, 255]}
-        self.green_ranges = {'h': [40, 80], 's': [80, 255], 'v': [80, 255]}
-    
-    def extract_roi(self, img):
-        h, w = img.shape[:2]
-        y1 = int(h * self.roi['y_start'])
-        y2 = int(h * self.roi['y_end'])
-        x1 = int(w * self.roi['x_start'])
-        x2 = int(w * self.roi['x_end'])
-        return img[y1:y2, x1:x2]
+        self.yellow_ranges = {'h': [10, 45], 's': [20, 255], 'v': [20, 255]}
+        self.green_ranges = {'h': [30, 90], 's': [20, 255], 'v': [20, 255]}
+        self.get_logger().warn('Using ULTRA-RELAXED defaults')
     
     def preprocess(self, img):
         blurred = cv2.GaussianBlur(img, (5, 5), 0)
-        lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-        l, a, b = cv2.split(lab)
-        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
-        l = clahe.apply(l)
-        enhanced = cv2.merge([l, a, b])
-        enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
-        return enhanced
+        return blurred
     
-    def detect_with_morphology(self, mask):
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-        return mask
-    
-    def calculate_confidence(self, mask, roi_shape):
-        total_pixels = roi_shape[0] * roi_shape[1]
+    def calculate_confidence(self, mask, img_shape):
+        total_pixels = img_shape[0] * img_shape[1]
         detected_pixels = cv2.countNonZero(mask)
-        ratio = detected_pixels / total_pixels
-        return ratio
+        return detected_pixels / total_pixels
     
     def smooth_confidence(self, color, new_confidence):
         self.confidence_history[color].append(new_confidence)
@@ -97,8 +76,8 @@ class TrafficLightDetectorV2(Node):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
             
-            roi = self.extract_roi(cv_image)
-            processed = self.preprocess(roi)
+            # NO ROI - FULL IMAGE
+            processed = self.preprocess(cv_image)
             hsv = cv2.cvtColor(processed, cv2.COLOR_BGR2HSV)
             
             # Red detection
@@ -109,28 +88,26 @@ class TrafficLightDetectorV2(Node):
             red2 = cv2.inRange(hsv, 
                               (r['h2'][0], r['s2'][0], r['v2'][0]),
                               (r['h2'][1], r['s2'][1], r['v2'][1]))
-            red_mask = self.detect_with_morphology(red1 | red2)
+            red_mask = red1 | red2
             
             # Yellow detection
             y = self.yellow_ranges
             yellow_mask = cv2.inRange(hsv,
                                      (y['h'][0], y['s'][0], y['v'][0]),
                                      (y['h'][1], y['s'][1], y['v'][1]))
-            yellow_mask = self.detect_with_morphology(yellow_mask)
             
             # Green detection
             g = self.green_ranges
             green_mask = cv2.inRange(hsv,
                                     (g['h'][0], g['s'][0], g['v'][0]),
                                     (g['h'][1], g['s'][1], g['v'][1]))
-            green_mask = self.detect_with_morphology(green_mask)
             
-            # Calculate raw confidences
-            red_conf = self.calculate_confidence(red_mask, roi.shape)
-            yellow_conf = self.calculate_confidence(yellow_mask, roi.shape)
-            green_conf = self.calculate_confidence(green_mask, roi.shape)
+            # Calculate confidences - FULL IMAGE SHAPE
+            red_conf = self.calculate_confidence(red_mask, cv_image.shape)
+            yellow_conf = self.calculate_confidence(yellow_mask, cv_image.shape)
+            green_conf = self.calculate_confidence(green_mask, cv_image.shape)
             
-            # Smooth confidences
+            # Smooth
             red_smooth = self.smooth_confidence('RED', red_conf)
             yellow_smooth = self.smooth_confidence('YELLOW', yellow_conf)
             green_smooth = self.smooth_confidence('GREEN', green_conf)
@@ -147,7 +124,7 @@ class TrafficLightDetectorV2(Node):
             else:
                 detected_state = "GREEN"
             
-            # State persistence
+            # Minimal persistence
             if detected_state == self.last_state:
                 self.state_persistence += 1
             else:
@@ -163,16 +140,13 @@ class TrafficLightDetectorV2(Node):
             msg_out.data = final_state
             self.state_publisher.publish(msg_out)
             
-            # Log on state change OR every 30 frames
-            if final_state != self.last_state or (hasattr(self, 'frame_count') and self.frame_count % 30 == 0):
+            # Log every 30 frames
+            self.frame_count += 1
+            if self.frame_count % 30 == 0:
                 self.get_logger().info(
-                    f'State: {final_state} | R:{red_smooth:.4f} Y:{yellow_smooth:.4f} G:{green_smooth:.4f}')
+                    f'State: {final_state} | R:{red_smooth:.6f} Y:{yellow_smooth:.6f} G:{green_smooth:.6f}')
             
             self.last_state = final_state
-            
-            if not hasattr(self, 'frame_count'):
-                self.frame_count = 0
-            self.frame_count += 1
                 
         except Exception as e:
             self.get_logger().error(f'Detection error: {str(e)}')
