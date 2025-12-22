@@ -18,18 +18,18 @@ setup(
     description='Traffic light detection robot',
     license='Apache License 2.0',
     tests_require=['pytest'],
-entry_points={
-    'console_scripts': [
-        'detector_node = traffic_light_robot.detector_node:main',
-        'controller_node = traffic_light_robot.controller_node:main',
-        'visualizer_node = traffic_light_robot.visualizer_node:main',
-        'rviz_visu = traffic_light_robot.rviz_visu:main',
-        'pid_tuner = traffic_light_robot.pid_tuner:main',
-        'hsv_tuner_node = traffic_light_robot.hsv_tuner_node:main',
-        'traffic_light_detector = traffic_light_robot.detector_node:main',
-        'hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main',
-        'traffic_light_detector_v2 = traffic_light_robot.detector_node_v2:main',
-        'camera_debug = traffic_light_robot.CameraDebugNode:main',  # ADD THIS
-    ],
-},
+    entry_points={
+        'console_scripts': [
+            'detector_node = traffic_light_robot.detector_node:main',
+            'controller_node = traffic_light_robot.controller_node:main',
+            'visualizer_node = traffic_light_robot.visualizer_node:main',
+            'rviz_visu = traffic_light_robot.rviz_visu:main',
+            'pid_tuner = traffic_light_robot.pid_tuner:main',
+            'hsv_tuner_node = traffic_light_robot.hsv_tuner_node:main',
+            'traffic_light_detector = traffic_light_robot.detector_node:main',
+            'hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main',
+            'traffic_light_detector_v2 = traffic_light_robot.detector_node_v2:main',
+            'camera_debug = traffic_light_robot.camera_debug:main',  # FIXED
+        ],
+    },
 )

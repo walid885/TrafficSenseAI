@@ -1,5 +1,5 @@
 [console_scripts]
-camera_debug = traffic_light_robot.CameraDebugNode:main
+camera_debug = traffic_light_robot.camera_debug:main
 controller_node = traffic_light_robot.controller_node:main
 detector_node = traffic_light_robot.detector_node:main
 hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main
