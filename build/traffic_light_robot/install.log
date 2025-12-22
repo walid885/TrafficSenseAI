@@ -5,6 +5,7 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/Viusl_node_yolo_only.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node_HSVuINIT.py
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/hsv_tuner_node.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/vis_node_Hyb.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/dataset_collector.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/rviz_visu.py
@@ -15,6 +16,7 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/Viusl_node_yolo_only.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/controller_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/visualizer_node_HSVuINIT.cpython-310.pyc
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/hsv_tuner_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/vis_node_Hyb.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/dataset_collector.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/rviz_visu.cpython-310.pyc
@@ -29,6 +31,7 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info/SOURCES.txt
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/hsv_tuner_node
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/pid_tuner
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/rviz_visu
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/visualizer_node

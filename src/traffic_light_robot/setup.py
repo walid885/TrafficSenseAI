@@ -25,6 +25,8 @@ entry_points={
         'visualizer_node = traffic_light_robot.visualizer_node:main',
         'rviz_visu = traffic_light_robot.rviz_visu:main',
         'pid_tuner = traffic_light_robot.pid_tuner:main',  # ADD THIS
+        'hsv_tuner_node = traffic_light_robot.hsv_tuner_node:main',
+
 
     ],
 },
