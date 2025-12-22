@@ -32,10 +32,12 @@ class TrafficLightDetectorV2(Node):
         
         self.subscription = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
+
         
         self.publisher = self.create_publisher(String, '/traffic_light_state', 10)
         self.get_logger().info('Optimized Traffic Light Detector v2 started')
-        
+        self.ground_truth_publisher = self.create_publisher(String, '/traffic_light_state', 10)
+
     def load_optimized_params(self):
         """Load optimized HSV parameters from JSON if available"""
         try:
@@ -151,6 +153,8 @@ class TrafficLightDetectorV2(Node):
             
             # Determine state with hysteresis
             max_conf = max(red_conf, yellow_conf, green_conf)
+
+
             
             if max_conf < self.detection_threshold:
                 detected_state = "UNKNOWN"
@@ -172,11 +176,16 @@ class TrafficLightDetectorV2(Node):
             else:
                 final_state = self.last_state if self.last_state != "UNKNOWN" else detected_state
             
+            state_msg = String()
+            state_msg.data = final_state
+            self.state_publisher.publish(state_msg)
+
             # Publish
             msg_out = String()
             msg_out.data = final_state
             self.publisher.publish(msg_out)
-            
+            self.ground_truth_publisher.publish(msg_out)  # ADD THIS
+
             if final_state != self.last_state and final_state != "UNKNOWN":
                 self.get_logger().info(
                     f'State: {final_state} | R:{red_conf:.4f} Y:{yellow_conf:.4f} G:{green_conf:.4f}')
