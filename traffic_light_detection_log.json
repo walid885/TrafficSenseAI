@@ -1,18 +1,18 @@
 {
   "session_info": {
-    "start_time": "2025-12-22T16:25:08.403734",
+    "start_time": "2025-12-22T23:27:09.481557",
     "node_name": "traffic_light_visualizer"
   },
   "frame_data": [
     {
       "frame": 0,
-      "timestamp": 3.409364700317383,
+      "timestamp": 0.24864745140075684,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.01,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.000732,
+        "green_ratio": 0.07429,
+        "yellow_ratio": 0.001393,
         "dominant_color": "GREEN",
-        "confidence": 1.0
+        "confidence": 0.07429
       },
       "speed_control": {
         "current_speed": 0.0,
@@ -23,1135 +23,812 @@
     },
     {
       "frame": 5,
-      "timestamp": 3.827224016189575,
+      "timestamp": 0.5254726409912109,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.011,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.000762,
+        "green_ratio": 0.088034,
+        "yellow_ratio": 0.001416,
         "dominant_color": "GREEN",
-        "confidence": 1.03
+        "confidence": 0.088034
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 10,
-      "timestamp": 4.066436052322388,
+      "timestamp": 0.9213426113128662,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.012,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.000758,
+        "green_ratio": 0.102018,
+        "yellow_ratio": 0.001423,
         "dominant_color": "GREEN",
-        "confidence": 1.18
+        "confidence": 0.102018
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 15,
-      "timestamp": 4.307295083999634,
+      "timestamp": 1.3139839172363281,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.014,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.000811,
+        "green_ratio": 0.123916,
+        "yellow_ratio": 0.001481,
         "dominant_color": "GREEN",
-        "confidence": 1.3
+        "confidence": 0.123916
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 20,
-      "timestamp": 4.505791187286377,
+      "timestamp": 1.6795034408569336,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.015,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.000902,
+        "green_ratio": 0.150859,
+        "yellow_ratio": 0.001781,
         "dominant_color": "GREEN",
-        "confidence": 1.42
+        "confidence": 0.150859
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 25,
-      "timestamp": 4.8621015548706055,
+      "timestamp": 2.0770370960235596,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.015,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.000902,
+        "green_ratio": 0.191781,
+        "yellow_ratio": 0.001803,
         "dominant_color": "GREEN",
-        "confidence": 1.45
+        "confidence": 0.191781
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 30,
-      "timestamp": 5.283978462219238,
+      "timestamp": 2.488957643508911,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.017,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.000957,
+        "green_ratio": 0.254479,
+        "yellow_ratio": 0.001956,
         "dominant_color": "GREEN",
-        "confidence": 1.57
+        "confidence": 0.254479
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 35,
-      "timestamp": 5.744512557983398,
+      "timestamp": 2.8313698768615723,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.018,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.001035,
+        "green_ratio": 0.358509,
+        "yellow_ratio": 0.002051,
         "dominant_color": "GREEN",
-        "confidence": 1.68
+        "confidence": 0.358509
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 40,
-      "timestamp": 6.170182943344116,
+      "timestamp": 3.245424270629883,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.02,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.00111,
+        "green_ratio": 0.472975,
+        "yellow_ratio": 0.002161,
         "dominant_color": "GREEN",
-        "confidence": 1.82
+        "confidence": 0.472975
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 45,
-      "timestamp": 6.601107358932495,
+      "timestamp": 3.619758129119873,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.02,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.001169,
+        "green_ratio": 0.481696,
+        "yellow_ratio": 0.002243,
         "dominant_color": "GREEN",
-        "confidence": 1.86
+        "confidence": 0.481696
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 50,
-      "timestamp": 7.024155139923096,
+      "timestamp": 3.9919729232788086,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.023,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.001234,
+        "green_ratio": 0.481702,
+        "yellow_ratio": 0.002334,
         "dominant_color": "GREEN",
-        "confidence": 2.11
+        "confidence": 0.481702
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 55,
-      "timestamp": 7.449931383132935,
+      "timestamp": 4.373589754104614,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.024,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.001305,
+        "green_ratio": 0.481676,
+        "yellow_ratio": 0.002471,
         "dominant_color": "GREEN",
-        "confidence": 2.25
+        "confidence": 0.481676
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 60,
-      "timestamp": 7.889195203781128,
+      "timestamp": 4.779331684112549,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.027,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.00127,
+        "green_ratio": 0.481641,
+        "yellow_ratio": 0.002633,
         "dominant_color": "GREEN",
-        "confidence": 2.44
+        "confidence": 0.481641
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 65,
-      "timestamp": 8.314281702041626,
+      "timestamp": 5.169235467910767,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.029,
-        "yellow_percentage": 0.001,
+        "red_ratio": 0.000785,
+        "green_ratio": 0.481442,
+        "yellow_ratio": 0.002799,
         "dominant_color": "GREEN",
-        "confidence": 2.66
+        "confidence": 0.481442
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 70,
-      "timestamp": 8.755090236663818,
+      "timestamp": 5.574601888656616,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.032,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.000176,
+        "green_ratio": 0.481165,
+        "yellow_ratio": 0.002832,
         "dominant_color": "GREEN",
-        "confidence": 2.9
+        "confidence": 0.481165
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 75,
-      "timestamp": 9.173948287963867,
+      "timestamp": 5.94312596321106,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.035,
-        "yellow_percentage": 0.0,
+        "red_ratio": 2.6e-05,
+        "green_ratio": 0.480524,
+        "yellow_ratio": 0.002321,
         "dominant_color": "GREEN",
-        "confidence": 3.16
+        "confidence": 0.480524
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 80,
-      "timestamp": 9.562710046768188,
+      "timestamp": 6.327662467956543,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.039,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.479987,
+        "yellow_ratio": 0.001836,
         "dominant_color": "GREEN",
-        "confidence": 3.42
+        "confidence": 0.479987
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 85,
-      "timestamp": 9.91841197013855,
+      "timestamp": 6.721183776855469,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.044,
-        "yellow_percentage": 0.001,
+        "red_ratio": 1e-05,
+        "green_ratio": 0.478955,
+        "yellow_ratio": 0.001045,
         "dominant_color": "GREEN",
-        "confidence": 3.82
+        "confidence": 0.478955
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 90,
-      "timestamp": 10.327343702316284,
+      "timestamp": 7.093513488769531,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.049,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1e-05,
+        "green_ratio": 0.478057,
+        "yellow_ratio": 0.000602,
         "dominant_color": "GREEN",
-        "confidence": 4.17
+        "confidence": 0.478057
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 95,
-      "timestamp": 10.733020782470703,
+      "timestamp": 7.444153308868408,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.052,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1e-05,
+        "green_ratio": 0.477568,
+        "yellow_ratio": 0.000622,
         "dominant_color": "GREEN",
-        "confidence": 4.45
+        "confidence": 0.477568
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 100,
-      "timestamp": 11.086939096450806,
+      "timestamp": 7.783021926879883,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.045,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.476875,
+        "yellow_ratio": 0.000563,
         "dominant_color": "GREEN",
-        "confidence": 3.92
+        "confidence": 0.476875
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 105,
-      "timestamp": 11.514791011810303,
+      "timestamp": 8.164424419403076,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.015,
-        "yellow_percentage": 0.001,
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.476445,
+        "yellow_ratio": 0.000573,
         "dominant_color": "GREEN",
-        "confidence": 1.42
+        "confidence": 0.476445
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 110,
-      "timestamp": 11.893947839736938,
+      "timestamp": 8.49081039428711,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
+        "red_ratio": 0.0,
+        "green_ratio": 0.476136,
+        "yellow_ratio": 0.000576,
         "dominant_color": "GREEN",
-        "confidence": 0.03
+        "confidence": 0.476136
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 115,
-      "timestamp": 12.301060199737549,
+      "timestamp": 8.840013265609741,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 3e-06,
+        "green_ratio": 0.475882,
+        "yellow_ratio": 0.000583,
+        "dominant_color": "GREEN",
+        "confidence": 0.475882
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 120,
-      "timestamp": 12.70846676826477,
+      "timestamp": 9.228585720062256,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 7e-06,
+        "green_ratio": 0.475521,
+        "yellow_ratio": 0.000589,
+        "dominant_color": "GREEN",
+        "confidence": 0.475521
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 125,
-      "timestamp": 13.130029916763306,
+      "timestamp": 9.575253248214722,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.475111,
+        "yellow_ratio": 0.000596,
+        "dominant_color": "GREEN",
+        "confidence": 0.475111
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 130,
-      "timestamp": 13.484530925750732,
+      "timestamp": 9.952775955200195,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1e-05,
+        "green_ratio": 0.475046,
+        "yellow_ratio": 0.000596,
+        "dominant_color": "GREEN",
+        "confidence": 0.475046
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 135,
-      "timestamp": 13.901649475097656,
+      "timestamp": 10.32020115852356,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.474915,
+        "yellow_ratio": 0.000586,
+        "dominant_color": "GREEN",
+        "confidence": 0.474915
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 140,
-      "timestamp": 14.269284725189209,
+      "timestamp": 10.706672191619873,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1e-05,
+        "green_ratio": 0.4746,
+        "yellow_ratio": 0.000583,
+        "dominant_color": "GREEN",
+        "confidence": 0.4746
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 145,
-      "timestamp": 14.64016342163086,
+      "timestamp": 11.049313306808472,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1.6e-05,
+        "green_ratio": 0.474248,
+        "yellow_ratio": 0.000592,
+        "dominant_color": "GREEN",
+        "confidence": 0.474248
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 150,
-      "timestamp": 15.120152950286865,
+      "timestamp": 11.447020769119263,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1e-05,
+        "green_ratio": 0.47387,
+        "yellow_ratio": 0.000605,
+        "dominant_color": "GREEN",
+        "confidence": 0.47387
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 155,
-      "timestamp": 15.594849586486816,
+      "timestamp": 11.802278757095337,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1e-05,
+        "green_ratio": 0.473337,
+        "yellow_ratio": 0.000609,
+        "dominant_color": "GREEN",
+        "confidence": 0.473337
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 160,
-      "timestamp": 16.08709168434143,
+      "timestamp": 12.128326177597046,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1e-05,
+        "green_ratio": 0.472793,
+        "yellow_ratio": 0.000605,
+        "dominant_color": "GREEN",
+        "confidence": 0.472793
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 165,
-      "timestamp": 16.5239737033844,
+      "timestamp": 12.495915412902832,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.06
+        "red_ratio": 1.6e-05,
+        "green_ratio": 0.472588,
+        "yellow_ratio": 0.000742,
+        "dominant_color": "GREEN",
+        "confidence": 0.472588
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 170,
-      "timestamp": 16.98289966583252,
+      "timestamp": 12.898174047470093,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1e-05,
+        "green_ratio": 0.472266,
+        "yellow_ratio": 0.000856,
         "dominant_color": "GREEN",
-        "confidence": 0.06
+        "confidence": 0.472266
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 175,
-      "timestamp": 17.440027952194214,
+      "timestamp": 13.245459794998169,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 3e-06,
+        "green_ratio": 0.471523,
+        "yellow_ratio": 0.000911,
+        "dominant_color": "GREEN",
+        "confidence": 0.471523
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 180,
-      "timestamp": 17.943322896957397,
+      "timestamp": 13.614615440368652,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 3e-06,
+        "green_ratio": 0.470957,
+        "yellow_ratio": 0.000924,
+        "dominant_color": "GREEN",
+        "confidence": 0.470957
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 185,
-      "timestamp": 18.439650297164917,
+      "timestamp": 13.93222188949585,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 7e-06,
+        "green_ratio": 0.470518,
+        "yellow_ratio": 0.000967,
+        "dominant_color": "GREEN",
+        "confidence": 0.470518
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 190,
-      "timestamp": 18.850565671920776,
+      "timestamp": 14.27605652809143,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.469974,
+        "yellow_ratio": 0.001016,
+        "dominant_color": "GREEN",
+        "confidence": 0.469974
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 195,
-      "timestamp": 19.320712566375732,
+      "timestamp": 14.622783899307251,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1e-05,
+        "green_ratio": 0.469062,
+        "yellow_ratio": 0.001048,
+        "dominant_color": "GREEN",
+        "confidence": 0.469062
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 200,
-      "timestamp": 19.78732681274414,
+      "timestamp": 14.963626623153687,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1e-05,
+        "green_ratio": 0.468418,
+        "yellow_ratio": 0.001081,
+        "dominant_color": "GREEN",
+        "confidence": 0.468418
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 205,
-      "timestamp": 20.227474689483643,
+      "timestamp": 15.346348524093628,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1e-05,
+        "green_ratio": 0.467715,
+        "yellow_ratio": 0.001104,
+        "dominant_color": "GREEN",
+        "confidence": 0.467715
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 210,
-      "timestamp": 20.666999340057373,
+      "timestamp": 15.668400049209595,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.1
+        "red_ratio": 1.6e-05,
+        "green_ratio": 0.466745,
+        "yellow_ratio": 0.00112,
+        "dominant_color": "GREEN",
+        "confidence": 0.466745
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 215,
-      "timestamp": 21.168816804885864,
+      "timestamp": 15.996154308319092,
       "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.03
+        "red_ratio": 1.6e-05,
+        "green_ratio": 0.466097,
+        "yellow_ratio": 0.001133,
+        "dominant_color": "GREEN",
+        "confidence": 0.466097
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 220,
-      "timestamp": 21.631866693496704,
+      "timestamp": 16.338147401809692,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.465107,
+        "yellow_ratio": 0.001139,
+        "dominant_color": "GREEN",
+        "confidence": 0.465107
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 225,
-      "timestamp": 22.105607986450195,
+      "timestamp": 16.69413423538208,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.06
+        "red_ratio": 1.3e-05,
+        "green_ratio": 0.463802,
+        "yellow_ratio": 0.001165,
+        "dominant_color": "GREEN",
+        "confidence": 0.463802
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 230,
-      "timestamp": 22.589049577713013,
+      "timestamp": 17.045244932174683,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 2e-05,
+        "green_ratio": 0.462917,
+        "yellow_ratio": 0.001182,
+        "dominant_color": "GREEN",
+        "confidence": 0.462917
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 235,
-      "timestamp": 23.040273904800415,
+      "timestamp": 17.399612188339233,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
+        "red_ratio": 1e-05,
+        "green_ratio": 0.461442,
+        "yellow_ratio": 0.001188,
+        "dominant_color": "GREEN",
+        "confidence": 0.461442
       },
       "speed_control": {
         "current_speed": 0.5308,
         "target_speed": 0.5,
         "speed_error": 0.0308
       },
-      "traffic_state": "GREEN"
+      "traffic_state": "UNKNOWN"
     },
     {
       "frame": 240,
-      "timestamp": 23.44105052947998,
+      "timestamp": 17.795045375823975,
       "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 245,
-      "timestamp": 23.788482427597046,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 250,
-      "timestamp": 24.174643516540527,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 255,
-      "timestamp": 24.583637714385986,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.06
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 260,
-      "timestamp": 24.92576503753662,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
+        "red_ratio": 1.6e-05,
+        "green_ratio": 0.460124,
+        "yellow_ratio": 0.001188,
         "dominant_color": "GREEN",
-        "confidence": 0.06
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 265,
-      "timestamp": 25.322205543518066,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "GREEN"
-    },
-    {
-      "frame": 270,
-      "timestamp": 25.69926905632019,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 275,
-      "timestamp": 26.07518768310547,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 280,
-      "timestamp": 26.46671724319458,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 285,
-      "timestamp": 26.84662175178528,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 290,
-      "timestamp": 27.183502674102783,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 295,
-      "timestamp": 27.53846049308777,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 300,
-      "timestamp": 27.93774390220642,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 305,
-      "timestamp": 28.278278827667236,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "RED",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 310,
-      "timestamp": 28.660213470458984,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.001,
-        "dominant_color": "GREEN",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 315,
-      "timestamp": 29.047722339630127,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.06
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 320,
-      "timestamp": 29.41335129737854,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.1
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 325,
-      "timestamp": 29.824591875076294,
-      "color_detection": {
-        "red_percentage": 0.0,
-        "green_percentage": 0.001,
-        "yellow_percentage": 0.0,
-        "dominant_color": "GREEN",
-        "confidence": 0.06
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 330,
-      "timestamp": 30.179989099502563,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.001,
-        "dominant_color": "YELLOW",
-        "confidence": 0.13
-      },
-      "speed_control": {
-        "current_speed": 0.5308,
-        "target_speed": 0.5,
-        "speed_error": 0.0308
-      },
-      "traffic_state": "UNKNOWN"
-    },
-    {
-      "frame": 335,
-      "timestamp": 30.52285647392273,
-      "color_detection": {
-        "red_percentage": 0.001,
-        "green_percentage": 0.0,
-        "yellow_percentage": 0.0,
-        "dominant_color": "RED",
-        "confidence": 0.13
+        "confidence": 0.460124
       },
       "speed_control": {
         "current_speed": 0.5308,
@@ -1161,65 +838,47 @@
       "traffic_state": "UNKNOWN"
     }
   ],
-  "state_changes": [
-    {
-      "timestamp": 25.535842180252075,
-      "frame": 268,
-      "previous_state": "GREEN",
-      "new_state": "UNKNOWN",
-      "speed_at_change": 0.5307692307692308,
-      "target_speed": 0.5
-    }
-  ],
-  "reaction_events": [
-    {
-      "timestamp": 25.5366370677948,
-      "reaction_time": 0.00079345703125,
-      "initial_speed": 0.5307692307692308,
-      "final_speed": 0.5307692307692308,
-      "target_speed": 0.5,
-      "state": "UNKNOWN"
-    }
-  ],
+  "state_changes": [],
+  "reaction_events": [],
   "session_summary": {
-    "end_time": "2025-12-22T16:25:39.083376",
-    "total_duration": 30.656893730163574,
-    "total_frames": 338,
-    "total_state_changes": 1,
-    "total_reaction_events": 1,
+    "end_time": "2025-12-22T23:27:27.292501",
+    "total_duration": 17.795045375823975,
+    "total_frames": 241,
+    "total_state_changes": 0,
+    "total_reaction_events": 0,
     "statistics": {
       "speed": {
-        "mean": 0.5291989076012744,
-        "std": 0.028827301383644092,
+        "mean": 0.5285668688143733,
+        "std": 0.03411884467125115,
         "max": 0.5307692307692308,
         "min": 0.0
       },
       "speed_error": {
-        "mean": 0.03215748748293122,
-        "rmse": 0.041031567240006936
+        "mean": 0.03271624640773444,
+        "rmse": 0.04449900623113494
       },
       "color_detection": {
         "red": {
-          "mean": 0.0007463865261341224,
-          "max": 0.001953125
+          "mean": 0.000290280839384509,
+          "max": 0.001357421875
         },
         "green": {
-          "mean": 0.00866000986193294,
-          "max": 0.055013020833333336
+          "mean": 0.42631950747752423,
+          "max": 0.4817805989583333
         },
         "yellow": {
-          "mean": 0.00042664416913214997,
-          "max": 0.0013020833333333335
+          "mean": 0.0012633720176348548,
+          "max": 0.002942708333333333
         }
       },
       "confidence": {
-        "mean": 0.8071281041987912,
-        "std": 1.2133599359911642
+        "mean": 0.42631950747752423,
+        "std": 0.11527951911844656
       },
       "reaction_time": {
-        "mean": 0.00079345703125,
-        "std": 0.0,
-        "count": 1
+        "mean": 0,
+        "std": 0,
+        "count": 0
       }
     }
   }
