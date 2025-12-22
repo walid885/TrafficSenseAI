@@ -27,7 +27,7 @@ entry_points={
         'pid_tuner = traffic_light_robot.pid_tuner:main',
         'hsv_tuner_node = traffic_light_robot.hsv_tuner_node:main',
         'traffic_light_detector = traffic_light_robot.detector_node:main',
-        'hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main',
+        'hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main',  # ← FIXED
         'traffic_light_detector_v2 = traffic_light_robot.detector_node_v2:main',
     ],
 },
