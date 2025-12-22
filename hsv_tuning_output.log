@@ -1,31 +1,26 @@
 /usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
   warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
-[INFO] [1766432566.061527358] [hsv_auto_tuner]: ================================================================================
-[INFO] [1766432566.062511882] [hsv_auto_tuner]: HSV AUTO-TUNER STARTED
-[INFO] [1766432566.063120633] [hsv_auto_tuner]: Waiting for messages...
-[INFO] [1766432566.063752981] [hsv_auto_tuner]: ================================================================================
-[INFO] [1766432568.020836603] [hsv_auto_tuner]: DIAGNOSTICS | Images: 16 | State msgs: 16 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432570.013359487] [hsv_auto_tuner]: DIAGNOSTICS | Images: 33 | State msgs: 34 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432572.016569944] [hsv_auto_tuner]: DIAGNOSTICS | Images: 51 | State msgs: 51 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432574.016926827] [hsv_auto_tuner]: DIAGNOSTICS | Images: 71 | State msgs: 71 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432576.013845706] [hsv_auto_tuner]: DIAGNOSTICS | Images: 89 | State msgs: 90 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432578.022718909] [hsv_auto_tuner]: DIAGNOSTICS | Images: 109 | State msgs: 109 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432580.027724177] [hsv_auto_tuner]: DIAGNOSTICS | Images: 128 | State msgs: 129 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432582.012911067] [hsv_auto_tuner]: DIAGNOSTICS | Images: 151 | State msgs: 152 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432584.090246753] [hsv_auto_tuner]: DIAGNOSTICS | Images: 169 | State msgs: 170 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432586.014396572] [hsv_auto_tuner]: DIAGNOSTICS | Images: 188 | State msgs: 188 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432588.014324036] [hsv_auto_tuner]: DIAGNOSTICS | Images: 208 | State msgs: 208 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432590.014576102] [hsv_auto_tuner]: DIAGNOSTICS | Images: 228 | State msgs: 229 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432592.016715138] [hsv_auto_tuner]: DIAGNOSTICS | Images: 250 | State msgs: 250 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432594.017789816] [hsv_auto_tuner]: DIAGNOSTICS | Images: 267 | State msgs: 268 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432596.016356817] [hsv_auto_tuner]: DIAGNOSTICS | Images: 288 | State msgs: 288 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432598.015705093] [hsv_auto_tuner]: DIAGNOSTICS | Images: 307 | State msgs: 308 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432600.014413499] [hsv_auto_tuner]: DIAGNOSTICS | Images: 327 | State msgs: 327 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432602.013385065] [hsv_auto_tuner]: DIAGNOSTICS | Images: 347 | State msgs: 347 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432604.023972906] [hsv_auto_tuner]: DIAGNOSTICS | Images: 367 | State msgs: 367 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432606.014800745] [hsv_auto_tuner]: DIAGNOSTICS | Images: 385 | State msgs: 386 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432608.013255682] [hsv_auto_tuner]: DIAGNOSTICS | Images: 405 | State msgs: 406 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432610.013994863] [hsv_auto_tuner]: DIAGNOSTICS | Images: 425 | State msgs: 425 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432612.013352307] [hsv_auto_tuner]: DIAGNOSTICS | Images: 446 | State msgs: 447 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432614.012817108] [hsv_auto_tuner]: DIAGNOSTICS | Images: 465 | State msgs: 465 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
-[INFO] [1766432616.013390240] [hsv_auto_tuner]: DIAGNOSTICS | Images: 483 | State msgs: 484 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433121.392577899] [hsv_auto_tuner]: ================================================================================
+[INFO] [1766433121.393299191] [hsv_auto_tuner]: HSV AUTO-TUNER STARTED
+[INFO] [1766433121.393775625] [hsv_auto_tuner]: Waiting for messages...
+[INFO] [1766433121.395788056] [hsv_auto_tuner]: ================================================================================
+[INFO] [1766433123.334049461] [hsv_auto_tuner]: DIAGNOSTICS | Images: 18 | State msgs: 34 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433125.332708564] [hsv_auto_tuner]: DIAGNOSTICS | Images: 37 | State msgs: 74 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433127.333086582] [hsv_auto_tuner]: DIAGNOSTICS | Images: 55 | State msgs: 110 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433129.332759473] [hsv_auto_tuner]: DIAGNOSTICS | Images: 74 | State msgs: 148 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433131.347929978] [hsv_auto_tuner]: DIAGNOSTICS | Images: 94 | State msgs: 188 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433133.331916363] [hsv_auto_tuner]: DIAGNOSTICS | Images: 114 | State msgs: 228 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433135.334633071] [hsv_auto_tuner]: DIAGNOSTICS | Images: 138 | State msgs: 276 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433137.333574131] [hsv_auto_tuner]: DIAGNOSTICS | Images: 164 | State msgs: 328 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433139.339139789] [hsv_auto_tuner]: DIAGNOSTICS | Images: 191 | State msgs: 380 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433141.333031135] [hsv_auto_tuner]: DIAGNOSTICS | Images: 214 | State msgs: 428 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433143.332137611] [hsv_auto_tuner]: DIAGNOSTICS | Images: 240 | State msgs: 480 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433145.333677756] [hsv_auto_tuner]: DIAGNOSTICS | Images: 265 | State msgs: 530 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433147.335352438] [hsv_auto_tuner]: DIAGNOSTICS | Images: 291 | State msgs: 581 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433149.332146469] [hsv_auto_tuner]: DIAGNOSTICS | Images: 314 | State msgs: 628 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433151.337378790] [hsv_auto_tuner]: DIAGNOSTICS | Images: 334 | State msgs: 668 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433153.331494941] [hsv_auto_tuner]: DIAGNOSTICS | Images: 359 | State msgs: 718 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433155.333634378] [hsv_auto_tuner]: DIAGNOSTICS | Images: 384 | State msgs: 768 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433157.332827669] [hsv_auto_tuner]: DIAGNOSTICS | Images: 409 | State msgs: 817 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433159.332091707] [hsv_auto_tuner]: DIAGNOSTICS | Images: 432 | State msgs: 864 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
+[INFO] [1766433161.331981137] [hsv_auto_tuner]: DIAGNOSTICS | Images: 455 | State msgs: 897 | Current state: UNKNOWN | RED: 0/50 | YELLOW: 0/50 | GREEN: 0/50
