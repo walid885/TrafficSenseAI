@@ -13,7 +13,6 @@ cleanup() {
     pkill -f "gzclient"
     sleep 2
     
-    # Display results if they exist
     if [ -f "$PROJECT_DIR/hsv_optimized_params.json" ]; then
         echo ""
         echo "═══════════════════════════════════════════════════════════"
@@ -32,24 +31,26 @@ cd "$PROJECT_DIR"
 colcon build --packages-select traffic_light_robot
 source install/setup.bash
 
+# Launch simulation
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 launch robot_description autonomous.launch.py; exec bash" 2>/dev/null &
 
 sleep 8
 
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot detector_node; exec bash" 2>/dev/null &
+# Launch detector_node_v2 (publishes /traffic_light_state properly)
+gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot traffic_light_detector_v2; exec bash" 2>/dev/null &
 
 sleep 3
 
+# Launch auto-tuner
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot hsv_auto_tuner 2>&1 | tee hsv_tuning_output.log; exec bash" 2>/dev/null &
-TUNER_PID=$!
 
 echo "═══════════════════════════════════════════════════════════"
 echo "HSV AUTO-TUNER ACTIVE"
 echo "═══════════════════════════════════════════════════════════"
+echo "Using detector_node_v2 for proper state publishing"
 echo "Collecting 50 frames per state (RED, YELLOW, GREEN)"
-echo "Process will auto-complete after RED detection and optimization"
-echo "Output logged to: hsv_tuning_output.log"
-echo "Press Ctrl+C to shutdown manually"
+echo "Check diagnostics output every 2 seconds"
+echo "Press Ctrl+C to shutdown"
 echo "═══════════════════════════════════════════════════════════"
 
 wait

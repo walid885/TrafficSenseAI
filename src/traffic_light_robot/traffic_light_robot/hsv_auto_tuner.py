@@ -12,8 +12,6 @@ from datetime import datetime
 import sys
 
 class HSVAutoTuner(Node):
-    """Automated HSV parameter optimizer using differential evolution"""
-    
     def __init__(self):
         super().__init__('hsv_auto_tuner')
         self.bridge = CvBridge()
@@ -25,11 +23,14 @@ class HSVAutoTuner(Node):
         self.frames_per_state = 50
         self.collected_frames = {'RED': 0, 'YELLOW': 0, 'GREEN': 0}
         
-        # Track if we've seen RED (end condition)
+        # Diagnostic counters
+        self.image_count = 0
+        self.state_msg_count = 0
+        self.last_diagnostic = self.get_clock().now()
+        
         self.red_detected = False
         self.optimization_complete = False
         
-        # Best HSV ranges (will be optimized)
         self.best_ranges = {
             'RED': {'h1': [0, 10], 's1': [100, 255], 'v1': [100, 255],
                     'h2': [170, 180], 's2': [100, 255], 'v2': [100, 255]},
@@ -37,28 +38,45 @@ class HSVAutoTuner(Node):
             'GREEN': {'h': [45, 75], 's': [100, 255], 'v': [100, 255]}
         }
         
-        # ROI parameters
         self.roi = {'y_start': 0.3, 'y_end': 0.7, 'x_start': 0.3, 'x_end': 0.7}
         
-        # Subscriptions
+        # Subscriptions with diagnostics
         self.image_sub = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
         self.state_sub = self.create_subscription(
             String, '/traffic_light_state', self.state_callback, 10)
         
-        # Publisher for optimized results
         self.result_pub = self.create_publisher(String, '/hsv_tuning_result', 10)
         
-        self.get_logger().info('HSV Auto-Tuner started - Collecting training data...')
+        # Diagnostic timer
+        self.diagnostic_timer = self.create_timer(2.0, self.print_diagnostics)
+        
+        self.get_logger().info('=' * 80)
+        self.get_logger().info('HSV AUTO-TUNER STARTED')
+        self.get_logger().info('Waiting for messages...')
+        self.get_logger().info('=' * 80)
+        
+    def print_diagnostics(self):
+        """Print diagnostic information every 2 seconds"""
+        if not self.optimization_complete:
+            self.get_logger().info(
+                f'DIAGNOSTICS | Images: {self.image_count} | '
+                f'State msgs: {self.state_msg_count} | '
+                f'Current state: {self.ground_truth_state} | '
+                f'RED: {self.collected_frames["RED"]}/50 | '
+                f'YELLOW: {self.collected_frames["YELLOW"]}/50 | '
+                f'GREEN: {self.collected_frames["GREEN"]}/50'
+            )
         
     def state_callback(self, msg):
-        """Track ground truth traffic light state"""
+        self.state_msg_count += 1
         self.ground_truth_state = msg.data
         if msg.data == "RED":
             self.red_detected = True
+            if self.collected_frames['RED'] == 0:
+                self.get_logger().info('>>> RED LIGHT DETECTED - Starting RED collection')
         
     def extract_roi(self, img):
-        """Extract region of interest from image"""
         h, w = img.shape[:2]
         y1 = int(h * self.roi['y_start'])
         y2 = int(h * self.roi['y_end'])
@@ -67,7 +85,6 @@ class HSVAutoTuner(Node):
         return img[y1:y2, x1:x2]
     
     def preprocess(self, img):
-        """Apply preprocessing for better color detection"""
         blurred = cv2.GaussianBlur(img, (5, 5), 0)
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
@@ -78,14 +95,14 @@ class HSVAutoTuner(Node):
         return enhanced
     
     def image_callback(self, msg):
-        """Collect training images during collection phase"""
+        self.image_count += 1
+        
         if not self.collection_phase or self.optimization_complete:
             return
             
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
             
-            # Only collect when we have valid ground truth
             if self.ground_truth_state in ['RED', 'YELLOW', 'GREEN']:
                 state = self.ground_truth_state
                 
@@ -97,21 +114,22 @@ class HSVAutoTuner(Node):
                     self.training_data[state].append(hsv.copy())
                     self.collected_frames[state] += 1
                     
-                    self.get_logger().info(
-                        f'Collected {state}: {self.collected_frames[state]}/{self.frames_per_state}')
+                    if self.collected_frames[state] % 10 == 0:
+                        self.get_logger().info(
+                            f'>>> Collected {state}: {self.collected_frames[state]}/{self.frames_per_state}')
             
-            # Check if collection is complete AND red detected
             if (all(count >= self.frames_per_state for count in self.collected_frames.values()) 
                 and self.red_detected):
                 self.collection_phase = False
-                self.get_logger().info('Collection complete - Starting optimization...')
+                self.get_logger().info('=' * 80)
+                self.get_logger().info('COLLECTION COMPLETE - Starting optimization...')
+                self.get_logger().info('=' * 80)
                 self.start_optimization()
                 
         except Exception as e:
             self.get_logger().error(f'Collection error: {str(e)}')
     
     def fitness_function(self, params, color):
-        """Fitness function for optimization"""
         if color == 'RED':
             h1_min, h1_max = int(params[0]), int(params[1])
             s1_min, s1_max = int(params[2]), int(params[3])
@@ -148,7 +166,6 @@ class HSVAutoTuner(Node):
         return -fitness
     
     def optimize_color(self, color):
-        """Optimize HSV range for a specific color"""
         self.get_logger().info(f'Optimizing {color}...')
         
         if color == 'RED':
@@ -166,7 +183,7 @@ class HSVAutoTuner(Node):
                 (80, 255), (100, 255),
                 (70, 255), (100, 255)
             ]
-        else:  # GREEN
+        else:
             bounds = [
                 (35, 50), (55, 85),
                 (80, 255), (100, 255),
@@ -186,7 +203,6 @@ class HSVAutoTuner(Node):
         return result.x
     
     def start_optimization(self):
-        """Run optimization for all colors"""
         try:
             optimized_params = {}
             
@@ -214,15 +230,15 @@ class HSVAutoTuner(Node):
             self.print_results()
             self.optimization_complete = True
             
-            # Exit after completion
-            self.get_logger().info('Optimization complete - Shutting down node')
+            self.get_logger().info('=' * 80)
+            self.get_logger().info('OPTIMIZATION COMPLETE - Shutting down node')
+            self.get_logger().info('=' * 80)
             rclpy.shutdown()
             
         except Exception as e:
             self.get_logger().error(f'Optimization error: {str(e)}')
     
     def save_results(self):
-        """Save optimized parameters to JSON file"""
         output = {
             'timestamp': datetime.now().isoformat(),
             'optimized_ranges': self.best_ranges,
@@ -234,21 +250,9 @@ class HSVAutoTuner(Node):
         with open(filename, 'w') as f:
             json.dump(output, f, indent=2)
         
-        # Also save to tuning_results directory
-        try:
-            import os
-            results_dir = 'tuning_results'
-            os.makedirs(results_dir, exist_ok=True)
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            results_file = f'{results_dir}/hsv_tuned_{timestamp}.json'
-            with open(results_file, 'w') as f:
-                json.dump(output, f, indent=2)
-            self.get_logger().info(f'Results saved to {filename} and {results_file}')
-        except Exception as e:
-            self.get_logger().warn(f'Could not save to tuning_results: {e}')
+        self.get_logger().info(f'Results saved to {filename}')
     
     def print_results(self):
-        """Print optimized parameters in usable format"""
         print("\n" + "="*80)
         print("OPTIMIZED HSV PARAMETERS")
         print("="*80)
@@ -262,23 +266,16 @@ class HSVAutoTuner(Node):
         print(f"\nRED:")
         print(f"  Range 1: H=[{r['h1'][0]}, {r['h1'][1]}], S=[{r['s1'][0]}, {r['s1'][1]}], V=[{r['v1'][0]}, {r['v1'][1]}]")
         print(f"  Range 2: H=[{r['h2'][0]}, {r['h2'][1]}], S=[{r['s2'][0]}, {r['s2'][1]}], V=[{r['v2'][0]}, {r['v2'][1]}]")
-        print(f"  Code: red1 = cv2.inRange(hsv, ({r['h1'][0]}, {r['s1'][0]}, {r['v1'][0]}), ({r['h1'][1]}, {r['s1'][1]}, {r['v1'][1]}))")
-        print(f"        red2 = cv2.inRange(hsv, ({r['h2'][0]}, {r['s2'][0]}, {r['v2'][0]}), ({r['h2'][1]}, {r['s2'][1]}, {r['v2'][1]}))")
-        print(f"        red_mask = red1 | red2")
         
         y = self.best_ranges['YELLOW']
         print(f"\nYELLOW:")
         print(f"  H=[{y['h'][0]}, {y['h'][1]}], S=[{y['s'][0]}, {y['s'][1]}], V=[{y['v'][0]}, {y['v'][1]}]")
-        print(f"  Code: yellow_mask = cv2.inRange(hsv, ({y['h'][0]}, {y['s'][0]}, {y['v'][0]}), ({y['h'][1]}, {y['s'][1]}, {y['v'][1]}))")
         
         g = self.best_ranges['GREEN']
         print(f"\nGREEN:")
         print(f"  H=[{g['h'][0]}, {g['h'][1]}], S=[{g['s'][0]}, {g['s'][1]}], V=[{g['v'][0]}, {g['v'][1]}]")
-        print(f"  Code: green_mask = cv2.inRange(hsv, ({g['h'][0]}, {g['s'][0]}, {g['v'][0]}), ({g['h'][1]}, {g['s'][1]}, {g['v'][1]}))")
         
         print("\n" + "="*80)
-        print("Results saved to hsv_optimized_params.json")
-        print("="*80 + "\n")
 
 
 def main():
