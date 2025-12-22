@@ -1,0 +1,2092 @@
+{
+  "session_info": {
+    "start_time": "2025-12-22T22:58:01.803222",
+    "hsv_ranges": {
+      "red": {
+        "h1": [
+          0,
+          15
+        ],
+        "s1": [
+          20,
+          255
+        ],
+        "v1": [
+          20,
+          255
+        ],
+        "h2": [
+          165,
+          180
+        ],
+        "s2": [
+          20,
+          255
+        ],
+        "v2": [
+          20,
+          255
+        ]
+      },
+      "yellow": {
+        "h": [
+          10,
+          45
+        ],
+        "s": [
+          20,
+          255
+        ],
+        "v": [
+          20,
+          255
+        ]
+      },
+      "green": {
+        "h": [
+          30,
+          90
+        ],
+        "s": [
+          20,
+          255
+        ],
+        "v": [
+          20,
+          255
+        ]
+      }
+    }
+  },
+  "frame_data": [
+    {
+      "frame": 0,
+      "timestamp": 0.014858017,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0013248697916666667,
+        "green_raw": 0.47957682291666665,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0013248697916666667,
+        "green_smooth": 0.47957682291666665
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 10,
+      "timestamp": 0.722317366,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.00018229166666666667,
+        "green_raw": 0.47787109375,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0002517361111111111,
+        "green_smooth": 0.47803819444444445
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 20,
+      "timestamp": 1.52720034,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 1.6276041666666666e-05,
+        "green_raw": 0.4763639322916667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 2.170138888888889e-05,
+        "green_smooth": 0.47645290798611106
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 30,
+      "timestamp": 2.238134423,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.00012044270833333334,
+        "green_raw": 0.47564127604166667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 9.548611111111112e-05,
+        "green_smooth": 0.4756770833333333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 40,
+      "timestamp": 2.91854552,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.000185546875,
+        "green_raw": 0.4750162760416667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.00016927083333333334,
+        "green_smooth": 0.4751150173611111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 50,
+      "timestamp": 3.683696981,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.000302734375,
+        "green_raw": 0.4742936197916667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.00029296875000000004,
+        "green_smooth": 0.47427625868055556
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 60,
+      "timestamp": 4.421741035,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0004069010416666667,
+        "green_raw": 0.47418294270833333,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.00037217881944444446,
+        "green_smooth": 0.4742610677083334
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 70,
+      "timestamp": 5.165247789,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.00042317708333333335,
+        "green_raw": 0.47346354166666665,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0004177517361111111,
+        "green_smooth": 0.47353407118055557
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 80,
+      "timestamp": 5.878529823,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0004654947916666667,
+        "green_raw": 0.472353515625,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0004633246527777778,
+        "green_smooth": 0.47244357638888895
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 90,
+      "timestamp": 6.660403808,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0005078125,
+        "green_raw": 0.47134765625,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0005013020833333333,
+        "green_smooth": 0.4714713541666667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 100,
+      "timestamp": 7.462297137,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.000615234375,
+        "green_raw": 0.4699251302083333,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0005989583333333333,
+        "green_smooth": 0.47002712673611113
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 110,
+      "timestamp": 8.298376449,
+      "confidences": {
+        "red_raw": 3.2552083333333335e-06,
+        "yellow_raw": 0.0008040364583333334,
+        "green_raw": 0.46838541666666667,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0007682291666666666,
+        "green_smooth": 0.4686729600694444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 120,
+      "timestamp": 9.049522365,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.000859375,
+        "green_raw": 0.466845703125,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0008582899305555556,
+        "green_smooth": 0.4669932725694444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 130,
+      "timestamp": 9.938255407,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0008919270833333333,
+        "green_raw": 0.46460611979166666,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0008919270833333334,
+        "green_smooth": 0.4648958333333333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 140,
+      "timestamp": 10.766197246,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0009114583333333333,
+        "green_raw": 0.46186197916666666,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.000910373263888889,
+        "green_smooth": 0.46230468750000003
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 150,
+      "timestamp": 11.598285014,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.00091796875,
+        "green_raw": 0.458857421875,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0009190538194444445,
+        "green_smooth": 0.45925998263888895
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 160,
+      "timestamp": 12.4095147,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0010188802083333332,
+        "green_raw": 0.4556022135416667,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0010188802083333332,
+        "green_smooth": 0.45589952256944444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 170,
+      "timestamp": 13.294513295,
+      "confidences": {
+        "red_raw": 3.2552083333333335e-06,
+        "yellow_raw": 0.0011263020833333333,
+        "green_raw": 0.45131510416666665,
+        "red_smooth": 2.170138888888889e-06,
+        "yellow_smooth": 0.0010926649305555555,
+        "green_smooth": 0.4517621527777778
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 180,
+      "timestamp": 14.025205302,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0013932291666666667,
+        "green_raw": 0.4471354166666667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0013758680555555555,
+        "green_smooth": 0.44769856770833333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 190,
+      "timestamp": 14.83897831,
+      "confidences": {
+        "red_raw": 3.2552083333333335e-06,
+        "yellow_raw": 0.0015364583333333333,
+        "green_raw": 0.44133138020833335,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0015245225694444444,
+        "green_smooth": 0.44196940104166665
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 200,
+      "timestamp": 15.718342389,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.001640625,
+        "green_raw": 0.4333365885416667,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0016297743055555555,
+        "green_smooth": 0.43391276041666665
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 210,
+      "timestamp": 16.450817893,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.001669921875,
+        "green_raw": 0.42423177083333335,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0016731770833333336,
+        "green_smooth": 0.4250434027777778
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 220,
+      "timestamp": 17.219083257,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0016829427083333334,
+        "green_raw": 0.41076171875,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0016937934027777778,
+        "green_smooth": 0.4121538628472223
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 230,
+      "timestamp": 18.015365657,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0016243489583333333,
+        "green_raw": 0.393447265625,
+        "red_smooth": 2.170138888888889e-06,
+        "yellow_smooth": 0.001640625,
+        "green_smooth": 0.395595703125
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 240,
+      "timestamp": 18.862379784,
+      "confidences": {
+        "red_raw": 6.510416666666667e-06,
+        "yellow_raw": 0.0020865885416666667,
+        "green_raw": 0.36167317708333335,
+        "red_smooth": 4.340277777777778e-06,
+        "yellow_smooth": 0.0020681423611111113,
+        "green_smooth": 0.3664908854166667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 250,
+      "timestamp": 19.609778577,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.002197265625,
+        "green_raw": 0.31452799479166665,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.002175564236111111,
+        "green_smooth": 0.3200010850694444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 260,
+      "timestamp": 20.348936159,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0022330729166666666,
+        "green_raw": 0.19085286458333334,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0022406684027777776,
+        "green_smooth": 0.2107638888888889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 270,
+      "timestamp": 21.092264935,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0022688802083333333,
+        "green_raw": 0.0025618489583333335,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.0022645399305555552,
+        "green_smooth": 0.011357421875
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 280,
+      "timestamp": 21.915181929,
+      "confidences": {
+        "red_raw": 9.765625e-06,
+        "yellow_raw": 0.0026139322916666667,
+        "green_raw": 0.0029524739583333334,
+        "red_smooth": 8.680555555555556e-06,
+        "yellow_smooth": 0.002542317708333333,
+        "green_smooth": 0.0028732638888888887
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 290,
+      "timestamp": 22.711373281,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0029622395833333332,
+        "green_raw": 0.0033203125,
+        "red_smooth": 2.170138888888889e-06,
+        "yellow_smooth": 0.002951388888888889,
+        "green_smooth": 0.0033094618055555555
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 300,
+      "timestamp": 23.734802753,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0030696614583333335,
+        "green_raw": 0.00345703125,
+        "red_smooth": 1.0850694444444444e-06,
+        "yellow_smooth": 0.003117404513888889,
+        "green_smooth": 0.0033745659722222224
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 310,
+      "timestamp": 24.543256203,
+      "confidences": {
+        "red_raw": 9.765625e-06,
+        "yellow_raw": 0.00349609375,
+        "green_raw": 0.0036588541666666666,
+        "red_smooth": 9.765625e-06,
+        "yellow_smooth": 0.003386501736111111,
+        "green_smooth": 0.0035633680555555553
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 320,
+      "timestamp": 25.415552538,
+      "confidences": {
+        "red_raw": 1.6276041666666666e-05,
+        "yellow_raw": 0.0039713541666666664,
+        "green_raw": 0.004111328125,
+        "red_smooth": 1.193576388888889e-05,
+        "yellow_smooth": 0.003929036458333333,
+        "green_smooth": 0.004083116319444444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 330,
+      "timestamp": 26.152737213,
+      "confidences": {
+        "red_raw": 9.765625e-06,
+        "yellow_raw": 0.004147135416666667,
+        "green_raw": 0.0043359375,
+        "red_smooth": 7.595486111111112e-06,
+        "yellow_smooth": 0.004142795138888889,
+        "green_smooth": 0.004309895833333334
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 340,
+      "timestamp": 26.92055632,
+      "confidences": {
+        "red_raw": 6.510416666666667e-06,
+        "yellow_raw": 0.004680989583333333,
+        "green_raw": 0.004905598958333333,
+        "red_smooth": 2.170138888888889e-06,
+        "yellow_smooth": 0.004634331597222222,
+        "green_smooth": 0.004850260416666667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 350,
+      "timestamp": 27.781603448,
+      "confidences": {
+        "red_raw": 9.765625e-06,
+        "yellow_raw": 0.005143229166666667,
+        "green_raw": 0.005377604166666667,
+        "red_smooth": 1.193576388888889e-05,
+        "yellow_smooth": 0.005111762152777778,
+        "green_smooth": 0.005328776041666667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 360,
+      "timestamp": 28.558654082,
+      "confidences": {
+        "red_raw": 9.765625e-06,
+        "yellow_raw": 0.005628255208333334,
+        "green_raw": 0.00583984375,
+        "red_smooth": 1.0850694444444445e-05,
+        "yellow_smooth": 0.005531684027777778,
+        "green_smooth": 0.005776909722222222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 370,
+      "timestamp": 29.391629066,
+      "confidences": {
+        "red_raw": 6.510416666666667e-06,
+        "yellow_raw": 0.0062858072916666665,
+        "green_raw": 0.006588541666666667,
+        "red_smooth": 9.765625e-06,
+        "yellow_smooth": 0.006259765625,
+        "green_smooth": 0.006550564236111111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 380,
+      "timestamp": 30.318550392,
+      "confidences": {
+        "red_raw": 1.953125e-05,
+        "yellow_raw": 0.0071842447916666665,
+        "green_raw": 0.0075390625,
+        "red_smooth": 1.736111111111111e-05,
+        "yellow_smooth": 0.007116970486111111,
+        "green_smooth": 0.007467447916666667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 390,
+      "timestamp": 31.201903328,
+      "confidences": {
+        "red_raw": 1.3020833333333334e-05,
+        "yellow_raw": 0.007952473958333333,
+        "green_raw": 0.008385416666666666,
+        "red_smooth": 1.4105902777777779e-05,
+        "yellow_smooth": 0.007796223958333332,
+        "green_smooth": 0.008215060763888888
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 400,
+      "timestamp": 32.07056878,
+      "confidences": {
+        "red_raw": 2.2786458333333334e-05,
+        "yellow_raw": 0.008828125,
+        "green_raw": 0.009326171875,
+        "red_smooth": 2.2786458333333334e-05,
+        "yellow_smooth": 0.008782552083333332,
+        "green_smooth": 0.009280598958333334
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 410,
+      "timestamp": 32.82564051,
+      "confidences": {
+        "red_raw": 2.2786458333333334e-05,
+        "yellow_raw": 0.009944661458333334,
+        "green_raw": 0.010472005208333333,
+        "red_smooth": 1.953125e-05,
+        "yellow_smooth": 0.009871961805555555,
+        "green_smooth": 0.010412326388888888
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 420,
+      "timestamp": 33.62445932,
+      "confidences": {
+        "red_raw": 2.9296875e-05,
+        "yellow_raw": 0.01099609375,
+        "green_raw": 0.011647135416666666,
+        "red_smooth": 2.8211805555555558e-05,
+        "yellow_smooth": 0.010853949652777778,
+        "green_smooth": 0.011485460069444444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 430,
+      "timestamp": 34.420129837,
+      "confidences": {
+        "red_raw": 1.953125e-05,
+        "yellow_raw": 0.012366536458333334,
+        "green_raw": 0.013040364583333333,
+        "red_smooth": 2.712673611111111e-05,
+        "yellow_smooth": 0.012185329861111113,
+        "green_smooth": 0.012864583333333334
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 440,
+      "timestamp": 35.285252183,
+      "confidences": {
+        "red_raw": 3.90625e-05,
+        "yellow_raw": 0.013990885416666666,
+        "green_raw": 0.014690755208333333,
+        "red_smooth": 3.689236111111111e-05,
+        "yellow_smooth": 0.013899739583333334,
+        "green_smooth": 0.01461480034722222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 450,
+      "timestamp": 36.04622765,
+      "confidences": {
+        "red_raw": 3.90625e-05,
+        "yellow_raw": 0.016181640625,
+        "green_raw": 0.016930338541666666,
+        "red_smooth": 4.014756944444445e-05,
+        "yellow_smooth": 0.0159765625,
+        "green_smooth": 0.01672200520833333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 460,
+      "timestamp": 36.925771914,
+      "confidences": {
+        "red_raw": 4.2317708333333335e-05,
+        "yellow_raw": 0.018313802083333334,
+        "green_raw": 0.01908203125,
+        "red_smooth": 3.90625e-05,
+        "yellow_smooth": 0.018096788194444446,
+        "green_smooth": 0.018879123263888888
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 470,
+      "timestamp": 37.755177249,
+      "confidences": {
+        "red_raw": 4.2317708333333335e-05,
+        "yellow_raw": 0.02138671875,
+        "green_raw": 0.022229817708333332,
+        "red_smooth": 4.6657986111111113e-05,
+        "yellow_smooth": 0.02090060763888889,
+        "green_smooth": 0.021751302083333337
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 480,
+      "timestamp": 38.475081161,
+      "confidences": {
+        "red_raw": 5.208333333333334e-05,
+        "yellow_raw": 0.024977213541666668,
+        "green_raw": 0.025891927083333332,
+        "red_smooth": 5.6423611111111115e-05,
+        "yellow_smooth": 0.024596354166666667,
+        "green_smooth": 0.025511067708333335
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 490,
+      "timestamp": 39.276587282,
+      "confidences": {
+        "red_raw": 5.5338541666666664e-05,
+        "yellow_raw": 0.029381510416666666,
+        "green_raw": 0.030478515625,
+        "red_smooth": 5.533854166666667e-05,
+        "yellow_smooth": 0.028837890625,
+        "green_smooth": 0.02992296006944445
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 500,
+      "timestamp": 40.029330973,
+      "confidences": {
+        "red_raw": 6.510416666666667e-05,
+        "yellow_raw": 0.034775390625,
+        "green_raw": 0.03596354166666667,
+        "red_smooth": 6.293402777777779e-05,
+        "yellow_smooth": 0.03415473090277778,
+        "green_smooth": 0.03534396701388889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 510,
+      "timestamp": 40.752782515,
+      "confidences": {
+        "red_raw": 6.8359375e-05,
+        "yellow_raw": 0.0419921875,
+        "green_raw": 0.043294270833333336,
+        "red_smooth": 6.618923611111112e-05,
+        "yellow_smooth": 0.04106011284722222,
+        "green_smooth": 0.04235134548611111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 520,
+      "timestamp": 41.591215291,
+      "confidences": {
+        "red_raw": 6.510416666666667e-05,
+        "yellow_raw": 0.05171875,
+        "green_raw": 0.05310872395833333,
+        "red_smooth": 7.05295138888889e-05,
+        "yellow_smooth": 0.05083984375,
+        "green_smooth": 0.05222981770833333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 530,
+      "timestamp": 42.385449468,
+      "confidences": {
+        "red_raw": 0.00010416666666666667,
+        "yellow_raw": 0.06679036458333333,
+        "green_raw": 0.06833984375,
+        "red_smooth": 9.223090277777778e-05,
+        "yellow_smooth": 0.06548936631944445,
+        "green_smooth": 0.06703233506944445
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 540,
+      "timestamp": 43.3322095,
+      "confidences": {
+        "red_raw": 0.00011067708333333333,
+        "yellow_raw": 0.09657552083333333,
+        "green_raw": 0.09835611979166667,
+        "red_smooth": 0.00010308159722222222,
+        "yellow_smooth": 0.09256727430555556,
+        "green_smooth": 0.09431206597222223
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 550,
+      "timestamp": 44.193990409,
+      "confidences": {
+        "red_raw": 0.0001171875,
+        "yellow_raw": 0.148994140625,
+        "green_raw": 0.15094401041666666,
+        "red_smooth": 0.0001171875,
+        "yellow_smooth": 0.14170789930555555,
+        "green_smooth": 0.14365342881944446
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 560,
+      "timestamp": 44.956302351,
+      "confidences": {
+        "red_raw": 0.00015299479166666668,
+        "yellow_raw": 0.2651497395833333,
+        "green_raw": 0.26738932291666667,
+        "red_smooth": 0.00013671874999999999,
+        "yellow_smooth": 0.249599609375,
+        "green_smooth": 0.25182508680555554
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 570,
+      "timestamp": 45.735276811,
+      "confidences": {
+        "red_raw": 0.00015625,
+        "yellow_raw": 0.47906575520833333,
+        "green_raw": 0.48157877604166666,
+        "red_smooth": 0.00015516493055555555,
+        "yellow_smooth": 0.47007812499999996,
+        "green_smooth": 0.47255642361111105
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 580,
+      "timestamp": 46.531177626,
+      "confidences": {
+        "red_raw": 0.00017903645833333332,
+        "yellow_raw": 0.4788411458333333,
+        "green_raw": 0.48176432291666665,
+        "red_smooth": 0.00017686631944444444,
+        "yellow_smooth": 0.4788747829861111,
+        "green_smooth": 0.4817599826388889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 590,
+      "timestamp": 47.31563562,
+      "confidences": {
+        "red_raw": 0.00021158854166666667,
+        "yellow_raw": 0.4783626302083333,
+        "green_raw": 0.481806640625,
+        "red_smooth": 0.00021484375,
+        "yellow_smooth": 0.47845920138888887,
+        "green_smooth": 0.48183376736111105
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 600,
+      "timestamp": 48.049076373,
+      "confidences": {
+        "red_raw": 6.184895833333334e-05,
+        "yellow_raw": 0.4778645833333333,
+        "green_raw": 0.481806640625,
+        "red_smooth": 8.572048611111112e-05,
+        "yellow_smooth": 0.4778873697916666,
+        "green_smooth": 0.4817979600694445
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 610,
+      "timestamp": 48.855589495,
+      "confidences": {
+        "red_raw": 2.9296875e-05,
+        "yellow_raw": 0.4771223958333333,
+        "green_raw": 0.481279296875,
+        "red_smooth": 3.363715277777778e-05,
+        "yellow_smooth": 0.4771744791666666,
+        "green_smooth": 0.48142361111111104
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 620,
+      "timestamp": 49.662714634,
+      "confidences": {
+        "red_raw": 3.255208333333333e-05,
+        "yellow_raw": 0.476572265625,
+        "green_raw": 0.47950846354166665,
+        "red_smooth": 2.604166666666667e-05,
+        "yellow_smooth": 0.4766449652777778,
+        "green_smooth": 0.4797439236111111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 630,
+      "timestamp": 50.600075632,
+      "confidences": {
+        "red_raw": 2.9296875e-05,
+        "yellow_raw": 0.475517578125,
+        "green_raw": 0.475517578125,
+        "red_smooth": 2.7126736111111113e-05,
+        "yellow_smooth": 0.475634765625,
+        "green_smooth": 0.47579969618055556
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 640,
+      "timestamp": 51.831296608,
+      "confidences": {
+        "red_raw": 2.604166666666667e-05,
+        "yellow_raw": 0.4745735677083333,
+        "green_raw": 0.4745735677083333,
+        "red_smooth": 2.8211805555555558e-05,
+        "yellow_smooth": 0.4746625434027778,
+        "green_smooth": 0.4746625434027778
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 650,
+      "timestamp": 52.982906594,
+      "confidences": {
+        "red_raw": 3.580729166666667e-05,
+        "yellow_raw": 0.473857421875,
+        "green_raw": 0.473857421875,
+        "red_smooth": 3.363715277777778e-05,
+        "yellow_smooth": 0.47402777777777777,
+        "green_smooth": 0.47402777777777777
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 660,
+      "timestamp": 54.155290617,
+      "confidences": {
+        "red_raw": 0.00012044270833333334,
+        "yellow_raw": 0.4728548177083333,
+        "green_raw": 0.4728548177083333,
+        "red_smooth": 8.029513888888888e-05,
+        "yellow_smooth": 0.4729817708333333,
+        "green_smooth": 0.4729817708333333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 670,
+      "timestamp": 55.568206644,
+      "confidences": {
+        "red_raw": 0.00021484375,
+        "yellow_raw": 0.47070963541666666,
+        "green_raw": 0.47070963541666666,
+        "red_smooth": 0.00020724826388888887,
+        "yellow_smooth": 0.4709266493055555,
+        "green_smooth": 0.4709266493055555
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 680,
+      "timestamp": 56.83551256,
+      "confidences": {
+        "red_raw": 0.0002571614583333333,
+        "yellow_raw": 0.4685514322916667,
+        "green_raw": 0.4685514322916667,
+        "red_smooth": 0.00024848090277777775,
+        "yellow_smooth": 0.468701171875,
+        "green_smooth": 0.468701171875
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 690,
+      "timestamp": 58.156746308,
+      "confidences": {
+        "red_raw": 0.000302734375,
+        "yellow_raw": 0.46588541666666666,
+        "green_raw": 0.465888671875,
+        "red_smooth": 0.0003049045138888889,
+        "yellow_smooth": 0.4661773003472222,
+        "green_smooth": 0.46618164062499995
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 700,
+      "timestamp": 59.290573853,
+      "confidences": {
+        "red_raw": 0.000283203125,
+        "yellow_raw": 0.46264973958333333,
+        "green_raw": 0.4626595052083333,
+        "red_smooth": 0.0002810329861111111,
+        "yellow_smooth": 0.46316948784722217,
+        "green_smooth": 0.4631727430555556
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 710,
+      "timestamp": 60.330707104,
+      "confidences": {
+        "red_raw": 6.510416666666667e-05,
+        "yellow_raw": 0.4596809895833333,
+        "green_raw": 0.4596809895833333,
+        "red_smooth": 6.510416666666667e-05,
+        "yellow_smooth": 0.45990234375,
+        "green_smooth": 0.45990234375
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 720,
+      "timestamp": 61.411371968,
+      "confidences": {
+        "red_raw": 6.8359375e-05,
+        "yellow_raw": 0.4556022135416667,
+        "green_raw": 0.45560546875,
+        "red_smooth": 6.401909722222221e-05,
+        "yellow_smooth": 0.45624457465277773,
+        "green_smooth": 0.4562456597222222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 730,
+      "timestamp": 62.496935975,
+      "confidences": {
+        "red_raw": 6.8359375e-05,
+        "yellow_raw": 0.4510579427083333,
+        "green_raw": 0.4510579427083333,
+        "red_smooth": 6.8359375e-05,
+        "yellow_smooth": 0.45168185763888885,
+        "green_smooth": 0.4516851128472223
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 740,
+      "timestamp": 63.435442333,
+      "confidences": {
+        "red_raw": 0.00037434895833333336,
+        "yellow_raw": 0.4447265625,
+        "green_raw": 0.4447265625,
+        "red_smooth": 0.00037217881944444446,
+        "yellow_smooth": 0.44547743055555555,
+        "green_smooth": 0.4454806857638889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 750,
+      "timestamp": 64.158899158,
+      "confidences": {
+        "red_raw": 0.000458984375,
+        "yellow_raw": 0.4394075520833333,
+        "green_raw": 0.4394075520833333,
+        "red_smooth": 0.00045355902777777777,
+        "yellow_smooth": 0.43978190104166665,
+        "green_smooth": 0.43978190104166665
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 760,
+      "timestamp": 64.913361165,
+      "confidences": {
+        "red_raw": 0.0005240885416666666,
+        "yellow_raw": 0.43207356770833333,
+        "green_raw": 0.43207682291666666,
+        "red_smooth": 0.0005164930555555555,
+        "yellow_smooth": 0.43286458333333333,
+        "green_smooth": 0.4328667534722222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 770,
+      "timestamp": 65.70749599,
+      "confidences": {
+        "red_raw": 0.0005631510416666667,
+        "yellow_raw": 0.4225130208333333,
+        "green_raw": 0.4225130208333333,
+        "red_smooth": 0.0005436197916666666,
+        "yellow_smooth": 0.4235557725694445,
+        "green_smooth": 0.42355794270833336
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 780,
+      "timestamp": 66.531028823,
+      "confidences": {
+        "red_raw": 0.0005729166666666667,
+        "yellow_raw": 0.4091796875,
+        "green_raw": 0.40918619791666666,
+        "red_smooth": 0.0005924479166666667,
+        "yellow_smooth": 0.41079644097222223,
+        "green_smooth": 0.41080186631944443
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 790,
+      "timestamp": 67.328850172,
+      "confidences": {
+        "red_raw": 0.0006119791666666667,
+        "yellow_raw": 0.388818359375,
+        "green_raw": 0.3888216145833333,
+        "red_smooth": 0.0006076388888888889,
+        "yellow_smooth": 0.39096354166666664,
+        "green_smooth": 0.39096896701388895
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 800,
+      "timestamp": 68.149245915,
+      "confidences": {
+        "red_raw": 0.00103515625,
+        "yellow_raw": 0.35748697916666666,
+        "green_raw": 0.3574934895833333,
+        "red_smooth": 0.001023220486111111,
+        "yellow_smooth": 0.36140733506944445,
+        "green_smooth": 0.36141710069444444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 810,
+      "timestamp": 68.928279215,
+      "confidences": {
+        "red_raw": 0.0011328125,
+        "yellow_raw": 0.30472005208333336,
+        "green_raw": 0.304736328125,
+        "red_smooth": 0.0011512586805555558,
+        "yellow_smooth": 0.31121961805555554,
+        "green_smooth": 0.31122504340277773
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 820,
+      "timestamp": 69.711704582,
+      "confidences": {
+        "red_raw": 0.0012369791666666666,
+        "yellow_raw": 0.16588216145833334,
+        "green_raw": 0.165888671875,
+        "red_smooth": 0.001222873263888889,
+        "yellow_smooth": 0.18234700520833336,
+        "green_smooth": 0.18234917534722225
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 830,
+      "timestamp": 70.488791801,
+      "confidences": {
+        "red_raw": 0.0013216145833333333,
+        "yellow_raw": 0.0,
+        "green_raw": 6.510416666666667e-06,
+        "red_smooth": 0.0013172743055555557,
+        "yellow_smooth": 0.0,
+        "green_smooth": 5.4253472222222224e-06
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 840,
+      "timestamp": 71.339980489,
+      "confidences": {
+        "red_raw": 0.0015234375,
+        "yellow_raw": 0.0,
+        "green_raw": 6.510416666666667e-06,
+        "red_smooth": 0.0015125868055555554,
+        "yellow_smooth": 0.0,
+        "green_smooth": 9.765625e-06
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 850,
+      "timestamp": 72.120489148,
+      "confidences": {
+        "red_raw": 0.0017610677083333332,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0017881944444444447,
+        "yellow_smooth": 0.0,
+        "green_smooth": 3.2552083333333335e-06
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 860,
+      "timestamp": 72.868130435,
+      "confidences": {
+        "red_raw": 0.001884765625,
+        "yellow_raw": 0.0,
+        "green_raw": 9.765625e-06,
+        "red_smooth": 0.0018739149305555555,
+        "yellow_smooth": 0.0,
+        "green_smooth": 8.680555555555556e-06
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 870,
+      "timestamp": 73.59204261,
+      "confidences": {
+        "red_raw": 0.00201171875,
+        "yellow_raw": 0.0,
+        "green_raw": 9.765625e-06,
+        "red_smooth": 0.00201171875,
+        "yellow_smooth": 1.0850694444444444e-06,
+        "green_smooth": 9.765625e-06
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 880,
+      "timestamp": 74.261153676,
+      "confidences": {
+        "red_raw": 0.0024837239583333334,
+        "yellow_raw": 0.0,
+        "green_raw": 1.6276041666666666e-05,
+        "red_smooth": 0.0025010850694444447,
+        "yellow_smooth": 0.0,
+        "green_smooth": 1.193576388888889e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 890,
+      "timestamp": 75.043767129,
+      "confidences": {
+        "red_raw": 0.0027864583333333335,
+        "yellow_raw": 6.510416666666667e-06,
+        "green_raw": 1.6276041666666666e-05,
+        "red_smooth": 0.002771267361111111,
+        "yellow_smooth": 4.340277777777778e-06,
+        "green_smooth": 1.519097222222222e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 900,
+      "timestamp": 75.748941506,
+      "confidences": {
+        "red_raw": 0.0030208333333333333,
+        "yellow_raw": 0.0,
+        "green_raw": 1.6276041666666666e-05,
+        "red_smooth": 0.003003472222222222,
+        "yellow_smooth": 4.340277777777778e-06,
+        "green_smooth": 1.8446180555555556e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 910,
+      "timestamp": 76.446124433,
+      "confidences": {
+        "red_raw": 0.0034537760416666666,
+        "yellow_raw": 0.0,
+        "green_raw": 9.765625e-06,
+        "red_smooth": 0.0033908420138888886,
+        "yellow_smooth": 3.2552083333333335e-06,
+        "green_smooth": 1.193576388888889e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 920,
+      "timestamp": 77.253562578,
+      "confidences": {
+        "red_raw": 0.0038020833333333335,
+        "yellow_raw": 1.3020833333333334e-05,
+        "green_raw": 3.255208333333333e-05,
+        "red_smooth": 0.003799913194444444,
+        "yellow_smooth": 1.4105902777777779e-05,
+        "green_smooth": 2.8211805555555558e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 930,
+      "timestamp": 78.26884199,
+      "confidences": {
+        "red_raw": 0.004475911458333333,
+        "yellow_raw": 9.765625e-06,
+        "green_raw": 1.953125e-05,
+        "red_smooth": 0.004377170138888889,
+        "yellow_smooth": 8.680555555555556e-06,
+        "green_smooth": 2.0616319444444445e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 940,
+      "timestamp": 79.181814426,
+      "confidences": {
+        "red_raw": 0.004892578125,
+        "yellow_raw": 6.510416666666667e-06,
+        "green_raw": 2.2786458333333334e-05,
+        "red_smooth": 0.004857855902777778,
+        "yellow_smooth": 8.680555555555556e-06,
+        "green_smooth": 2.604166666666667e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 950,
+      "timestamp": 80.027063248,
+      "confidences": {
+        "red_raw": 0.00583984375,
+        "yellow_raw": 9.765625e-06,
+        "green_raw": 2.604166666666667e-05,
+        "red_smooth": 0.005764973958333333,
+        "yellow_smooth": 9.765625e-06,
+        "green_smooth": 2.8211805555555558e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 960,
+      "timestamp": 80.815996051,
+      "confidences": {
+        "red_raw": 0.006715494791666667,
+        "yellow_raw": 1.6276041666666666e-05,
+        "green_raw": 4.557291666666667e-05,
+        "red_smooth": 0.006615668402777777,
+        "yellow_smooth": 1.6276041666666666e-05,
+        "green_smooth": 3.689236111111111e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 970,
+      "timestamp": 81.542746663,
+      "confidences": {
+        "red_raw": 0.00734375,
+        "yellow_raw": 9.765625e-06,
+        "green_raw": 2.9296875e-05,
+        "red_smooth": 0.007315538194444444,
+        "yellow_smooth": 1.5190972222222223e-05,
+        "green_smooth": 3.689236111111111e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 980,
+      "timestamp": 82.330062833,
+      "confidences": {
+        "red_raw": 0.008343098958333333,
+        "yellow_raw": 1.3020833333333334e-05,
+        "green_raw": 4.8828125e-05,
+        "red_smooth": 0.008271484375,
+        "yellow_smooth": 1.736111111111111e-05,
+        "green_smooth": 4.991319444444444e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 990,
+      "timestamp": 83.220428249,
+      "confidences": {
+        "red_raw": 0.009192708333333334,
+        "yellow_raw": 2.604166666666667e-05,
+        "green_raw": 5.5338541666666664e-05,
+        "red_smooth": 0.009078776041666667,
+        "yellow_smooth": 1.8446180555555556e-05,
+        "green_smooth": 4.557291666666667e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1000,
+      "timestamp": 84.070224659,
+      "confidences": {
+        "red_raw": 0.010481770833333333,
+        "yellow_raw": 2.9296875e-05,
+        "green_raw": 6.510416666666667e-05,
+        "red_smooth": 0.010345052083333334,
+        "yellow_smooth": 2.2786458333333334e-05,
+        "green_smooth": 6.293402777777779e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1010,
+      "timestamp": 84.887511828,
+      "confidences": {
+        "red_raw": 0.01201171875,
+        "yellow_raw": 2.2786458333333334e-05,
+        "green_raw": 6.510416666666667e-05,
+        "red_smooth": 0.01187934027777778,
+        "yellow_smooth": 2.495659722222222e-05,
+        "green_smooth": 6.61892361111111e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1020,
+      "timestamp": 85.791208466,
+      "confidences": {
+        "red_raw": 0.014313151041666666,
+        "yellow_raw": 1.953125e-05,
+        "green_raw": 7.486979166666666e-05,
+        "red_smooth": 0.01408420138888889,
+        "yellow_smooth": 2.2786458333333334e-05,
+        "green_smooth": 6.835937499999999e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1030,
+      "timestamp": 86.572555056,
+      "confidences": {
+        "red_raw": 0.016637369791666665,
+        "yellow_raw": 2.9296875e-05,
+        "green_raw": 8.7890625e-05,
+        "red_smooth": 0.016190321180555554,
+        "yellow_smooth": 3.255208333333333e-05,
+        "green_smooth": 8.572048611111111e-05
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1040,
+      "timestamp": 87.413379067,
+      "confidences": {
+        "red_raw": 0.019143880208333332,
+        "yellow_raw": 5.5338541666666664e-05,
+        "green_raw": 0.00012044270833333334,
+        "red_smooth": 0.018844401041666667,
+        "yellow_smooth": 3.90625e-05,
+        "green_smooth": 0.00010091145833333333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1050,
+      "timestamp": 88.145664643,
+      "confidences": {
+        "red_raw": 0.022750651041666667,
+        "yellow_raw": 4.2317708333333335e-05,
+        "green_raw": 9.765625e-05,
+        "red_smooth": 0.022352430555555556,
+        "yellow_smooth": 4.6657986111111113e-05,
+        "green_smooth": 0.00010308159722222222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1060,
+      "timestamp": 88.878587236,
+      "confidences": {
+        "red_raw": 0.0262109375,
+        "yellow_raw": 4.2317708333333335e-05,
+        "green_raw": 0.00010091145833333333,
+        "red_smooth": 0.025919053819444444,
+        "yellow_smooth": 4.8828124999999996e-05,
+        "green_smooth": 0.00011284722222222223
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1070,
+      "timestamp": 89.651646867,
+      "confidences": {
+        "red_raw": 0.031246744791666666,
+        "yellow_raw": 5.859375e-05,
+        "green_raw": 0.00014973958333333332,
+        "red_smooth": 0.03084201388888889,
+        "yellow_smooth": 5.208333333333334e-05,
+        "green_smooth": 0.00012369791666666668
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1080,
+      "timestamp": 90.471299219,
+      "confidences": {
+        "red_raw": 0.03857421875,
+        "yellow_raw": 6.184895833333334e-05,
+        "green_raw": 0.00013020833333333333,
+        "red_smooth": 0.03788302951388889,
+        "yellow_smooth": 5.967881944444445e-05,
+        "green_smooth": 0.0001291232638888889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1090,
+      "timestamp": 91.254909654,
+      "confidences": {
+        "red_raw": 0.0490234375,
+        "yellow_raw": 6.184895833333334e-05,
+        "green_raw": 0.00013020833333333333,
+        "red_smooth": 0.04746202256944445,
+        "yellow_smooth": 6.510416666666667e-05,
+        "green_smooth": 0.0001486545138888889
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1100,
+      "timestamp": 92.022873448,
+      "confidences": {
+        "red_raw": 0.06358072916666667,
+        "yellow_raw": 7.8125e-05,
+        "green_raw": 0.00017578125,
+        "red_smooth": 0.061982421875000006,
+        "yellow_smooth": 7.703993055555556e-05,
+        "green_smooth": 0.00017469618055555554
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1110,
+      "timestamp": 92.984416291,
+      "confidences": {
+        "red_raw": 0.08968098958333333,
+        "yellow_raw": 8.7890625e-05,
+        "green_raw": 0.00018229166666666667,
+        "red_smooth": 0.08692708333333332,
+        "yellow_smooth": 9.223090277777778e-05,
+        "green_smooth": 0.00019639756944444444
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1120,
+      "timestamp": 93.790470559,
+      "confidences": {
+        "red_raw": 0.133798828125,
+        "yellow_raw": 0.00010416666666666667,
+        "green_raw": 0.00024739583333333335,
+        "red_smooth": 0.12726236979166666,
+        "yellow_smooth": 0.00010308159722222224,
+        "green_smooth": 0.0002289496527777778
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1130,
+      "timestamp": 94.695182143,
+      "confidences": {
+        "red_raw": 0.236611328125,
+        "yellow_raw": 0.00012369791666666668,
+        "green_raw": 0.00027018229166666667,
+        "red_smooth": 0.2243413628472222,
+        "yellow_smooth": 0.00012044270833333334,
+        "green_smooth": 0.00026150173611111106
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1140,
+      "timestamp": 95.449692607,
+      "confidences": {
+        "red_raw": 0.47056640625,
+        "yellow_raw": 0.000146484375,
+        "green_raw": 0.0003157552083333333,
+        "red_smooth": 0.4595789930555556,
+        "yellow_smooth": 0.00013997395833333334,
+        "green_smooth": 0.0003005642361111111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1150,
+      "timestamp": 96.281622914,
+      "confidences": {
+        "red_raw": 0.47412760416666666,
+        "yellow_raw": 0.00017252604166666667,
+        "green_raw": 0.00036458333333333335,
+        "red_smooth": 0.47421766493055556,
+        "yellow_smooth": 0.000166015625,
+        "green_smooth": 0.00035698784722222224
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1160,
+      "timestamp": 97.172274004,
+      "confidences": {
+        "red_raw": 0.473447265625,
+        "yellow_raw": 0.00020833333333333335,
+        "green_raw": 0.00043294270833333336,
+        "red_smooth": 0.47348198784722223,
+        "yellow_smooth": 0.0002072482638888889,
+        "green_smooth": 0.0004264322916666667
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1170,
+      "timestamp": 97.971805775,
+      "confidences": {
+        "red_raw": 0.47219401041666664,
+        "yellow_raw": 0.000263671875,
+        "green_raw": 0.0005208333333333333,
+        "red_smooth": 0.47224717881944445,
+        "yellow_smooth": 0.00025173611111111116,
+        "green_smooth": 0.0005132378472222222
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1180,
+      "timestamp": 98.719973492,
+      "confidences": {
+        "red_raw": 0.47076171875,
+        "yellow_raw": 6.184895833333334e-05,
+        "green_raw": 0.00040364583333333333,
+        "red_smooth": 0.4710427517361111,
+        "yellow_smooth": 0.00010308159722222224,
+        "green_smooth": 0.0004568142361111111
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1190,
+      "timestamp": 99.603850141,
+      "confidences": {
+        "red_raw": 0.4694596354166667,
+        "yellow_raw": 0.0,
+        "green_raw": 4.8828125e-05,
+        "red_smooth": 0.4695431857638889,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.00010091145833333333
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1200,
+      "timestamp": 100.439748717,
+      "confidences": {
+        "red_raw": 0.46770833333333334,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.46772894965277784,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1210,
+      "timestamp": 101.300375747,
+      "confidences": {
+        "red_raw": 0.46570963541666666,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.46595160590277773,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1220,
+      "timestamp": 102.192766976,
+      "confidences": {
+        "red_raw": 0.46381510416666666,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4637326388888889,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1230,
+      "timestamp": 103.093700606,
+      "confidences": {
+        "red_raw": 0.4609602864583333,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4615386284722222,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1240,
+      "timestamp": 103.942455161,
+      "confidences": {
+        "red_raw": 0.458125,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4582150607638889,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1250,
+      "timestamp": 104.87302249,
+      "confidences": {
+        "red_raw": 0.45403971354166667,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4541243489583333,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1260,
+      "timestamp": 105.757340229,
+      "confidences": {
+        "red_raw": 0.44841796875,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4492046440972222,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1270,
+      "timestamp": 106.57711096,
+      "confidences": {
+        "red_raw": 0.44300455729166666,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.4435015190972222,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1280,
+      "timestamp": 107.537936867,
+      "confidences": {
+        "red_raw": 0.433603515625,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.43481228298611113,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1290,
+      "timestamp": 108.409277026,
+      "confidences": {
+        "red_raw": 0.42291666666666666,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.42459201388888884,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1300,
+      "timestamp": 109.160474882,
+      "confidences": {
+        "red_raw": 0.41041666666666665,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.41159179687499997,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1310,
+      "timestamp": 110.126278509,
+      "confidences": {
+        "red_raw": 0.3848697916666667,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.38940104166666667,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1320,
+      "timestamp": 110.949143592,
+      "confidences": {
+        "red_raw": 0.3458333333333333,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.35123914930555555,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1330,
+      "timestamp": 111.612681088,
+      "confidences": {
+        "red_raw": 0.2880859375,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.29668836805555554,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1340,
+      "timestamp": 112.241738679,
+      "confidences": {
+        "red_raw": 0.18333333333333332,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.19678602430555556,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1350,
+      "timestamp": 112.797292452,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1360,
+      "timestamp": 113.316225053,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1370,
+      "timestamp": 113.814569765,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1380,
+      "timestamp": 114.280076287,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1390,
+      "timestamp": 114.748518393,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1400,
+      "timestamp": 115.257552831,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1410,
+      "timestamp": 115.830599429,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1420,
+      "timestamp": 116.344949114,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1430,
+      "timestamp": 116.843824722,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1440,
+      "timestamp": 117.302686254,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1450,
+      "timestamp": 117.831518514,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1460,
+      "timestamp": 118.270061919,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1470,
+      "timestamp": 118.77775341,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1480,
+      "timestamp": 119.269358399,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1490,
+      "timestamp": 119.789493702,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1500,
+      "timestamp": 120.318250082,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1510,
+      "timestamp": 120.837279606,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1520,
+      "timestamp": 121.404179983,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    },
+    {
+      "frame": 1530,
+      "timestamp": 121.875094458,
+      "confidences": {
+        "red_raw": 0.0,
+        "yellow_raw": 0.0,
+        "green_raw": 0.0,
+        "red_smooth": 0.0,
+        "yellow_smooth": 0.0,
+        "green_smooth": 0.0
+      },
+      "detected_state": "GREEN"
+    }
+  ],
+  "state_changes": [],
+  "session_summary": {
+    "end_time": "2025-12-22T23:00:04.109024",
+    "total_frames": 1537,
+    "duration_seconds": 122.166375336,
+    "state_changes": 0,
+    "statistics": {
+      "red_confidence": {
+        "mean": 0.06385456271348407,
+        "std": 0.14863760103528714,
+        "max": 0.4747070312500001,
+        "min": 0.0
+      },
+      "yellow_confidence": {
+        "mean": 0.08010434068723794,
+        "std": 0.16551327501736285,
+        "max": 0.4790494791666667,
+        "min": 0.0
+      },
+      "green_confidence": {
+        "mean": 0.15635410948343634,
+        "std": 0.2087219808485638,
+        "max": 0.48183702256944444,
+        "min": 0.0
+      }
+    }
+  }
+}
