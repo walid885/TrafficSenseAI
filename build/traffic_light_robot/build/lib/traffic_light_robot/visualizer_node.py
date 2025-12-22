@@ -11,6 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 import time
+import json
+from datetime import datetime
 
 class TrafficLightVisualizer(Node):
     def __init__(self):
@@ -35,6 +37,17 @@ class TrafficLightVisualizer(Node):
         self.last_state_change = None
         self.state_change_speed = None
         
+        # JSON logging data structures
+        self.json_log = {
+            "session_info": {
+                "start_time": datetime.now().isoformat(),
+                "node_name": self.get_name()
+            },
+            "frame_data": [],
+            "state_changes": [],
+            "reaction_events": []
+        }
+        
         self.plot_window = 100
         self.plot_red = deque(maxlen=self.plot_window)
         self.plot_green = deque(maxlen=self.plot_window)
@@ -51,12 +64,25 @@ class TrafficLightVisualizer(Node):
         cv2.namedWindow("Traffic Light Detection", cv2.WINDOW_NORMAL)
         cv2.setWindowProperty("Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         
-        self.get_logger().info('Enhanced Visualizer - Press Q for analytics')
+        self.get_logger().info('Enhanced Visualizer with JSON Logging - Press Q for analytics')
         
     def state_callback(self, msg):
         if self.current_state != msg.data and self.current_state != "UNKNOWN":
+            elapsed = time.time() - self.start_time
             self.last_state_change = time.time()
             self.state_change_speed = self.current_speed
+            
+            # Log state change to JSON
+            state_change_event = {
+                "timestamp": elapsed,
+                "frame": self.frame_count,
+                "previous_state": self.current_state,
+                "new_state": msg.data,
+                "speed_at_change": self.current_speed,
+                "target_speed": self.target_speed
+            }
+            self.json_log["state_changes"].append(state_change_event)
+            
         self.current_state = msg.data
         
     def cmd_callback(self, msg):
@@ -67,6 +93,18 @@ class TrafficLightVisualizer(Node):
                 reaction_time = time.time() - self.last_state_change
                 if reaction_time < 5.0:
                     self.reaction_times.append(reaction_time)
+                    
+                    # Log reaction event to JSON
+                    reaction_event = {
+                        "timestamp": time.time() - self.start_time,
+                        "reaction_time": reaction_time,
+                        "initial_speed": self.state_change_speed,
+                        "final_speed": self.current_speed,
+                        "target_speed": self.target_speed,
+                        "state": self.current_state
+                    }
+                    self.json_log["reaction_events"].append(reaction_event)
+                    
                 self.last_state_change = None
         
     def image_callback(self, msg):
@@ -93,6 +131,11 @@ class TrafficLightVisualizer(Node):
         confidence = (max_ratio / (avg_ratio + 0.1)) * 10
         confidence = min(confidence, 100.0)
         
+        # Determine dominant color
+        dominant_color = "RED" if red_ratio == max_ratio else \
+                        "GREEN" if green_ratio == max_ratio else \
+                        "YELLOW" if yellow_ratio == max_ratio else "NONE"
+        
         if self.current_state == "GREEN":
             self.target_speed = 0.5
         elif self.current_state == "YELLOW":
@@ -104,6 +147,27 @@ class TrafficLightVisualizer(Node):
         
         speed_error = abs(self.current_speed - self.target_speed)
         elapsed = time.time() - self.start_time
+        
+        # Log comprehensive frame data to JSON (sample every 5th frame to reduce file size)
+        if self.frame_count % 5 == 0:
+            frame_data = {
+                "frame": self.frame_count,
+                "timestamp": elapsed,
+                "color_detection": {
+                    "red_percentage": round(red_ratio, 3),
+                    "green_percentage": round(green_ratio, 3),
+                    "yellow_percentage": round(yellow_ratio, 3),
+                    "dominant_color": dominant_color,
+                    "confidence": round(confidence, 2)
+                },
+                "speed_control": {
+                    "current_speed": round(self.current_speed, 4),
+                    "target_speed": round(self.target_speed, 4),
+                    "speed_error": round(speed_error, 4)
+                },
+                "traffic_state": self.current_state
+            }
+            self.json_log["frame_data"].append(frame_data)
         
         self.red_history.append(red_ratio)
         self.green_history.append(green_ratio)
@@ -259,7 +323,7 @@ class TrafficLightVisualizer(Node):
         
         info_y = display_h - 50
         cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
-        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.1f}% | Press Q for Analytics", 
+        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.1f}% | JSON Logging Active | Press Q for Analytics", 
                     (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
         cv2.imshow("Traffic Light Detection", canvas)
@@ -269,10 +333,71 @@ class TrafficLightVisualizer(Node):
             self.generate_analytics()
             raise KeyboardInterrupt
     
+    def save_json_log(self, filename='traffic_light_detection_log.json'):
+        """Save comprehensive JSON log of all detection data"""
+        
+        # Add session summary
+        self.json_log["session_summary"] = {
+            "end_time": datetime.now().isoformat(),
+            "total_duration": float(self.timestamps[-1]) if self.timestamps else 0,
+            "total_frames": self.frame_count,
+            "total_state_changes": len(self.json_log["state_changes"]),
+            "total_reaction_events": len(self.json_log["reaction_events"]),
+            "statistics": {
+                "speed": {
+                    "mean": float(np.mean(self.speed_history)) if self.speed_history else 0,
+                    "std": float(np.std(self.speed_history)) if self.speed_history else 0,
+                    "max": float(np.max(self.speed_history)) if self.speed_history else 0,
+                    "min": float(np.min(self.speed_history)) if self.speed_history else 0
+                },
+                "speed_error": {
+                    "mean": float(np.mean(self.speed_error_history)) if self.speed_error_history else 0,
+                    "rmse": float(np.sqrt(np.mean(np.array(self.speed_error_history)**2))) if self.speed_error_history else 0
+                },
+                "color_detection": {
+                    "red": {
+                        "mean": float(np.mean(self.red_history)) if self.red_history else 0,
+                        "max": float(np.max(self.red_history)) if self.red_history else 0
+                    },
+                    "green": {
+                        "mean": float(np.mean(self.green_history)) if self.green_history else 0,
+                        "max": float(np.max(self.green_history)) if self.green_history else 0
+                    },
+                    "yellow": {
+                        "mean": float(np.mean(self.yellow_history)) if self.yellow_history else 0,
+                        "max": float(np.max(self.yellow_history)) if self.yellow_history else 0
+                    }
+                },
+                "confidence": {
+                    "mean": float(np.mean(self.detection_confidence)) if self.detection_confidence else 0,
+                    "std": float(np.std(self.detection_confidence)) if self.detection_confidence else 0
+                },
+                "reaction_time": {
+                    "mean": float(np.mean(self.reaction_times)) if self.reaction_times else 0,
+                    "std": float(np.std(self.reaction_times)) if self.reaction_times else 0,
+                    "count": len(self.reaction_times)
+                }
+            }
+        }
+        
+        try:
+            with open(filename, 'w') as f:
+                json.dump(self.json_log, f, indent=2)
+            self.get_logger().info(f'JSON log saved to {filename}')
+            print(f"\n✓ Comprehensive JSON log saved: {filename}")
+            print(f"  - {len(self.json_log['frame_data'])} frame samples")
+            print(f"  - {len(self.json_log['state_changes'])} state changes")
+            print(f"  - {len(self.json_log['reaction_events'])} reaction events")
+        except Exception as e:
+            self.get_logger().error(f'Failed to save JSON log: {e}')
+    
     def generate_analytics(self):
         if len(self.timestamps) == 0:
             self.get_logger().warn('No data')
             return
+        
+        # Save JSON log first
+        self.save_json_log('traffic_light_detection_log.json')
         
         times = np.array(list(self.timestamps))
         
@@ -421,6 +546,8 @@ class TrafficLightVisualizer(Node):
         
         fig8, ax8 = plt.subplots(figsize=(10, 8))
         ax8.axis('off')
+        
+
         
         stats_text = f"""COMPREHENSIVE PERFORMANCE REPORT
 
