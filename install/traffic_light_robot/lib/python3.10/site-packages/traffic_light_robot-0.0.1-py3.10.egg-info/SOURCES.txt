@@ -17,6 +17,8 @@ traffic_light_robot/__init__.py
 traffic_light_robot/controller_node.py
 traffic_light_robot/dataset_collector.py
 traffic_light_robot/detector_node.py
+traffic_light_robot/detector_node_v2.py
+traffic_light_robot/hsv_auto_tuner.py
 traffic_light_robot/hsv_tuner_node.py
 traffic_light_robot/pid_tuner.py
 traffic_light_robot/rviz_visu.py

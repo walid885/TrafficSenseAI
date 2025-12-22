@@ -1,5 +1,7 @@
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node_v2.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__init__.py
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/hsv_auto_tuner.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/pid_tuner.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/Viusl_node_yolo_only.py
@@ -9,8 +11,10 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/vis_node_Hyb.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/dataset_collector.py
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/rviz_visu.py
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/detector_node_v2.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/detector_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/__init__.cpython-310.pyc
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/hsv_auto_tuner.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/pid_tuner.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/visualizer_node.cpython-310.pyc
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/__pycache__/Viusl_node_yolo_only.cpython-310.pyc
@@ -31,7 +35,10 @@
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info/SOURCES.txt
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/hsv_auto_tuner
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/hsv_tuner_node
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/pid_tuner
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/rviz_visu
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/traffic_light_detector
+/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/traffic_light_detector_v2
 /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/visualizer_node

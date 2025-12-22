@@ -6,7 +6,7 @@ export QT_QPA_PLATFORM=xcb
 trap 'cleanup' INT TERM
 
 cleanup() {
-    echo "Shutting down Vision Tuner..."
+    echo "Shutting down Auto-Tuner..."
     pkill -f "ros2 launch robot_description"
     pkill -f "ros2 run traffic_light_robot"
     pkill -f "gzserver"
@@ -22,11 +22,16 @@ source install/setup.bash
 
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 launch robot_description autonomous.launch.py; exec bash" 2>/dev/null &
 
-sleep 5
+sleep 8
 
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot hsv_tuner_node; exec bash" 2>/dev/null &
+gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot detector_node; exec bash" 2>/dev/null &
 
-echo "Vision Tuner launched - Adjust trackbars in OpenCV window"
-echo "Press Ctrl+C to shutdown"
+sleep 3
+
+gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot hsv_auto_tuner; exec bash" 2>/dev/null &
+
+echo "═══════════════════════════════════════════════════════════"
+echo "HSV AUTO-TUNER ACTIVE"
+echo "═══════════════════════════════════════════════════════════"
 
 wait
