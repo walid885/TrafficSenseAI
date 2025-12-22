@@ -137,13 +137,30 @@ class HSVTuner(Node):
     
     def get_roi(self, img):
         h, w = img.shape[:2]
-        y_start = int(h * self.roi_y_start)
-        y_end = int(h * self.roi_y_end)
-        x_start = int(w * self.roi_x_start)
-        x_end = int(w * self.roi_x_end)
-        return img[y_start:y_end, x_start:x_end], (x_start, y_start, x_end, y_end)
+        y_start = max(0, int(h * self.roi_y_start))
+        y_end = min(h, int(h * self.roi_y_end))
+        x_start = max(0, int(w * self.roi_x_start))
+        x_end = min(w, int(w * self.roi_x_end))
+        
+        # Ensure valid ROI
+        if y_end <= y_start:
+            y_start, y_end = 0, h
+        if x_end <= x_start:
+            x_start, x_end = 0, w
+            
+        roi = img[y_start:y_end, x_start:x_end]
+        
+        # Fallback to full image if ROI is empty
+        if roi.size == 0:
+            roi = img
+            x_start, y_start, x_end, y_end = 0, 0, w, h
+            
+        return roi, (x_start, y_start, x_end, y_end)
     
     def preprocess(self, img):
+        if img is None or img.size == 0:
+            return img
+            
         if self.blur_kernel > 0:
             blurred = cv2.GaussianBlur(img, (self.blur_kernel, self.blur_kernel), 0)
         else:
@@ -163,18 +180,29 @@ class HSVTuner(Node):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
             
+            if cv_image is None or cv_image.size == 0:
+                self.get_logger().warn('Empty image received')
+                return
+            
             # Draw ROI on full image
             h, w = cv_image.shape[:2]
-            y_start = int(h * self.roi_y_start)
-            y_end = int(h * self.roi_y_end)
-            x_start = int(w * self.roi_x_start)
-            x_end = int(w * self.roi_x_end)
+            y_start = max(0, min(h-1, int(h * self.roi_y_start)))
+            y_end = max(y_start+1, min(h, int(h * self.roi_y_end)))
+            x_start = max(0, min(w-1, int(w * self.roi_x_start)))
+            x_end = max(x_start+1, min(w, int(w * self.roi_x_end)))
             
             full_display = cv_image.copy()
             cv2.rectangle(full_display, (x_start, y_start), (x_end, y_end), (0, 255, 0), 3)
             
             # Get ROI and preprocess
             roi, roi_coords = self.get_roi(cv_image)
+            
+            if roi is None or roi.size == 0:
+                self.get_logger().warn('Empty ROI')
+                cv2.imshow("HSV Tuner", full_display)
+                cv2.waitKey(1)
+                return
+                
             processed = self.preprocess(roi)
             
             # Convert to HSV
