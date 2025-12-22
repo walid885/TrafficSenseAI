@@ -9,6 +9,7 @@ import numpy as np
 from scipy.optimize import differential_evolution
 import json
 from datetime import datetime
+import sys
 
 class HSVAutoTuner(Node):
     """Automated HSV parameter optimizer using differential evolution"""
@@ -23,6 +24,10 @@ class HSVAutoTuner(Node):
         self.collection_phase = True
         self.frames_per_state = 50
         self.collected_frames = {'RED': 0, 'YELLOW': 0, 'GREEN': 0}
+        
+        # Track if we've seen RED (end condition)
+        self.red_detected = False
+        self.optimization_complete = False
         
         # Best HSV ranges (will be optimized)
         self.best_ranges = {
@@ -44,14 +49,13 @@ class HSVAutoTuner(Node):
         # Publisher for optimized results
         self.result_pub = self.create_publisher(String, '/hsv_tuning_result', 10)
         
-        # Optimization timer (runs after collection phase)
-        self.optimization_timer = None
-        
         self.get_logger().info('HSV Auto-Tuner started - Collecting training data...')
         
     def state_callback(self, msg):
         """Track ground truth traffic light state"""
         self.ground_truth_state = msg.data
+        if msg.data == "RED":
+            self.red_detected = True
         
     def extract_roi(self, img):
         """Extract region of interest from image"""
@@ -64,22 +68,18 @@ class HSVAutoTuner(Node):
     
     def preprocess(self, img):
         """Apply preprocessing for better color detection"""
-        # Gaussian blur to reduce noise
         blurred = cv2.GaussianBlur(img, (5, 5), 0)
-        
-        # CLAHE to enhance contrast
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
         clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
         l = clahe.apply(l)
         enhanced = cv2.merge([l, a, b])
         enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
-        
         return enhanced
     
     def image_callback(self, msg):
         """Collect training images during collection phase"""
-        if not self.collection_phase:
+        if not self.collection_phase or self.optimization_complete:
             return
             
         try:
@@ -100,8 +100,9 @@ class HSVAutoTuner(Node):
                     self.get_logger().info(
                         f'Collected {state}: {self.collected_frames[state]}/{self.frames_per_state}')
             
-            # Check if collection is complete
-            if all(count >= self.frames_per_state for count in self.collected_frames.values()):
+            # Check if collection is complete AND red detected
+            if (all(count >= self.frames_per_state for count in self.collected_frames.values()) 
+                and self.red_detected):
                 self.collection_phase = False
                 self.get_logger().info('Collection complete - Starting optimization...')
                 self.start_optimization()
@@ -110,10 +111,7 @@ class HSVAutoTuner(Node):
             self.get_logger().error(f'Collection error: {str(e)}')
     
     def fitness_function(self, params, color):
-        """
-        Fitness function for optimization
-        Maximizes: true positives - false positives
-        """
+        """Fitness function for optimization"""
         if color == 'RED':
             h1_min, h1_max = int(params[0]), int(params[1])
             s1_min, s1_max = int(params[2]), int(params[3])
@@ -129,7 +127,6 @@ class HSVAutoTuner(Node):
         true_positives = 0
         false_positives = 0
         
-        # Test on all collected data
         for state, images in self.training_data.items():
             for hsv_img in images:
                 if color == 'RED':
@@ -141,55 +138,41 @@ class HSVAutoTuner(Node):
                 
                 detection_ratio = cv2.countNonZero(mask) / (mask.shape[0] * mask.shape[1])
                 
-                # Threshold for detection
-                if detection_ratio > 0.005:  # 0.5% of pixels
+                if detection_ratio > 0.005:
                     if state == color:
                         true_positives += 1
                     else:
                         false_positives += 1
         
-        # Fitness: maximize TP, minimize FP
         fitness = true_positives - 2 * false_positives
-        return -fitness  # Negative because scipy minimizes
+        return -fitness
     
     def optimize_color(self, color):
         """Optimize HSV range for a specific color"""
         self.get_logger().info(f'Optimizing {color}...')
         
         if color == 'RED':
-            # Red wraps around HSV, need two ranges
             bounds = [
-                (0, 10),      # h1_min, h1_max
-                (5, 15),
-                (80, 255),    # s1_min, s1_max
-                (100, 255),
-                (70, 255),    # v1_min, v1_max
-                (100, 255),
-                (165, 175),   # h2_min, h2_max
-                (170, 180),
-                (80, 255),    # s2_min, s2_max
-                (100, 255),
-                (70, 255),    # v2_min, v2_max
-                (100, 255)
+                (0, 10), (5, 15),
+                (80, 255), (100, 255),
+                (70, 255), (100, 255),
+                (165, 175), (170, 180),
+                (80, 255), (100, 255),
+                (70, 255), (100, 255)
             ]
         elif color == 'YELLOW':
             bounds = [
-                (15, 25),     # h_min, h_max
-                (25, 40),
-                (80, 255),    # s_min, s_max
-                (100, 255),
-                (70, 255)     # v_min, v_max
+                (15, 25), (25, 40),
+                (80, 255), (100, 255),
+                (70, 255), (100, 255)
             ]
         else:  # GREEN
             bounds = [
-                (35, 50),     # h_min, h_max
-                (55, 85),
-                (80, 255),    # s_min, s_max
-                (100, 255),
-                (70, 255)     # v_min, v_max
+                (35, 50), (55, 85),
+                (80, 255), (100, 255),
+                (70, 255), (100, 255)
             ]
         
-        # Differential Evolution optimization
         result = differential_evolution(
             lambda x: self.fitness_function(x, color),
             bounds,
@@ -229,6 +212,11 @@ class HSVAutoTuner(Node):
             self.best_ranges = optimized_params
             self.save_results()
             self.print_results()
+            self.optimization_complete = True
+            
+            # Exit after completion
+            self.get_logger().info('Optimization complete - Shutting down node')
+            rclpy.shutdown()
             
         except Exception as e:
             self.get_logger().error(f'Optimization error: {str(e)}')
@@ -246,34 +234,51 @@ class HSVAutoTuner(Node):
         with open(filename, 'w') as f:
             json.dump(output, f, indent=2)
         
-        self.get_logger().info(f'Results saved to {filename}')
+        # Also save to tuning_results directory
+        try:
+            import os
+            results_dir = 'tuning_results'
+            os.makedirs(results_dir, exist_ok=True)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            results_file = f'{results_dir}/hsv_tuned_{timestamp}.json'
+            with open(results_file, 'w') as f:
+                json.dump(output, f, indent=2)
+            self.get_logger().info(f'Results saved to {filename} and {results_file}')
+        except Exception as e:
+            self.get_logger().warn(f'Could not save to tuning_results: {e}')
     
     def print_results(self):
         """Print optimized parameters in usable format"""
         print("\n" + "="*80)
         print("OPTIMIZED HSV PARAMETERS")
         print("="*80)
-        print("\nCopy to traffic_light_detector.py:\n")
+        print(f"\nTimestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"Training samples: RED={len(self.training_data['RED'])}, "
+              f"YELLOW={len(self.training_data['YELLOW'])}, "
+              f"GREEN={len(self.training_data['GREEN'])}")
+        print("\n" + "-"*80)
         
         r = self.best_ranges['RED']
-        print(f"# Red (dual range)")
-        print(f"red1 = cv2.inRange(hsv, ({r['h1'][0]}, {r['s1'][0]}, {r['v1'][0]}), "
-              f"({r['h1'][1]}, {r['s1'][1]}, {r['v1'][1]}))")
-        print(f"red2 = cv2.inRange(hsv, ({r['h2'][0]}, {r['s2'][0]}, {r['v2'][0]}), "
-              f"({r['h2'][1]}, {r['s2'][1]}, {r['v2'][1]}))")
-        print("red_mask = red1 | red2\n")
+        print(f"\nRED:")
+        print(f"  Range 1: H=[{r['h1'][0]}, {r['h1'][1]}], S=[{r['s1'][0]}, {r['s1'][1]}], V=[{r['v1'][0]}, {r['v1'][1]}]")
+        print(f"  Range 2: H=[{r['h2'][0]}, {r['h2'][1]}], S=[{r['s2'][0]}, {r['s2'][1]}], V=[{r['v2'][0]}, {r['v2'][1]}]")
+        print(f"  Code: red1 = cv2.inRange(hsv, ({r['h1'][0]}, {r['s1'][0]}, {r['v1'][0]}), ({r['h1'][1]}, {r['s1'][1]}, {r['v1'][1]}))")
+        print(f"        red2 = cv2.inRange(hsv, ({r['h2'][0]}, {r['s2'][0]}, {r['v2'][0]}), ({r['h2'][1]}, {r['s2'][1]}, {r['v2'][1]}))")
+        print(f"        red_mask = red1 | red2")
         
         y = self.best_ranges['YELLOW']
-        print(f"# Yellow")
-        print(f"yellow_mask = cv2.inRange(hsv, ({y['h'][0]}, {y['s'][0]}, {y['v'][0]}), "
-              f"({y['h'][1]}, {y['s'][1]}, {y['v'][1]}))\n")
+        print(f"\nYELLOW:")
+        print(f"  H=[{y['h'][0]}, {y['h'][1]}], S=[{y['s'][0]}, {y['s'][1]}], V=[{y['v'][0]}, {y['v'][1]}]")
+        print(f"  Code: yellow_mask = cv2.inRange(hsv, ({y['h'][0]}, {y['s'][0]}, {y['v'][0]}), ({y['h'][1]}, {y['s'][1]}, {y['v'][1]}))")
         
         g = self.best_ranges['GREEN']
-        print(f"# Green")
-        print(f"green_mask = cv2.inRange(hsv, ({g['h'][0]}, {g['s'][0]}, {g['v'][0]}), "
-              f"({g['h'][1]}, {g['s'][1]}, {g['v'][1]}))")
+        print(f"\nGREEN:")
+        print(f"  H=[{g['h'][0]}, {g['h'][1]}], S=[{g['s'][0]}, {g['s'][1]}], V=[{g['v'][0]}, {g['v'][1]}]")
+        print(f"  Code: green_mask = cv2.inRange(hsv, ({g['h'][0]}, {g['s'][0]}, {g['v'][0]}), ({g['h'][1]}, {g['s'][1]}, {g['v'][1]}))")
         
-        print("\n" + "="*80 + "\n")
+        print("\n" + "="*80)
+        print("Results saved to hsv_optimized_params.json")
+        print("="*80 + "\n")
 
 
 def main():
