@@ -121,7 +121,11 @@ class AutonomousController(Node):
     def control_loop(self):
         cmd = Twist()
         
-        self.target_speed = self.speed_targets[self.state]
+        # Handle UNKNOWN state: set speed to 0.5 m/s
+        if self.current_light == "UNKNOWN":
+            self.target_speed = 0.5
+        else:
+            self.target_speed = self.speed_targets[self.state]
         
         output, p_term, i_term, d_term = self.pid.compute(self.target_speed, self.current_speed)
         
