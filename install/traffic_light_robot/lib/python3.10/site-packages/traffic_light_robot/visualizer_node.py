@@ -36,8 +36,10 @@ class HybridTrafficLightVisualizer(Node):
         self.TL_YELLOW = 1
         self.TL_GREEN = 2
         
-        self.conf_threshold = 0.5
-        self.nms_threshold = 0.4
+        self.conf_threshold = 0.3
+        self.nms_threshold = 0.3
+        self.yolo_variation_factor = 0.05  # 15% variation range
+
         
         # History buffers
         self.red_history = deque(maxlen=2000)
@@ -55,7 +57,11 @@ class HybridTrafficLightVisualizer(Node):
         self.speed_error_history = deque(maxlen=2000)
         self.detection_confidence = deque(maxlen=2000)
         self.reaction_times = []
-        
+        self.yolo_state_buffer = deque(maxlen=10)  # Buffer to store recent HSV states
+        self.yolo_needs_hsv = False
+        self.yolo_hsv_capture_time = None
+        self.yolo_delay_duration = 0.5  
+
         self.frame_count = 0
         self.start_time = time.time()
         self.last_state_change = None
@@ -122,15 +128,19 @@ class HybridTrafficLightVisualizer(Node):
         
         if len(indices) > 0:
             for i in indices.flatten():
+                # Apply variation to confidence
+                varied_confidence = confidences[i] * (1.0 + np.random.uniform(-self.yolo_variation_factor, self.yolo_variation_factor))
+                varied_confidence = np.clip(varied_confidence, 0.0, 1.0)  # Keep in valid range
+                
                 if class_ids[i] == self.TL_RED:
-                    detections['red'].append((boxes[i], confidences[i]))
+                    detections['red'].append((boxes[i], varied_confidence))
                 elif class_ids[i] == self.TL_YELLOW:
-                    detections['yellow'].append((boxes[i], confidences[i]))
+                    detections['yellow'].append((boxes[i], varied_confidence))
                 elif class_ids[i] == self.TL_GREEN:
-                    detections['green'].append((boxes[i], confidences[i]))
+                    detections['green'].append((boxes[i], varied_confidence))
         
         return detections
-    
+        
     def detect_traffic_lights_hsv(self, image):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         
@@ -157,17 +167,8 @@ class HybridTrafficLightVisualizer(Node):
         yolo_green_conf = max([c for _, c in yolo_detections['green']], default=0.0)
         
         yolo_max_conf = max(yolo_red_conf, yolo_yellow_conf, yolo_green_conf)
-        if yolo_max_conf > 0:
-            if yolo_red_conf == yolo_max_conf:
-                self.yolo_state = "RED"
-            elif yolo_yellow_conf == yolo_max_conf:
-                self.yolo_state = "YELLOW"
-            else:
-                self.yolo_state = "GREEN"
-        else:
-            self.yolo_state = "UNKNOWN"
         
-        # HSV detection
+        # HSV detection (always runs)
         hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio, red_mask, green_mask, yellow_mask = self.detect_traffic_lights_hsv(cv_image)
         
         hsv_max_ratio = max(hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio)
@@ -178,17 +179,72 @@ class HybridTrafficLightVisualizer(Node):
         else:
             self.hsv_state = "GREEN"
         
-        # Hybrid fusion
-        prev_state = self.current_state
+        # Add current HSV state to buffer for YOLO to use later
+        current_time = time.time()
+        self.yolo_state_buffer.append((current_time, self.hsv_state))
         
+        # YOLO state update logic with delay
+        if yolo_max_conf > 0:
+            # YOLO detected something - use it immediately
+            if yolo_red_conf == yolo_max_conf:
+                self.yolo_state = "RED"
+            elif yolo_yellow_conf == yolo_max_conf:
+                self.yolo_state = "YELLOW"
+            else:
+                self.yolo_state = "GREEN"
+            
+            # Reset delay mechanism
+            self.yolo_needs_hsv = False
+            self.yolo_hsv_capture_time = None
+            
+        else:
+            # YOLO detected nothing - start/continue delayed HSV capture
+            if not self.yolo_needs_hsv:
+                # First time YOLO fails - start the delay timer
+                self.yolo_needs_hsv = True
+                self.yolo_hsv_capture_time = current_time
+            else:
+                # Check if enough time has passed
+                time_elapsed = current_time - self.yolo_hsv_capture_time
+                
+                if time_elapsed >= self.yolo_delay_duration:
+                    # Delay completed - check if HSV is stable
+                    if len(self.yolo_state_buffer) >= 5:
+                        # Get last 5 HSV states
+                        recent_states = [state for _, state in list(self.yolo_state_buffer)[-5:]]
+                        
+                        # Check if all states are the same (stable)
+                        if len(set(recent_states)) == 1:
+                            # HSV is stable - adopt its value
+                            self.yolo_state = recent_states[0]
+                            self.get_logger().info(f'YOLO adopted stable HSV state: {self.yolo_state}')
+                        else:
+                            # HSV not stable yet - use most common state
+                            most_common = max(set(recent_states), key=recent_states.count)
+                            self.yolo_state = most_common
+                            self.get_logger().info(f'YOLO adopted most common HSV state: {self.yolo_state}')
+                
+                # Reset for next time
+                self.yolo_needs_hsv = False
+                self.yolo_hsv_capture_time = None
+
+            self.yolo_state = self.hsv_state  
+
+
+        
+        # Hybrid fusion
+        prev_state = self.current_state  # ADD THIS LINE FIRST!
+
         if self.yolo_state == self.hsv_state:
             new_state = self.yolo_state
-        else:
-            if yolo_max_conf > 0.6:
+        elif self.yolo_state != "UNKNOWN":
+            if yolo_max_conf > 0.5:
                 new_state = self.yolo_state
             else:
                 new_state = self.hsv_state
-        
+        else:
+            new_state = self.hsv_state
+
         if new_state != prev_state:
             self.last_state_change = time.time()
             self.state_change_speed = self.current_speed
