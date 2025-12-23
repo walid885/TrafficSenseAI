@@ -22,6 +22,7 @@ traffic_light_robot/detector_node.py
 traffic_light_robot/detector_node_v2.py
 traffic_light_robot/hsv_auto_tuner.py
 traffic_light_robot/hsv_tuner_node.py
+traffic_light_robot/interactive_hsv_tuner.py
 traffic_light_robot/pid_tuner.py
 traffic_light_robot/rviz_visu.py
 traffic_light_robot/vis_node_Hyb.py
