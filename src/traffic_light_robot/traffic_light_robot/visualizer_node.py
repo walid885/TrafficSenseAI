@@ -119,7 +119,7 @@ class TrafficLightVisualizer(Node):
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
         
-        cam_h, cam_w = 600, 800
+        cam_h, cam_w = 700, 950
         cam_x, cam_y = 50, 50
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
@@ -145,8 +145,8 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, "CAMERA FEED + COLOR DETECTION", (cam_x, cam_y-15), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         
-        plot_x, plot_y = 900, 50
-        plot_w, plot_h = 950, 350
+        plot_x, plot_y = 1050, 50
+        plot_w, plot_h = 820, 450
         
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
         cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
@@ -175,8 +175,8 @@ class TrafficLightVisualizer(Node):
                     for i in range(len(points)-1):
                         cv2.line(canvas, points[i], points[i+1], color, 2)
         
-        cv2.putText(canvas, "0%", (plot_x-40, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
-        cv2.putText(canvas, f"{max_val:.1f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        cv2.putText(canvas, "0", (plot_x-30, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        cv2.putText(canvas, f"{max_val:.1f}", (plot_x-50, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
         
         legend_y = plot_y + plot_h + 20
         cv2.rectangle(canvas, (plot_x, legend_y), (plot_x+20, legend_y+20), (0, 0, 255), -1)
@@ -193,36 +193,36 @@ class TrafficLightVisualizer(Node):
                       (0, 255, 255) if self.current_state == "YELLOW" else \
                       (0, 0, 255) if self.current_state == "RED" else (128, 128, 128)
         
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), state_color, 4)
+        cv2.rectangle(canvas, (state_x, state_y), (state_x+480, state_y+120), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (state_x, state_y), (state_x+480, state_y+120), state_color, 4)
         
-        cv2.putText(canvas, "TRAFFIC STATE", (state_x+90, state_y+40), 
+        cv2.putText(canvas, "TRAFFIC STATE", (state_x+120, state_y+40), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (200, 200, 200), 2)
-        cv2.putText(canvas, self.current_state, (state_x+70, state_y+90), 
+        cv2.putText(canvas, self.current_state, (state_x+100, state_y+90), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1.8, state_color, 4)
         
-        metrics_x = 470
+        metrics_x = 570
         metrics_y = state_y
         
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (255, 255, 255), 2)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+430, metrics_y+120), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+430, metrics_y+120), (255, 255, 255), 2)
         
-        cv2.putText(canvas, "COLOR DETECTION %", (metrics_x+70, metrics_y+30), 
+        cv2.putText(canvas, "COLOR DETECTION", (metrics_x+90, metrics_y+30), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, f"R: {red_ratio:5.2f}%", (metrics_x+20, metrics_y+60), 
+        cv2.putText(canvas, f"R: {red_ratio:5.2f}", (metrics_x+20, metrics_y+60), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        cv2.putText(canvas, f"Y: {yellow_ratio:5.2f}%", (metrics_x+20, metrics_y+85), 
+        cv2.putText(canvas, f"Y: {yellow_ratio:5.2f}", (metrics_x+20, metrics_y+85), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        cv2.putText(canvas, f"G: {green_ratio:5.2f}%", (metrics_x+20, metrics_y+110), 
+        cv2.putText(canvas, f"G: {green_ratio:5.2f}", (metrics_x+20, metrics_y+110), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         
-        speed_x = 900
-        speed_y = 450
+        speed_x = 1050
+        speed_y = 550
         
-        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (255, 255, 255), 2)
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+820, speed_y+180), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+820, speed_y+180), (255, 255, 255), 2)
         
-        cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+300, speed_y+35), 
+        cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+220, speed_y+35), 
                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (200, 200, 200), 2)
         
         speed_color = (0, 255, 0) if self.current_speed > 0.1 else (128, 128, 128)
@@ -233,8 +233,8 @@ class TrafficLightVisualizer(Node):
         cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+160), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 100, 100), 2)
         
-        bar_x = speed_x + 550
-        bar_w = 350
+        bar_x = speed_x + 450
+        bar_w = 330
         bar_h = 100
         bar_y = speed_y + 40
         

@@ -32,9 +32,6 @@ echo "=== LAUNCHING CONTROLLER ==="
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot controller_node; exec bash" &
 sleep 2
 
-echo "=== LAUNCHING DEBUG ==="
-gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot debug_traffic; exec bash" &
-sleep 2
 
 echo "=== LAUNCHING VISUALIZER ==="
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot visualizer_node; exec bash" &
