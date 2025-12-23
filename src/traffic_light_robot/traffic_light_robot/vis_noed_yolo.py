@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from tkinter import Canvas
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
@@ -11,18 +12,20 @@ import matplotlib.pyplot as plt
 from collections import deque
 import time
 
-class YOLOTrafficLightVisualizer(Node):
+class HybridTrafficLightVisualizer(Node):
     def __init__(self):
-        super().__init__('yolo_traffic_light_visualizer')
+        super().__init__('hybrid_traffic_light_visualizer')
         self.bridge = CvBridge()
         self.current_state = "UNKNOWN"
+        self.hsv_state = "UNKNOWN"
+        self.yolo_state = "UNKNOWN"
         self.current_speed = 0.0
         self.target_speed = 0.0
         
         # Load YOLOv4-tiny
         self.net = cv2.dnn.readNetFromDarknet(
-    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.cfg',
-    '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.weights'
+            '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.cfg',
+            '/home/raspb/Desktop/TrafficSenseAI/models/yolov4-tiny.weights'
         )
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
@@ -30,7 +33,6 @@ class YOLOTrafficLightVisualizer(Node):
         self.layer_names = self.net.getLayerNames()
         self.output_layers = [self.layer_names[i - 1] for i in self.net.getUnconnectedOutLayers()]
         
-        # Traffic light class IDs (adjust based on your trained model)
         self.TL_RED = 0
         self.TL_YELLOW = 1
         self.TL_GREEN = 2
@@ -42,10 +44,15 @@ class YOLOTrafficLightVisualizer(Node):
         self.red_history = deque(maxlen=2000)
         self.green_history = deque(maxlen=2000)
         self.yellow_history = deque(maxlen=2000)
+        self.yolo_red_history = deque(maxlen=2000)
+        self.yolo_green_history = deque(maxlen=2000)
+        self.yolo_yellow_history = deque(maxlen=2000)
         self.speed_history = deque(maxlen=2000)
         self.target_speed_history = deque(maxlen=2000)
         self.timestamps = deque(maxlen=2000)
         self.state_history = deque(maxlen=2000)
+        self.hsv_state_history = deque(maxlen=2000)
+        self.yolo_state_history = deque(maxlen=2000)
         self.speed_error_history = deque(maxlen=2000)
         self.detection_confidence = deque(maxlen=2000)
         self.reaction_times = []
@@ -59,22 +66,18 @@ class YOLOTrafficLightVisualizer(Node):
         self.plot_red = deque(maxlen=self.plot_window)
         self.plot_green = deque(maxlen=self.plot_window)
         self.plot_yellow = deque(maxlen=self.plot_window)
+        self.plot_yolo_red = deque(maxlen=self.plot_window)
+        self.plot_yolo_green = deque(maxlen=self.plot_window)
+        self.plot_yolo_yellow = deque(maxlen=self.plot_window)
         self.plot_times = deque(maxlen=self.plot_window)
         
         self.image_sub = self.create_subscription(Image, '/front_camera/image_raw', self.image_callback, 10)
-        self.state_sub = self.create_subscription(String, '/traffic_light_state', self.state_callback, 10)
         self.cmd_sub = self.create_subscription(Twist, '/cmd_vel', self.cmd_callback, 10)
         
-        cv2.namedWindow("YOLO Traffic Light Detection", cv2.WINDOW_NORMAL)
-        cv2.setWindowProperty("YOLO Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.namedWindow("Hybrid Traffic Light Detection", cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty("Hybrid Traffic Light Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         
-        self.get_logger().info('YOLO Visualizer - Press Q for analytics')
-        
-    def state_callback(self, msg):
-        if self.current_state != msg.data and self.current_state != "UNKNOWN":
-            self.last_state_change = time.time()
-            self.state_change_speed = self.current_speed
-        self.current_state = msg.data
+        self.get_logger().info('Hybrid Visualizer - Press Q for analytics')
         
     def cmd_callback(self, msg):
         self.current_speed = msg.linear.x
@@ -86,10 +89,8 @@ class YOLOTrafficLightVisualizer(Node):
                     self.reaction_times.append(reaction_time)
                 self.last_state_change = None
     
-    def detect_traffic_lights(self, image):
+    def detect_traffic_lights_yolo(self, image):
         height, width = image.shape[:2]
-        
-        # YOLO preprocessing
         blob = cv2.dnn.blobFromImage(image, 1/255.0, (416, 416), swapRB=True, crop=False)
         self.net.setInput(blob)
         outputs = self.net.forward(self.output_layers)
@@ -116,7 +117,6 @@ class YOLOTrafficLightVisualizer(Node):
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
         
-        # NMS
         indices = cv2.dnn.NMSBoxes(boxes, confidences, self.conf_threshold, self.nms_threshold)
         
         detections = {'red': [], 'yellow': [], 'green': []}
@@ -132,32 +132,71 @@ class YOLOTrafficLightVisualizer(Node):
         
         return detections
     
+    def detect_traffic_lights_hsv(self, image):
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        
+        red1 = cv2.inRange(hsv, (0, 120, 70), (10, 255, 255))
+        red2 = cv2.inRange(hsv, (170, 120, 70), (180, 255, 255))
+        red_mask = red1 | red2
+        green_mask = cv2.inRange(hsv, (45, 100, 70), (75, 255, 255))
+        yellow_mask = cv2.inRange(hsv, (20, 120, 70), (30, 255, 255))
+        
+        total_pixels = image.shape[0] * image.shape[1]
+        red_ratio = (cv2.countNonZero(red_mask) / total_pixels) * 100
+        green_ratio = (cv2.countNonZero(green_mask) / total_pixels) * 100
+        yellow_ratio = (cv2.countNonZero(yellow_mask) / total_pixels) * 100
+        
+        return red_ratio, green_ratio, yellow_ratio, red_mask, green_mask, yellow_mask
+    
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        detections = self.detect_traffic_lights(cv_image)
         
-        # Calculate confidence scores
-        red_conf = max([c for _, c in detections['red']], default=0.0)
-        yellow_conf = max([c for _, c in detections['yellow']], default=0.0)
-        green_conf = max([c for _, c in detections['green']], default=0.0)
+        # YOLO detection
+        yolo_detections = self.detect_traffic_lights_yolo(cv_image)
+        yolo_red_conf = max([c for _, c in yolo_detections['red']], default=0.0)
+        yolo_yellow_conf = max([c for _, c in yolo_detections['yellow']], default=0.0)
+        yolo_green_conf = max([c for _, c in yolo_detections['green']], default=0.0)
         
-        # Determine state
-        max_conf = max(red_conf, yellow_conf, green_conf)
-        if max_conf > 0:
-            if red_conf == max_conf:
-                detected_state = "RED"
-            elif yellow_conf == max_conf:
-                detected_state = "YELLOW"
+        yolo_max_conf = max(yolo_red_conf, yolo_yellow_conf, yolo_green_conf)
+        if yolo_max_conf > 0:
+            if yolo_red_conf == yolo_max_conf:
+                self.yolo_state = "RED"
+            elif yolo_yellow_conf == yolo_max_conf:
+                self.yolo_state = "YELLOW"
             else:
-                detected_state = "GREEN"
+                self.yolo_state = "GREEN"
+        
+        # HSV detection
+        hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio, red_mask, green_mask, yellow_mask = self.detect_traffic_lights_hsv(cv_image)
+        
+        hsv_max_ratio = max(hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio)
+        if hsv_red_ratio == hsv_max_ratio:
+            self.hsv_state = "RED"
+        elif hsv_yellow_ratio == hsv_max_ratio:
+            self.hsv_state = "YELLOW"
         else:
-            detected_state = self.current_state
+            self.hsv_state = "GREEN"
         
-        # Update state
-        if detected_state != self.current_state:
-            self.current_state = detected_state
+        # Hybrid fusion: always determine state from current detections
+        # Priority: if both systems agree, use that; if they disagree, use YOLO if confident, else HSV
+        prev_state = self.current_state
         
-        # Set target speed
+        if self.yolo_state == self.hsv_state:
+            # Both agree - high confidence
+            new_state = self.yolo_state
+        else:
+            # Disagreement - use YOLO if it has strong detection, otherwise HSV
+            if yolo_max_conf > 0.6:
+                new_state = self.yolo_state
+            else:
+                new_state = self.hsv_state
+        
+        if new_state != prev_state:
+            self.last_state_change = time.time()
+            self.state_change_speed = self.current_speed
+            self.current_state = new_state
+        
+        # Set target speed based on current state
         if self.current_state == "GREEN":
             self.target_speed = 0.5
         elif self.current_state == "YELLOW":
@@ -167,27 +206,40 @@ class YOLOTrafficLightVisualizer(Node):
         else:
             self.target_speed = 0.5
         
-        # Calculate confidence ratio
-        confs = sorted([red_conf, yellow_conf, green_conf], reverse=True)
-        confidence = confs[0] / (confs[1] + 0.01) if len(confs) > 1 else 1.0
+        # Calculate confidence metrics
+        hsv_ratios = sorted([hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio], reverse=True)
+        hsv_confidence = hsv_ratios[0] / (hsv_ratios[1] + 0.01)
+        
+        yolo_confs = sorted([yolo_red_conf, yolo_yellow_conf, yolo_green_conf], reverse=True)
+        yolo_confidence = yolo_confs[0] / (yolo_confs[1] + 0.01) if yolo_confs[1] > 0 else 1.0
+        
+        combined_confidence = (hsv_confidence + yolo_confidence) / 2.0
         
         speed_error = abs(self.current_speed - self.target_speed)
         elapsed = time.time() - self.start_time
         
-        # Store history (convert confidence to percentage scale for compatibility)
-        self.red_history.append(red_conf * 100)
-        self.green_history.append(green_conf * 100)
-        self.yellow_history.append(yellow_conf * 100)
+        # Store history
+        self.red_history.append(hsv_red_ratio)
+        self.green_history.append(hsv_green_ratio)
+        self.yellow_history.append(hsv_yellow_ratio)
+        self.yolo_red_history.append(yolo_red_conf * 100)
+        self.yolo_green_history.append(yolo_green_conf * 100)
+        self.yolo_yellow_history.append(yolo_yellow_conf * 100)
         self.speed_history.append(self.current_speed)
         self.target_speed_history.append(self.target_speed)
         self.timestamps.append(elapsed)
         self.state_history.append(self.current_state)
+        self.hsv_state_history.append(self.hsv_state)
+        self.yolo_state_history.append(self.yolo_state)
         self.speed_error_history.append(speed_error)
-        self.detection_confidence.append(confidence)
+        self.detection_confidence.append(combined_confidence)
         
-        self.plot_red.append(red_conf * 100)
-        self.plot_green.append(green_conf * 100)
-        self.plot_yellow.append(yellow_conf * 100)
+        self.plot_red.append(hsv_red_ratio)
+        self.plot_green.append(hsv_green_ratio)
+        self.plot_yellow.append(hsv_yellow_ratio)
+        self.plot_yolo_red.append(yolo_red_conf * 100)
+        self.plot_yolo_green.append(yolo_green_conf * 100)
+        self.plot_yolo_yellow.append(yolo_yellow_conf * 100)
         self.plot_times.append(elapsed)
         
         self.frame_count += 1
@@ -196,15 +248,15 @@ class YOLOTrafficLightVisualizer(Node):
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
         
-        cam_h, cam_w = 600, 800
+        cam_h, cam_w = 450, 600
         cam_x, cam_y = 50, 50
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
-        # Draw detections on resized frame
+        # Draw YOLO detections
         scale_x = cam_w / cv_image.shape[1]
         scale_y = cam_h / cv_image.shape[0]
         
-        for color, dets in detections.items():
+        for color, dets in yolo_detections.items():
             box_color = (0, 0, 255) if color == 'red' else (0, 255, 255) if color == 'yellow' else (0, 255, 0)
             for (x, y, w, h), conf in dets:
                 x1 = int(x * scale_x)
@@ -212,89 +264,176 @@ class YOLOTrafficLightVisualizer(Node):
                 x2 = int((x + w) * scale_x)
                 y2 = int((y + h) * scale_y)
                 cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 2)
-                cv2.putText(cam_resized, f"{color.upper()} {conf:.2f}", (x1, y1-10),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, box_color, 2)
+                cv2.putText(cam_resized, f"{conf:.2f}", (x1, y1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, box_color, 1)
         
         cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_resized
-        cv2.putText(canvas, "YOLO TRAFFIC LIGHT DETECTION", (cam_x, cam_y-15), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+        cv2.putText(canvas, "CAMERA + YOLO", (cam_x, cam_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
-        # Plot area
-        plot_x, plot_y = 900, 50
-        plot_w, plot_h = 950, 350
+        # HSV masks visualization
+        mask_h, mask_w = 450, 600
+        mask_x, mask_y = 700, 50
         
-        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
-        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "DETECTION CONFIDENCE TIMELINE (Last 100 frames)", 
-                    (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        red_overlay_resized = cv2.resize(red_mask, (mask_w, mask_h))
+        green_overlay_resized = cv2.resize(green_mask, (mask_w, mask_h))
+        yellow_overlay_resized = cv2.resize(yellow_mask, (mask_w, mask_h))
         
-        max_val = 1.0
+        mask_bgr = np.zeros((mask_h, mask_w, 3), dtype=np.uint8)
+        mask_bgr[:,:,2] = red_overlay_resized
+        mask_bgr[:,:,1] = cv2.addWeighted(green_overlay_resized, 1.0, yellow_overlay_resized, 1.0, 0)
+        
+        cv2.rectangle(canvas, (mask_x-5, mask_y-5), (mask_x+mask_w+5, mask_y+mask_h+5), (255, 255, 255), 3)
+        canvas[mask_y:mask_y+mask_h, mask_x:mask_x+mask_w] = mask_bgr
+        cv2.putText(canvas, "HSV COLOR MASKS", (mask_x, mask_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        
+        # HSV plot
+        plot1_x, plot1_y = 1350, 50
+        plot1_w, plot1_h = 520, 200
+        
+        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (30, 30, 30), -1)
+        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (255, 255, 255), 2)
+        cv2.putText(canvas, "HSV DETECTION", (plot1_x+10, plot1_y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        
         if len(self.plot_red) > 1:
-            plot_data = [
-                (list(self.plot_red), (0, 0, 255)),
-                (list(self.plot_green), (0, 255, 0)),
-                (list(self.plot_yellow), (0, 255, 255))
-            ]
-            
             max_val = max(max(self.plot_red), max(self.plot_green), max(self.plot_yellow), 1.0)
             
-            for data, color in plot_data:
-                points = []
-                for i, val in enumerate(data):
-                    x = plot_x + int((i / len(data)) * plot_w)
-                    y = plot_y + plot_h - int((val / max_val) * (plot_h - 20))
-                    points.append((x, y))
-                
+            for data, color in [(list(self.plot_red), (0, 0, 255)), (list(self.plot_green), (0, 255, 0)), (list(self.plot_yellow), (0, 255, 255))]:
+                points = [(plot1_x + int((i / len(data)) * plot1_w), plot1_y + plot1_h - int((val / max_val) * (plot1_h - 20))) for i, val in enumerate(data)]
                 if len(points) > 1:
                     for i in range(len(points)-1):
                         cv2.line(canvas, points[i], points[i+1], color, 2)
         
-        cv2.putText(canvas, "0%", (plot_x-40, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
-        cv2.putText(canvas, f"{max_val:.1f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        # YOLO plot
+        plot2_x, plot2_y = 1350, 300
+        plot2_w, plot2_h = 520, 200
         
-        legend_y = plot_y + plot_h + 20
-        cv2.rectangle(canvas, (plot_x, legend_y), (plot_x+20, legend_y+20), (0, 0, 255), -1)
-        cv2.putText(canvas, "Red", (plot_x+30, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-        cv2.rectangle(canvas, (plot_x+120, legend_y), (plot_x+140, legend_y+20), (0, 255, 255), -1)
-        cv2.putText(canvas, "Yellow", (plot_x+150, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-        cv2.rectangle(canvas, (plot_x+260, legend_y), (plot_x+280, legend_y+20), (0, 255, 0), -1)
-        cv2.putText(canvas, "Green", (plot_x+290, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (30, 30, 30), -1)
+        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (255, 255, 255), 2)
+        cv2.putText(canvas, "YOLO DETECTION", (plot2_x+10, plot2_y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
         
-        # State display
-        state_x = 50
-        state_y = cam_y + cam_h + 80
+        if len(self.plot_yolo_red) > 1:
+            max_val = max(max(self.plot_yolo_red), max(self.plot_yolo_green), max(self.plot_yolo_yellow), 1.0)
+            
+            for data, color in [(list(self.plot_yolo_red), (0, 0, 255)), (list(self.plot_yolo_green), (0, 255, 0)), (list(self.plot_yolo_yellow), (0, 255, 255))]:
+                points = [(plot2_x + int((i / len(data)) * plot2_w), plot2_y + plot2_h - int((val / max_val) * (plot2_h - 20))) for i, val in enumerate(data)]
+                if len(points) > 1:
+                    for i in range(len(points)-1):
+                        cv2.line(canvas, points[i], points[i+1], color, 2)
         
-        state_color = (0, 255, 0) if self.current_state == "GREEN" else \
-                      (0, 255, 255) if self.current_state == "YELLOW" else \
-                      (0, 0, 255) if self.current_state == "RED" else (128, 128, 128)
+        # State displays
+        state_y = 550
+        state_w = 280
+        state_h = 100
         
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), state_color, 4)
-        cv2.putText(canvas, "TRAFFIC STATE", (state_x+90, state_y+40), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (200, 200, 200), 2)
-        cv2.putText(canvas, self.current_state, (state_x+70, state_y+90), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 1.8, state_color, 4)
+        # HSV State
+        hsv_state_x = 50
+        hsv_state_color = (0, 255, 0) if self.hsv_state == "GREEN" else (0, 255, 255) if self.hsv_state == "YELLOW" else (0, 0, 255) if self.hsv_state == "RED" else (128, 128, 128)
+        
+        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), hsv_state_color, 4)
+        cv2.putText(canvas, "HSV STATE", (hsv_state_x+60, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
+        cv2.putText(canvas, self.hsv_state, (hsv_state_x+50, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, hsv_state_color, 3)
+        
+        # YOLO State
+        yolo_state_x = 380
+        yolo_state_color = (0, 255, 0) if self.yolo_state == "GREEN" else (0, 255, 255) if self.yolo_state == "YELLOW" else (0, 0, 255) if self.yolo_state == "RED" else (128, 128, 128)
+        
+        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), yolo_state_color, 4)
+        cv2.putText(canvas, "YOLO STATE", (yolo_state_x+50, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
+        cv2.putText(canvas, self.yolo_state, (yolo_state_x+40, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, yolo_state_color, 3)
+        
+        # Final Hybrid State
+        final_state_x = 710
+        final_state_color = (0, 255, 0) if self.current_state == "GREEN" else (0, 255, 255) if self.current_state == "YELLOW" else (0, 0, 255) if self.current_state == "RED" else (128, 128, 128)
+        
+        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), final_state_color, 6)
+        cv2.putText(canvas, "HYBRID STATE", (final_state_x+40, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
+        cv2.putText(canvas, self.current_state, (final_state_x+30, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, final_state_color, 3)
         
         # Metrics
-        metrics_x = 470
+        metrics_x = 1040
         metrics_y = state_y
         
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (255, 255, 255), 2)
-        cv2.putText(canvas, "YOLO CONFIDENCE", (metrics_x+90, metrics_y+30), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, f"R: {red_conf:.3f}", (metrics_x+20, metrics_y+60), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        cv2.putText(canvas, f"Y: {yellow_conf:.3f}", (metrics_x+20, metrics_y+85), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        cv2.putText(canvas, f"G: {green_conf:.3f}", (metrics_x+20, metrics_y+110), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (255, 255, 255), 2)
+        cv2.putText(canvas, "HSV% | YOLO", (metrics_x+100, metrics_y+25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 2)
+        cv2.putText(canvas, f"R: {hsv_red_ratio:5.2f} | {yolo_red_conf:.2f}", (metrics_x+15, metrics_y+48), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+        cv2.putText(canvas, f"Y: {hsv_yellow_ratio:5.2f} | {yolo_yellow_conf:.2f}", (metrics_x+15, metrics_y+68), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+        cv2.putText(canvas, f"G: {hsv_green_ratio:5.2f} | {yolo_green_conf:.2f}", (metrics_x+15, metrics_y+88), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         
+        # Speed control
+        speed_x = 50
+        speed_y = 700
+        
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+1820, speed_y+180), (50, 50, 50), -1)
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+1820, speed_y+180), (255, 255, 255), 2)
+        cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+650, speed_y+35), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (200, 200, 200), 2)
+        
+        speed_color = (0, 255, 0) if self.current_speed > 0.1 else (128, 128, 128)
+        cv2.putText(canvas, f"Current: {self.current_speed:.3f} m/s", (speed_x+30, speed_y+80), cv2.FONT_HERSHEY_SIMPLEX, 0.9, speed_color, 2)
+        cv2.putText(canvas, f"Target:  {self.target_speed:.3f} m/s", (speed_x+30, speed_y+120), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+        cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+160), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 100, 100), 2)
+        
+        # Speed bar
+        bar_x = speed_x + 550
+        bar_w = 1200
+        bar_h = 100
+        bar_y = speed_y + 40
+        
+        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (30, 30, 30), -1)
+        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (100, 100, 100), 2)
+        
+        max_speed = 0.6
+        current_bar = int((self.current_speed / max_speed) * bar_w)
+        target_bar = int((self.target_speed / max_speed) * bar_w)
+        
+        if current_bar > 0:
+            cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+current_bar, bar_y+bar_h), speed_color, -1)
+        
+        target_x = bar_x + target_bar
+        cv2.line(canvas, (target_x, bar_y), (target_x, bar_y+bar_h), (255, 0, 0), 4)
+        
+        # Info bar
+        info_y = display_h - 50
+        cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
+        agreement = "AGREE" if self.hsv_state == self.yolo_state else "CONFLICT"
+        agreement_color = (0, 255, 0) if agreement == "AGREE" else (0, 165, 255)
+        info_text = f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Systems: {agreement} | Confidence: {combined_confidence:.2f} | Press Q for Analytics"
+        cv2.putText(canvas, info_text, (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        
+        cv2.imshow("Hybrid Traffic Light Detection", canvas)
+        key = cv2.waitKey(1)
+        
+        if key == ord('q') or key == ord('Q'):
+            self.generate_analytics()
+            raise KeyboardInterrupt
+    
+    def generate_analytics(self):
+        if len(self.timestamps) == 0:
+            self.get_logger().warn('No data')
+            return
+        
+        times = np.array(list(self.timestamps))
+        
+        # Speed control
+        fig1, ax1 = plt.subplots(figsize=(14, 6))
+        ax1.plot(times, list(self.speed_history), 'b-', label='Actual Speed', linewidth=2.5)
+        ax1.plot(times, list(self.target_speed_history), 'r--', label='Target Speed', linewidth=2.5)
+        ax1.fill_between(times, list(self.speed_history), list(self.target_speed_history), alpha=0.2, color='gray')
+        ax1.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
+        ax1.set_ylabel('Speed (m/s)', fontsize=12, fontweight='bold')
+        ax1.set_title('Robot Speed Control Performance', fontsize=14, fontweight='bold', pad=20)
+        ax1.legend(fontsize=11, loc='upper right')
+        ax1.grid(True, alpha=0.3)
+        plt.tight_layout()
+
         # Speed control
         speed_x = 900
         speed_y = 450
         
+
         cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (50, 50, 50), -1)
         cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (255, 255, 255), 2)
         cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+300, speed_y+35), 
@@ -303,7 +442,7 @@ class YOLOTrafficLightVisualizer(Node):
         speed_color = (0, 255, 0) if self.current_speed > 0.1 else (128, 128, 128)
         cv2.putText(canvas, f"Current: {self.current_speed:.3f} m/s", (speed_x+30, speed_y+80), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, speed_color, 2)
-        cv2.putText(canvas, f"Target:  {self.target_speed:.3f} m/s", (speed_x+30, speed_y+120), 
+        cv2.putText(Canvas, f"Target:  {self.target_speed:.3f} m/s", (speed_x+30, speed_y+120), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
         cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+160), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 100, 100), 2)
