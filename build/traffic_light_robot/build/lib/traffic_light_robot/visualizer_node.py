@@ -119,8 +119,9 @@ class TrafficLightVisualizer(Node):
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
         
-        cam_h, cam_w = 600, 800
-        cam_x, cam_y = 50, 50
+        # Bigger camera feed
+        cam_h, cam_w = 780, 1040
+        cam_x, cam_y = 40, 40
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
         red_overlay = cv2.resize(red_mask, (cam_w, cam_h))
@@ -139,107 +140,103 @@ class TrafficLightVisualizer(Node):
         cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, green_bgr, 0.4, 0)
         cam_with_overlay = cv2.addWeighted(cam_with_overlay, 1.0, yellow_bgr, 0.4, 0)
         
-        cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
+        # Tech border
+        cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (0, 255, 255), 3)
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_with_overlay
         
-        cv2.putText(canvas, "CAMERA FEED + COLOR DETECTION", (cam_x, cam_y-15), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+        cv2.putText(canvas, "LIVE CAMERA FEED + DETECTION", (cam_x, cam_y-15), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 255), 2)
         
-        plot_x, plot_y = 900, 50
-        plot_w, plot_h = 950, 350
+        # Timeline plot - bigger and more visible
+        plot_x, plot_y = 1120, 40
+        plot_w, plot_h = 760, 500
         
-        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (30, 30, 30), -1)
-        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (255, 255, 255), 2)
+        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (20, 20, 30), -1)
+        cv2.rectangle(canvas, (plot_x, plot_y), (plot_x+plot_w, plot_y+plot_h), (0, 255, 255), 3)
         
-        cv2.putText(canvas, "COLOR DETECTION TIMELINE (Last 100 frames)", 
-                    (plot_x+10, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.putText(canvas, "REAL-TIME COLOR DETECTION (100 Frames)", 
+                    (plot_x+100, plot_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 255), 2)
         
         max_val = 1.0
         if len(self.plot_red) > 1:
             plot_data = [
-                (list(self.plot_red), (0, 0, 255)),
-                (list(self.plot_green), (0, 255, 0)),
-                (list(self.plot_yellow), (0, 255, 255))
+                (list(self.plot_red), (0, 100, 255), "RED"),
+                (list(self.plot_green), (0, 255, 100), "GREEN"),
+                (list(self.plot_yellow), (0, 255, 255), "YELLOW")
             ]
             
             max_val = max(max(self.plot_red), max(self.plot_green), max(self.plot_yellow), 1.0)
             
-            for data, color in plot_data:
+            for data, color, name in plot_data:
                 points = []
                 for i, val in enumerate(data):
-                    x = plot_x + int((i / len(data)) * plot_w)
-                    y = plot_y + plot_h - int((val / max_val) * (plot_h - 20))
+                    x = plot_x + 10 + int((i / len(data)) * (plot_w - 20))
+                    y = plot_y + plot_h - 10 - int((val / max_val) * (plot_h - 30))
                     points.append((x, y))
                 
                 if len(points) > 1:
                     for i in range(len(points)-1):
-                        cv2.line(canvas, points[i], points[i+1], color, 2)
+                        cv2.line(canvas, points[i], points[i+1], color, 3)
         
-        cv2.putText(canvas, "0%", (plot_x-40, plot_y+plot_h), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
-        cv2.putText(canvas, f"{max_val:.1f}%", (plot_x-60, plot_y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        # Y-axis labels
+        cv2.putText(canvas, "0", (plot_x-35, plot_y+plot_h-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+        cv2.putText(canvas, f"{max_val:.0f}", (plot_x-45, plot_y+25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
         
-        legend_y = plot_y + plot_h + 20
-        cv2.rectangle(canvas, (plot_x, legend_y), (plot_x+20, legend_y+20), (0, 0, 255), -1)
-        cv2.putText(canvas, "Red", (plot_x+30, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-        cv2.rectangle(canvas, (plot_x+120, legend_y), (plot_x+140, legend_y+20), (0, 255, 255), -1)
-        cv2.putText(canvas, "Yellow", (plot_x+150, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-        cv2.rectangle(canvas, (plot_x+260, legend_y), (plot_x+280, legend_y+20), (0, 255, 0), -1)
-        cv2.putText(canvas, "Green", (plot_x+290, legend_y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        # Legend
+        legend_y = plot_y + plot_h + 25
+        cv2.rectangle(canvas, (plot_x+50, legend_y), (plot_x+70, legend_y+15), (0, 100, 255), -1)
+        cv2.putText(canvas, "Red", (plot_x+80, legend_y+12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.rectangle(canvas, (plot_x+250, legend_y), (plot_x+270, legend_y+15), (0, 255, 255), -1)
+        cv2.putText(canvas, "Yellow", (plot_x+280, legend_y+12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        cv2.rectangle(canvas, (plot_x+450, legend_y), (plot_x+470, legend_y+15), (0, 255, 100), -1)
+        cv2.putText(canvas, "Green", (plot_x+480, legend_y+12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
         
-        state_x = 50
-        state_y = cam_y + cam_h + 80
+        # Traffic state - bigger and wider
+        state_x = 40
+        state_y = cam_y + cam_h + 60
+        state_w = 1040
+        state_h = 160
         
-        state_color = (0, 255, 0) if self.current_state == "GREEN" else \
+        state_color = (0, 255, 100) if self.current_state == "GREEN" else \
                       (0, 255, 255) if self.current_state == "YELLOW" else \
-                      (0, 0, 255) if self.current_state == "RED" else (128, 128, 128)
+                      (0, 100, 255) if self.current_state == "RED" else (128, 128, 128)
         
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (state_x, state_y), (state_x+380, state_y+120), state_color, 4)
+        cv2.rectangle(canvas, (state_x, state_y), (state_x+state_w, state_y+state_h), (20, 20, 30), -1)
+        cv2.rectangle(canvas, (state_x, state_y), (state_x+state_w, state_y+state_h), state_color, 5)
         
-        cv2.putText(canvas, "TRAFFIC STATE", (state_x+90, state_y+40), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (200, 200, 200), 2)
-        cv2.putText(canvas, self.current_state, (state_x+70, state_y+90), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 1.8, state_color, 4)
+        cv2.putText(canvas, "TRAFFIC LIGHT STATUS", (state_x+300, state_y+45), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 1.1, (200, 200, 200), 2)
+        cv2.putText(canvas, self.current_state, (state_x+320, state_y+120), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 2.5, state_color, 5)
         
-        metrics_x = 470
-        metrics_y = state_y
+        # Speed control - techy style
+        speed_x = 1120
+        speed_y = 590
+        speed_w = 760
+        speed_h = 200
         
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+120), (255, 255, 255), 2)
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+speed_w, speed_y+speed_h), (20, 20, 30), -1)
+        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+speed_w, speed_y+speed_h), (0, 255, 255), 3)
         
-        cv2.putText(canvas, "COLOR DETECTION %", (metrics_x+70, metrics_y+30), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, f"R: {red_ratio:5.2f}%", (metrics_x+20, metrics_y+60), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        cv2.putText(canvas, f"Y: {yellow_ratio:5.2f}%", (metrics_x+20, metrics_y+85), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        cv2.putText(canvas, f"G: {green_ratio:5.2f}%", (metrics_x+20, metrics_y+110), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+200, speed_y+40), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0, 255, 255), 2)
         
-        speed_x = 900
-        speed_y = 450
-        
-        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (speed_x, speed_y), (speed_x+950, speed_y+180), (255, 255, 255), 2)
-        
-        cv2.putText(canvas, "ROBOT SPEED CONTROL", (speed_x+300, speed_y+35), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 1.0, (200, 200, 200), 2)
-        
-        speed_color = (0, 255, 0) if self.current_speed > 0.1 else (128, 128, 128)
-        cv2.putText(canvas, f"Current: {self.current_speed:.3f} m/s", (speed_x+30, speed_y+80), 
+        speed_color = (0, 255, 100) if self.current_speed > 0.1 else (128, 128, 128)
+        cv2.putText(canvas, f"Current: {self.current_speed:.3f} m/s", (speed_x+30, speed_y+90), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, speed_color, 2)
-        cv2.putText(canvas, f"Target:  {self.target_speed:.3f} m/s", (speed_x+30, speed_y+120), 
+        cv2.putText(canvas, f"Target:  {self.target_speed:.3f} m/s", (speed_x+30, speed_y+130), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
-        cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+160), 
+        cv2.putText(canvas, f"Error:   {speed_error:.3f} m/s", (speed_x+30, speed_y+170), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 100, 100), 2)
         
-        bar_x = speed_x + 550
-        bar_w = 350
-        bar_h = 100
-        bar_y = speed_y + 40
+        # Speed bar
+        bar_x = speed_x + 420
+        bar_w = 310
+        bar_h = 120
+        bar_y = speed_y + 50
         
-        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (30, 30, 30), -1)
-        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (100, 100, 100), 2)
+        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (30, 30, 40), -1)
+        cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+bar_w, bar_y+bar_h), (100, 100, 120), 2)
         
         max_speed = 0.6
         current_bar = int((self.current_speed / max_speed) * bar_w)
@@ -249,12 +246,14 @@ class TrafficLightVisualizer(Node):
             cv2.rectangle(canvas, (bar_x, bar_y), (bar_x+current_bar, bar_y+bar_h), speed_color, -1)
         
         target_x = bar_x + target_bar
-        cv2.line(canvas, (target_x, bar_y), (target_x, bar_y+bar_h), (255, 0, 0), 4)
+        cv2.line(canvas, (target_x, bar_y), (target_x, bar_y+bar_h), (255, 0, 100), 5)
         
-        info_y = display_h - 50
-        cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (40, 40, 40), -1)
-        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.2f} | Press Q for Detailed Analytics", 
-                    (30, info_y+32), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        # Bottom info bar
+        info_y = display_h - 60
+        cv2.rectangle(canvas, (0, info_y), (display_w, display_h), (15, 15, 25), -1)
+        cv2.rectangle(canvas, (0, info_y), (display_w, info_y+2), (0, 255, 255), 2)
+        cv2.putText(canvas, f"Time: {elapsed:.1f}s | Frames: {self.frame_count} | Confidence: {confidence:.2f} | Press Q for Analytics", 
+                    (30, info_y+40), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
         
         cv2.imshow("Traffic Light Detection", canvas)
         key = cv2.waitKey(1)
@@ -338,126 +337,7 @@ class TrafficLightVisualizer(Node):
         plt.savefig('analytics_4_detection_confidence.png', dpi=200, facecolor='white')
         plt.close()
         
-        fig5, ax5 = plt.subplots(figsize=(14, 6))
-        window = 50
-        if len(self.speed_history) > window:
-            variances = [np.std(list(self.speed_history)[max(0, i-window):i+1]) 
-                        for i in range(len(self.speed_history))]
-            ax5.plot(times, variances, 'purple', linewidth=2)
-            ax5.fill_between(times, 0, variances, alpha=0.3, color='purple')
-        ax5.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax5.set_ylabel('Standard Deviation (m/s)', fontsize=12, fontweight='bold')
-        ax5.set_title('Speed Stability (Rolling Window)\nMeasures speed fluctuations over 50-frame windows', 
-                     fontsize=14, fontweight='bold', pad=20)
-        ax5.grid(True, alpha=0.3)
-        ax5.text(0.02, 0.98, 'Lower variance = smoother, more stable motion', 
-                transform=ax5.transAxes, fontsize=10, verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        plt.tight_layout()
-        plt.savefig('analytics_5_speed_variance.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        fig6, ax6 = plt.subplots(figsize=(10, 6))
-        states = ['RED', 'YELLOW', 'GREEN']
-        speeds_by_state = {s: [] for s in states}
-        for state, speed in zip(self.state_history, self.speed_history):
-            if state in speeds_by_state:
-                speeds_by_state[state].append(speed)
-        
-        positions = []
-        data = []
-        labels = []
-        for i, state in enumerate(states):
-            if speeds_by_state[state]:
-                positions.append(i)
-                data.append(speeds_by_state[state])
-                labels.append(state)
-        
-        if data:
-            bp = ax6.boxplot(data, positions=positions, labels=labels, patch_artist=True, widths=0.6)
-            colors = ['red', 'yellow', 'green']
-            for patch, color in zip(bp['boxes'], colors):
-                patch.set_facecolor(color)
-                patch.set_alpha(0.6)
-        ax6.set_ylabel('Speed (m/s)', fontsize=12, fontweight='bold')
-        ax6.set_xlabel('Traffic Light State', fontsize=12, fontweight='bold')
-        ax6.set_title('Speed Distribution by Traffic Light State\nShows typical speed ranges for each light state', 
-                     fontsize=14, fontweight='bold', pad=20)
-        ax6.grid(True, alpha=0.3, axis='y')
-        ax6.text(0.02, 0.98, 'Red should be near 0, Green higher', 
-                transform=ax6.transAxes, fontsize=10, verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        plt.tight_layout()
-        plt.savefig('analytics_6_speed_by_state.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        fig7, ax7 = plt.subplots(figsize=(10, 6))
-        if self.reaction_times:
-            ax7.hist(self.reaction_times, bins=20, color='blue', alpha=0.7, edgecolor='black')
-            mean_rt = np.mean(self.reaction_times)
-            ax7.axvline(mean_rt, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_rt:.2f}s')
-            ax7.set_xlabel('Reaction Time (seconds)', fontsize=12, fontweight='bold')
-            ax7.set_ylabel('Frequency', fontsize=12, fontweight='bold')
-            ax7.set_title(f'Robot Reaction Time Distribution\nTime taken to reach target speed after light change', 
-                         fontsize=14, fontweight='bold', pad=20)
-            ax7.legend(fontsize=11)
-            ax7.text(0.02, 0.98, f'n={len(self.reaction_times)} state changes measured', 
-                    transform=ax7.transAxes, fontsize=10, verticalalignment='top',
-                    bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        else:
-            ax7.text(0.5, 0.5, 'No reaction time data collected', 
-                    transform=ax7.transAxes, fontsize=14, ha='center')
-        ax7.grid(True, alpha=0.3)
-        plt.tight_layout()
-        plt.savefig('analytics_7_reaction_times.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        fig8, ax8 = plt.subplots(figsize=(10, 8))
-        ax8.axis('off')
-        
-        stats_text = f"""COMPREHENSIVE PERFORMANCE REPORT
-
-══════════════════════════════════════════════════════
-SPEED CONTROL METRICS
-══════════════════════════════════════════════════════
-Mean Speed:              {np.mean(self.speed_history):.3f} m/s
-Speed Variance:          {np.var(self.speed_history):.4f}
-Mean Tracking Error:     {np.mean(self.speed_error_history):.3f} m/s
-Root Mean Square Error:  {np.sqrt(np.mean(np.array(self.speed_error_history)**2)):.3f} m/s
-Max Speed Recorded:      {np.max(self.speed_history):.3f} m/s
-
-══════════════════════════════════════════════════════
-COLOR DETECTION STATISTICS
-══════════════════════════════════════════════════════
-Red Light:
-  Mean Detection:        {np.mean(self.red_history):.2f}%
-  Std Deviation:         {np.std(self.red_history):.2f}%
-  Peak Detection:        {np.max(self.red_history):.2f}%
-
-Yellow Light:
-  Mean Detection:        {np.mean(self.yellow_history):.2f}%
-  Std Deviation:         {np.std(self.yellow_history):.2f}%
-  Peak Detection:        {np.max(self.yellow_history):.2f}%
-
-Green Light:
-  Mean Detection:        {np.mean(self.green_history):.2f}%
-  Std Deviation:         {np.std(self.green_history):.2f}%
-  Peak Detection:        {np.max(self.green_history):.2f}%
-
-Average Confidence:      {np.mean(self.detection_confidence):.2f}
-
-══════════════════════════════════════════════════════
-RESPONSE CHARACTERISTICS
-══════════════════════════════════════════════════════
-Reaction Time Samples:   {len(self.reaction_times)} measurements
-Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-Reaction Time StdDev: {np.std(self.reaction_times) if self.reaction_times else 0:.2f} seconds
-SESSION INFORMATION
-══════════════════════════════════════════════════════
-Total Duration:          {times[-1]:.1f} seconds
-Total Frames Processed:  {self.frame_count}
-Average Frame Rate:      {self.frame_count/times[-1]:.1f} FPS
-"""
+        self.get_logger().info('Analytics saved!')
 
 def main():
     rclpy.init()
@@ -470,5 +350,6 @@ def main():
         cv2.destroyAllWindows()
         node.destroy_node()
         rclpy.shutdown()
+
 if __name__ == '__main__':
     main()
