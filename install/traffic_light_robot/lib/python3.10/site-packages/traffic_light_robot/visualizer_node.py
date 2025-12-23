@@ -38,9 +38,8 @@ class HybridTrafficLightVisualizer(Node):
         
         self.conf_threshold = 0.3
         self.nms_threshold = 0.3
-        self.yolo_variation_factor = 0.05  # 15% variation range
+        self.yolo_variation_factor = 0.05
 
-        
         # History buffers
         self.red_history = deque(maxlen=2000)
         self.green_history = deque(maxlen=2000)
@@ -57,10 +56,10 @@ class HybridTrafficLightVisualizer(Node):
         self.speed_error_history = deque(maxlen=2000)
         self.detection_confidence = deque(maxlen=2000)
         self.reaction_times = []
-        self.yolo_state_buffer = deque(maxlen=10)  # Buffer to store recent HSV states
+        self.yolo_state_buffer = deque(maxlen=10)
         self.yolo_needs_hsv = False
         self.yolo_hsv_capture_time = None
-        self.yolo_delay_duration = 0.5  
+        self.yolo_delay_duration = 0.5
 
         self.frame_count = 0
         self.start_time = time.time()
@@ -128,9 +127,8 @@ class HybridTrafficLightVisualizer(Node):
         
         if len(indices) > 0:
             for i in indices.flatten():
-                # Apply variation to confidence
                 varied_confidence = confidences[i] * (1.0 + np.random.uniform(-self.yolo_variation_factor, self.yolo_variation_factor))
-                varied_confidence = np.clip(varied_confidence, 0.0, 1.0)  # Keep in valid range
+                varied_confidence = np.clip(varied_confidence, 0.0, 1.0)
                 
                 if class_ids[i] == self.TL_RED:
                     detections['red'].append((boxes[i], varied_confidence))
@@ -168,7 +166,7 @@ class HybridTrafficLightVisualizer(Node):
         
         yolo_max_conf = max(yolo_red_conf, yolo_yellow_conf, yolo_green_conf)
         
-        # HSV detection (always runs)
+        # HSV detection
         hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio, red_mask, green_mask, yellow_mask = self.detect_traffic_lights_hsv(cv_image)
         
         hsv_max_ratio = max(hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio)
@@ -179,13 +177,11 @@ class HybridTrafficLightVisualizer(Node):
         else:
             self.hsv_state = "GREEN"
         
-        # Add current HSV state to buffer for YOLO to use later
         current_time = time.time()
         self.yolo_state_buffer.append((current_time, self.hsv_state))
         
-        # YOLO state update logic with delay
+        # YOLO state update logic
         if yolo_max_conf > 0:
-            # YOLO detected something - use it immediately
             if yolo_red_conf == yolo_max_conf:
                 self.yolo_state = "RED"
             elif yolo_yellow_conf == yolo_max_conf:
@@ -193,47 +189,34 @@ class HybridTrafficLightVisualizer(Node):
             else:
                 self.yolo_state = "GREEN"
             
-            # Reset delay mechanism
             self.yolo_needs_hsv = False
             self.yolo_hsv_capture_time = None
-            
         else:
-            # YOLO detected nothing - start/continue delayed HSV capture
             if not self.yolo_needs_hsv:
-                # First time YOLO fails - start the delay timer
                 self.yolo_needs_hsv = True
                 self.yolo_hsv_capture_time = current_time
             else:
-                # Check if enough time has passed
                 time_elapsed = current_time - self.yolo_hsv_capture_time
                 
                 if time_elapsed >= self.yolo_delay_duration:
-                    # Delay completed - check if HSV is stable
                     if len(self.yolo_state_buffer) >= 5:
-                        # Get last 5 HSV states
                         recent_states = [state for _, state in list(self.yolo_state_buffer)[-5:]]
                         
-                        # Check if all states are the same (stable)
                         if len(set(recent_states)) == 1:
-                            # HSV is stable - adopt its value
                             self.yolo_state = recent_states[0]
                             self.get_logger().info(f'YOLO adopted stable HSV state: {self.yolo_state}')
                         else:
-                            # HSV not stable yet - use most common state
                             most_common = max(set(recent_states), key=recent_states.count)
                             self.yolo_state = most_common
                             self.get_logger().info(f'YOLO adopted most common HSV state: {self.yolo_state}')
                 
-                # Reset for next time
                 self.yolo_needs_hsv = False
                 self.yolo_hsv_capture_time = None
 
-            self.yolo_state = self.hsv_state  
+            self.yolo_state = self.hsv_state
 
-
-        
         # Hybrid fusion
-        prev_state = self.current_state  # ADD THIS LINE FIRST!
+        prev_state = self.current_state
 
         if self.yolo_state == self.hsv_state:
             new_state = self.yolo_state
@@ -301,30 +284,43 @@ class HybridTrafficLightVisualizer(Node):
         # Visualization
         display_h, display_w = 1080, 1920
         canvas = np.zeros((display_h, display_w, 3), dtype=np.uint8)
+        canvas[:] = (15, 15, 25)  # Dark navy background
         
         cam_h, cam_w = 450, 600
         cam_x, cam_y = 50, 50
         cam_resized = cv2.resize(cv_image, (cam_w, cam_h))
         
-        # Draw YOLO detections
+        # Draw YOLO detections with enhanced styling
         scale_x = cam_w / cv_image.shape[1]
         scale_y = cam_h / cv_image.shape[0]
         
         for color, dets in yolo_detections.items():
-            box_color = (0, 0, 255) if color == 'red' else (0, 255, 255) if color == 'yellow' else (0, 255, 0)
+            if color == 'red':
+                box_color = (50, 50, 255)
+            elif color == 'yellow':
+                box_color = (50, 255, 255)
+            else:
+                box_color = (50, 255, 100)
+                
             for (x, y, w, h), conf in dets:
                 x1 = int(x * scale_x)
                 y1 = int(y * scale_y)
                 x2 = int((x + w) * scale_x)
                 y2 = int((y + h) * scale_y)
-                cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 2)
-                cv2.putText(cam_resized, f"{conf:.2f}", (x1, y1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, box_color, 1)
+                cv2.rectangle(cam_resized, (x1, y1), (x2, y2), box_color, 3)
+                
+                # Enhanced label background
+                label = f"{conf:.2f}"
+                label_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)[0]
+                cv2.rectangle(cam_resized, (x1, y1-label_size[1]-8), (x1+label_size[0]+8, y1), box_color, -1)
+                cv2.putText(cam_resized, label, (x1+4, y1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
         
-        cv2.rectangle(canvas, (cam_x-5, cam_y-5), (cam_x+cam_w+5, cam_y+cam_h+5), (255, 255, 255), 3)
+        # Gradient border for camera
+        cv2.rectangle(canvas, (cam_x-6, cam_y-6), (cam_x+cam_w+6, cam_y+cam_h+6), (80, 80, 120), 6)
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_resized
-        cv2.putText(canvas, "CAMERA + YOLO", (cam_x, cam_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.putText(canvas, "CAMERA + YOLO", (cam_x+5, cam_y-18), cv2.FONT_HERSHEY_DUPLEX, 0.8, (200, 200, 255), 2)
         
-        # HSV masks
+        # HSV masks with enhanced borders
         mask_h, mask_w = 450, 600
         mask_x, mask_y = 700, 50
         
@@ -336,87 +332,105 @@ class HybridTrafficLightVisualizer(Node):
         mask_bgr[:,:,2] = red_overlay_resized
         mask_bgr[:,:,1] = cv2.addWeighted(green_overlay_resized, 1.0, yellow_overlay_resized, 1.0, 0)
         
-        cv2.rectangle(canvas, (mask_x-5, mask_y-5), (mask_x+mask_w+5, mask_y+mask_h+5), (255, 255, 255), 3)
+        cv2.rectangle(canvas, (mask_x-6, mask_y-6), (mask_x+mask_w+6, mask_y+mask_h+6), (80, 120, 80), 6)
         canvas[mask_y:mask_y+mask_h, mask_x:mask_x+mask_w] = mask_bgr
-        cv2.putText(canvas, "HSV COLOR MASKS", (mask_x, mask_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.putText(canvas, "HSV COLOR MASKS", (mask_x+5, mask_y-18), cv2.FONT_HERSHEY_DUPLEX, 0.8, (200, 255, 200), 2)
         
-        # HSV plot
+        # HSV plot with enhanced styling
         plot1_x, plot1_y = 1350, 50
         plot1_w, plot1_h = 520, 200
         
-        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (30, 30, 30), -1)
-        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "HSV DETECTION", (plot1_x+10, plot1_y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (25, 30, 35), -1)
+        cv2.rectangle(canvas, (plot1_x, plot1_y), (plot1_x+plot1_w, plot1_y+plot1_h), (100, 120, 140), 3)
+        cv2.putText(canvas, "HSV DETECTION", (plot1_x+15, plot1_y-12), cv2.FONT_HERSHEY_DUPLEX, 0.7, (150, 200, 255), 2)
+        
+        # Grid lines for plot
+        for i in range(1, 5):
+            y_pos = plot1_y + int(i * plot1_h / 5)
+            cv2.line(canvas, (plot1_x, y_pos), (plot1_x+plot1_w, y_pos), (40, 50, 60), 1)
         
         if len(self.plot_red) > 1:
             max_val = max(max(self.plot_red), max(self.plot_green), max(self.plot_yellow), 1.0)
             
-            for data, color in [(list(self.plot_red), (0, 0, 255)), (list(self.plot_green), (0, 255, 0)), (list(self.plot_yellow), (0, 255, 255))]:
-                points = [(plot1_x + int((i / len(data)) * plot1_w), plot1_y + plot1_h - int((val / max_val) * (plot1_h - 20))) for i, val in enumerate(data)]
+            for data, color, thickness in [(list(self.plot_red), (80, 80, 255), 3), 
+                                            (list(self.plot_green), (80, 255, 120), 3), 
+                                            (list(self.plot_yellow), (80, 255, 255), 3)]:
+                points = [(plot1_x + int((i / len(data)) * plot1_w), 
+                          plot1_y + plot1_h - int((val / max_val) * (plot1_h - 20))) 
+                         for i, val in enumerate(data)]
                 if len(points) > 1:
                     for i in range(len(points)-1):
-                        cv2.line(canvas, points[i], points[i+1], color, 2)
+                        cv2.line(canvas, points[i], points[i+1], color, thickness)
         
-        # YOLO plot
+        # YOLO plot with enhanced styling
         plot2_x, plot2_y = 1350, 300
         plot2_w, plot2_h = 520, 200
         
-        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (30, 30, 30), -1)
-        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "YOLO DETECTION", (plot2_x+10, plot2_y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (25, 30, 35), -1)
+        cv2.rectangle(canvas, (plot2_x, plot2_y), (plot2_x+plot2_w, plot2_y+plot2_h), (140, 100, 120), 3)
+        cv2.putText(canvas, "YOLO DETECTION", (plot2_x+15, plot2_y-12), cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 200, 150), 2)
+        
+        # Grid lines for YOLO plot
+        for i in range(1, 5):
+            y_pos = plot2_y + int(i * plot2_h / 5)
+            cv2.line(canvas, (plot2_x, y_pos), (plot2_x+plot2_w, y_pos), (40, 50, 60), 1)
         
         if len(self.plot_yolo_red) > 1:
             max_val = max(max(self.plot_yolo_red), max(self.plot_yolo_green), max(self.plot_yolo_yellow), 1.0)
             
-            for data, color in [(list(self.plot_yolo_red), (0, 0, 255)), (list(self.plot_yolo_green), (0, 255, 0)), (list(self.plot_yolo_yellow), (0, 255, 255))]:
-                points = [(plot2_x + int((i / len(data)) * plot2_w), plot2_y + plot2_h - int((val / max_val) * (plot2_h - 20))) for i, val in enumerate(data)]
+            for data, color, thickness in [(list(self.plot_yolo_red), (100, 100, 255), 3), 
+                                            (list(self.plot_yolo_green), (100, 255, 140), 3), 
+                                            (list(self.plot_yolo_yellow), (100, 255, 255), 3)]:
+                points = [(plot2_x + int((i / len(data)) * plot2_w), 
+                          plot2_y + plot2_h - int((val / max_val) * (plot2_h - 20))) 
+                         for i, val in enumerate(data)]
                 if len(points) > 1:
                     for i in range(len(points)-1):
-                        cv2.line(canvas, points[i], points[i+1], color, 2)
+                        cv2.line(canvas, points[i], points[i+1], color, thickness)
         
-        # State displays
+        # State displays with glowing effect
         state_y = 550
         state_w = 280
         state_h = 100
         
         # HSV State
         hsv_state_x = 50
-        hsv_state_color = (0, 255, 0) if self.hsv_state == "GREEN" else (0, 255, 255) if self.hsv_state == "YELLOW" else (0, 0, 255) if self.hsv_state == "RED" else (128, 128, 128)
+        hsv_state_color = (80, 255, 120) if self.hsv_state == "GREEN" else (80, 255, 255) if self.hsv_state == "YELLOW" else (80, 80, 255) if self.hsv_state == "RED" else (100, 100, 100)
         
-        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), hsv_state_color, 4)
-        cv2.putText(canvas, "HSV STATE", (hsv_state_x+60, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, self.hsv_state, (hsv_state_x+50, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, hsv_state_color, 3)
+        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), (30, 35, 40), -1)
+        cv2.rectangle(canvas, (hsv_state_x, state_y), (hsv_state_x+state_w, state_y+state_h), hsv_state_color, 5)
+        cv2.putText(canvas, "HSV STATE", (hsv_state_x+65, state_y+32), cv2.FONT_HERSHEY_DUPLEX, 0.7, (180, 180, 180), 2)
+        cv2.putText(canvas, self.hsv_state, (hsv_state_x+50, state_y+75), cv2.FONT_HERSHEY_DUPLEX, 1.3, hsv_state_color, 3)
         
         # YOLO State
         yolo_state_x = 380
-        yolo_state_color = (0, 255, 0) if self.yolo_state == "GREEN" else (0, 255, 255) if self.yolo_state == "YELLOW" else (0, 0, 255) if self.yolo_state == "RED" else (128, 128, 128)
+        yolo_state_color = (80, 255, 120) if self.yolo_state == "GREEN" else (80, 255, 255) if self.yolo_state == "YELLOW" else (80, 80, 255) if self.yolo_state == "RED" else (100, 100, 100)
         
-        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), yolo_state_color, 4)
-        cv2.putText(canvas, "YOLO STATE", (yolo_state_x+50, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, self.yolo_state, (yolo_state_x+40, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, yolo_state_color, 3)
+        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), (30, 35, 40), -1)
+        cv2.rectangle(canvas, (yolo_state_x, state_y), (yolo_state_x+state_w, state_y+state_h), yolo_state_color, 5)
+        cv2.putText(canvas, "YOLO STATE", (yolo_state_x+55, state_y+32), cv2.FONT_HERSHEY_DUPLEX, 0.7, (180, 180, 180), 2)
+        cv2.putText(canvas, self.yolo_state, (yolo_state_x+45, state_y+75), cv2.FONT_HERSHEY_DUPLEX, 1.3, yolo_state_color, 3)
         
-        # Final Hybrid State
+        # Final Hybrid State with stronger emphasis
         final_state_x = 710
-        final_state_color = (0, 255, 0) if self.current_state == "GREEN" else (0, 255, 255) if self.current_state == "YELLOW" else (0, 0, 255) if self.current_state == "RED" else (128, 128, 128)
+        final_state_color = (100, 255, 140) if self.current_state == "GREEN" else (100, 255, 255) if self.current_state == "YELLOW" else (100, 100, 255) if self.current_state == "RED" else (100, 100, 100)
         
-        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), final_state_color, 6)
-        cv2.putText(canvas, "HYBRID STATE", (final_state_x+40, state_y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
-        cv2.putText(canvas, self.current_state, (final_state_x+30, state_y+75), cv2.FONT_HERSHEY_SIMPLEX, 1.2, final_state_color, 3)
+        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), (35, 40, 45), -1)
+        cv2.rectangle(canvas, (final_state_x, state_y), (final_state_x+state_w, state_y+state_h), final_state_color, 7)
+        cv2.putText(canvas, "HYBRID STATE", (final_state_x+45, state_y+32), cv2.FONT_HERSHEY_DUPLEX, 0.7, (200, 200, 200), 2)
+        cv2.putText(canvas, self.current_state, (final_state_x+35, state_y+75), cv2.FONT_HERSHEY_DUPLEX, 1.3, final_state_color, 3)
         
-        # Metrics
+        # Metrics with enhanced background
         metrics_x = 1040
         metrics_y = state_y
         
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (50, 50, 50), -1)
-        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (255, 255, 255), 2)
-        cv2.putText(canvas, "HSV% | YOLO", (metrics_x+100, metrics_y+25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 2)
-        cv2.putText(canvas, f"R: {hsv_red_ratio:5.2f} | {yolo_red_conf:.2f}", (metrics_x+15, metrics_y+48), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-        cv2.putText(canvas, f"Y: {hsv_yellow_ratio:5.2f} | {yolo_yellow_conf:.2f}", (metrics_x+15, metrics_y+68), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
-        cv2.putText(canvas, f"G: {hsv_green_ratio:5.2f} | {yolo_green_conf:.2f}", (metrics_x+15, metrics_y+88), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (30, 35, 40), -1)
+        cv2.rectangle(canvas, (metrics_x, metrics_y), (metrics_x+380, metrics_y+state_h), (120, 140, 160), 3)
+        cv2.putText(canvas, "HSV% | YOLO", (metrics_x+105, metrics_y+24), cv2.FONT_HERSHEY_DUPLEX, 0.6, (200, 200, 200), 2)
+        cv2.putText(canvas, f"R: {hsv_red_ratio:5.2f} | {yolo_red_conf:.2f}", (metrics_x+20, metrics_y+50), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (120, 120, 255), 2)
+        cv2.putText(canvas, f"Y: {hsv_yellow_ratio:5.2f} | {yolo_yellow_conf:.2f}", (metrics_x+20, metrics_y+72), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (120, 255, 255), 2)
+        cv2.putText(canvas, f"G: {hsv_green_ratio:5.2f} | {yolo_green_conf:.2f}", (metrics_x+20, metrics_y+94), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (120, 255, 140), 2)
+
         # Speed control
         speed_x = 50
         speed_y = 700
