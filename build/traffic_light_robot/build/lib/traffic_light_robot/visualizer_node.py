@@ -159,44 +159,40 @@ class HybridTrafficLightVisualizer(Node):
         yolo_max_conf = max(yolo_red_conf, yolo_yellow_conf, yolo_green_conf)
         if yolo_max_conf > 0:
             if yolo_red_conf == yolo_max_conf:
-                yolo_detected_state = "RED"
+                self.yolo_state = "RED"
             elif yolo_yellow_conf == yolo_max_conf:
-                yolo_detected_state = "YELLOW"
+                self.yolo_state = "YELLOW"
             else:
-                yolo_detected_state = "GREEN"
+                self.yolo_state = "GREEN"
         else:
-            yolo_detected_state = self.yolo_state
+            self.yolo_state = "UNKNOWN"
         
         # HSV detection
         hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio, red_mask, green_mask, yellow_mask = self.detect_traffic_lights_hsv(cv_image)
         
         hsv_max_ratio = max(hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio)
         if hsv_red_ratio == hsv_max_ratio:
-            hsv_detected_state = "RED"
+            self.hsv_state = "RED"
         elif hsv_yellow_ratio == hsv_max_ratio:
-            hsv_detected_state = "YELLOW"
+            self.hsv_state = "YELLOW"
         else:
-            hsv_detected_state = "GREEN"
+            self.hsv_state = "GREEN"
         
-        # Hybrid state logic: only change final state when at least one system changes
-        prev_yolo_state = self.yolo_state
-        prev_hsv_state = self.hsv_state
+        # Hybrid fusion
+        prev_state = self.current_state
         
-        self.yolo_state = yolo_detected_state
-        self.hsv_state = hsv_detected_state
-        
-        # Update current_state only if at least one system changed
-        if self.yolo_state != prev_yolo_state or self.hsv_state != prev_hsv_state:
-            # Priority: if both agree, use that; otherwise use YOLO
-            if self.yolo_state == self.hsv_state:
+        if self.yolo_state == self.hsv_state:
+            new_state = self.yolo_state
+        else:
+            if yolo_max_conf > 0.6:
                 new_state = self.yolo_state
             else:
-                new_state = self.yolo_state  # YOLO has priority in conflict
-            
-            if new_state != self.current_state:
-                self.last_state_change = time.time()
-                self.state_change_speed = self.current_speed
-                self.current_state = new_state
+                new_state = self.hsv_state
+        
+        if new_state != prev_state:
+            self.last_state_change = time.time()
+            self.state_change_speed = self.current_speed
+            self.current_state = new_state
         
         # Set target speed
         if self.current_state == "GREEN":
@@ -208,7 +204,7 @@ class HybridTrafficLightVisualizer(Node):
         else:
             self.target_speed = 0.5
         
-        # Calculate confidence metrics
+        # Calculate confidence
         hsv_ratios = sorted([hsv_red_ratio, hsv_green_ratio, hsv_yellow_ratio], reverse=True)
         hsv_confidence = hsv_ratios[0] / (hsv_ratios[1] + 0.01)
         
@@ -272,7 +268,7 @@ class HybridTrafficLightVisualizer(Node):
         canvas[cam_y:cam_y+cam_h, cam_x:cam_x+cam_w] = cam_resized
         cv2.putText(canvas, "CAMERA + YOLO", (cam_x, cam_y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         
-        # HSV masks visualization
+        # HSV masks
         mask_h, mask_w = 450, 600
         mask_x, mask_y = 700, 50
         
@@ -430,181 +426,193 @@ class HybridTrafficLightVisualizer(Node):
         ax1.legend(fontsize=11, loc='upper right')
         ax1.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_1_speed_control.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_1_speed_control.png', dpi=200, facecolor='white')
         plt.close()
         
-        # HSV detection
+        # HSV Detection
         fig2, ax2 = plt.subplots(figsize=(14, 6))
-        ax2.plot(times, list(self.red_history), 'r-', label='Red', alpha=0.8, linewidth=2.5)
-        ax2.plot(times, list(self.green_history), 'g-', label='Green', alpha=0.8, linewidth=2.5)
-        ax2.plot(times, list(self.yellow_history), 'y-', label='Yellow', alpha=0.8, linewidth=2.5)
+        ax2.plot(times, list(self.red_history), 'r-', label='Red Light', alpha=0.8, linewidth=2.5)
+        ax2.plot(times, list(self.green_history), 'g-', label='Green Light', alpha=0.8, linewidth=2.5)
+        ax2.plot(times, list(self.yellow_history), 'y-', label='Yellow Light', alpha=0.8, linewidth=2.5)
         ax2.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax2.set_ylabel('HSV Detection (%)', fontsize=12, fontweight='bold')
-        ax2.set_title('HSV Color Detection', fontsize=14, fontweight='bold', pad=20)
+        ax2.set_ylabel('HSV Color Ratio (%)', fontsize=12, fontweight='bold')
+        ax2.set_title('HSV Traffic Light Detection', fontsize=14, fontweight='bold', pad=20)
         ax2.legend(fontsize=11, loc='upper right')
         ax2.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_2_hsv_detection.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_2_hsv_detection.png', dpi=200, facecolor='white')
         plt.close()
-
-        # YOLO detection
+    # YOLO Detection
+    # YOLO Detection
         fig3, ax3 = plt.subplots(figsize=(14, 6))
-        ax3.plot(times, list(self.yolo_red_history), 'r-', label='Red', alpha=0.8, linewidth=2.5)
-        ax3.plot(times, list(self.yolo_green_history), 'g-', label='Green', alpha=0.8, linewidth=2.5)
-        ax3.plot(times, list(self.yolo_yellow_history), 'y-', label='Yellow', alpha=0.8, linewidth=2.5)
+        ax3.plot(times, list(self.yolo_red_history), 'r-', label='Red Light', alpha=0.8, linewidth=2.5)
+        ax3.plot(times, list(self.yolo_green_history), 'g-', label='Green Light', alpha=0.8, linewidth=2.5)
+        ax3.plot(times, list(self.yolo_yellow_history), 'y-', label='Yellow Light', alpha=0.8, linewidth=2.5)
         ax3.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
         ax3.set_ylabel('YOLO Confidence (%)', fontsize=12, fontweight='bold')
-        ax3.set_title('YOLO Detection Confidence', fontsize=14, fontweight='bold', pad=20)
+        ax3.set_title('YOLO Traffic Light Detection', fontsize=14, fontweight='bold', pad=20)
         ax3.legend(fontsize=11, loc='upper right')
         ax3.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_3_yolo_detection.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_3_yolo_detection.png', dpi=200, facecolor='white')
         plt.close()
-        
-        # State comparison
-        fig4, (ax4a, ax4b, ax4c) = plt.subplots(3, 1, figsize=(14, 10))
-        
-        state_map = {'RED': 0, 'YELLOW': 1, 'GREEN': 2, 'UNKNOWN': -1}
-        hsv_states_num = [state_map[s] for s in self.hsv_state_history]
-        yolo_states_num = [state_map[s] for s in self.yolo_state_history]
-        final_states_num = [state_map[s] for s in self.state_history]
-        
-        ax4a.plot(times, hsv_states_num, 'b-', linewidth=2, label='HSV State')
-        ax4a.set_ylabel('HSV State', fontsize=11, fontweight='bold')
-        ax4a.set_yticks([0, 1, 2])
-        ax4a.set_yticklabels(['RED', 'YELLOW', 'GREEN'])
-        ax4a.grid(True, alpha=0.3)
-        ax4a.legend(fontsize=10)
-        
-        ax4b.plot(times, yolo_states_num, 'orange', linewidth=2, label='YOLO State')
-        ax4b.set_ylabel('YOLO State', fontsize=11, fontweight='bold')
-        ax4b.set_yticks([0, 1, 2])
-        ax4b.set_yticklabels(['RED', 'YELLOW', 'GREEN'])
-        ax4b.grid(True, alpha=0.3)
-        ax4b.legend(fontsize=10)
-        
-        ax4c.plot(times, final_states_num, 'purple', linewidth=2.5, label='Hybrid Final State')
-        ax4c.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax4c.set_ylabel('Final State', fontsize=11, fontweight='bold')
-        ax4c.set_yticks([0, 1, 2])
-        ax4c.set_yticklabels(['RED', 'YELLOW', 'GREEN'])
-        ax4c.grid(True, alpha=0.3)
-        ax4c.legend(fontsize=10)
-        
-        plt.suptitle('State Detection Comparison: HSV vs YOLO vs Hybrid', fontsize=14, fontweight='bold')
-        plt.tight_layout()
-        plt.savefig('hybrid_analytics_4_state_comparison.png', dpi=200, facecolor='white')
-        plt.close()
-        
-        # System agreement
-        fig5, ax5 = plt.subplots(figsize=(14, 6))
-        agreement = [1 if h == y else 0 for h, y in zip(self.hsv_state_history, self.yolo_state_history)]
-        ax5.plot(times, agreement, 'cyan', linewidth=2)
-        ax5.fill_between(times, 0, agreement, alpha=0.3, color='cyan')
-        ax5.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax5.set_ylabel('Agreement (1=Yes, 0=No)', fontsize=12, fontweight='bold')
-        ax5.set_title('HSV-YOLO System Agreement', fontsize=14, fontweight='bold', pad=20)
-        ax5.grid(True, alpha=0.3)
-        agreement_pct = (sum(agreement) / len(agreement)) * 100
-        ax5.text(0.02, 0.98, f'Agreement: {agreement_pct:.1f}%', transform=ax5.transAxes, 
-                fontsize=11, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        plt.tight_layout()
-        plt.savefig('hybrid_analytics_5_system_agreement.png', dpi=200, facecolor='white')
-        plt.close()
-        
+
         # Speed error
-        fig6, ax6 = plt.subplots(figsize=(14, 6))
-        ax6.plot(times, list(self.speed_error_history), 'orange', linewidth=2)
-        ax6.fill_between(times, 0, list(self.speed_error_history), alpha=0.3, color='orange')
-        ax6.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
-        ax6.set_ylabel('Speed Error (m/s)', fontsize=12, fontweight='bold')
-        ax6.set_title('Speed Tracking Error', fontsize=14, fontweight='bold', pad=20)
-        ax6.grid(True, alpha=0.3)
+        fig4, ax4 = plt.subplots(figsize=(14, 6))
+        ax4.plot(times, list(self.speed_error_history), 'orange', linewidth=2)
+        ax4.fill_between(times, 0, list(self.speed_error_history), alpha=0.3, color='orange')
+        ax4.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
+        ax4.set_ylabel('Speed Error (m/s)', fontsize=12, fontweight='bold')
+        ax4.set_title('Speed Tracking Error', fontsize=14, fontweight='bold', pad=20)
+        ax4.grid(True, alpha=0.3)
         mean_error = np.mean(self.speed_error_history)
-        ax6.axhline(mean_error, color='red', linestyle='--', linewidth=2, label=f'Mean Error: {mean_error:.3f} m/s')
-        ax6.legend(fontsize=11)
+        ax4.axhline(mean_error, color='red', linestyle='--', linewidth=2, label=f'Mean Error: {mean_error:.3f} m/s')
+        ax4.legend(fontsize=11)
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_6_speed_error.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_4_speed_error.png', dpi=200, facecolor='white')
         plt.close()
-        
-        # Reaction times
+
+        # Combined confidence
+        fig5, ax5 = plt.subplots(figsize=(14, 6))
+        ax5.plot(times, list(self.detection_confidence), 'cyan', linewidth=2)
+        ax5.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
+        ax5.set_ylabel('Confidence Ratio', fontsize=12, fontweight='bold')
+        ax5.set_title('Combined Detection Confidence', fontsize=14, fontweight='bold', pad=20)
+        ax5.grid(True, alpha=0.3)
+        plt.tight_layout()
+        plt.savefig('analytics_5_detection_confidence.png', dpi=200, facecolor='white')
+        plt.close()
+
+        # Speed variance
+        fig6, ax6 = plt.subplots(figsize=(14, 6))
+        window = 50
+        if len(self.speed_history) > window:
+            variances = [np.std(list(self.speed_history)[max(0, i-window):i+1]) 
+                        for i in range(len(self.speed_history))]
+            ax6.plot(times, variances, 'purple', linewidth=2)
+            ax6.fill_between(times, 0, variances, alpha=0.3, color='purple')
+        ax6.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')
+        ax6.set_ylabel('Standard Deviation (m/s)', fontsize=12, fontweight='bold')
+        ax6.set_title('Speed Stability', fontsize=14, fontweight='bold', pad=20)
+        ax6.grid(True, alpha=0.3)
+        plt.tight_layout()
+        plt.savefig('analytics_6_speed_variance.png', dpi=200, facecolor='white')
+        plt.close()
+
+        # Speed by state
         fig7, ax7 = plt.subplots(figsize=(10, 6))
+        states = ['RED', 'YELLOW', 'GREEN']
+        speeds_by_state = {s: [] for s in states}
+        for state, speed in zip(self.state_history, self.speed_history):
+            if state in speeds_by_state:
+                speeds_by_state[state].append(speed)
+
+        positions = []
+        data = []
+        labels = []
+        for i, state in enumerate(states):
+            if speeds_by_state[state]:
+                positions.append(i)
+                data.append(speeds_by_state[state])
+                labels.append(state)
+
+        if data:
+            bp = ax7.boxplot(data, positions=positions, labels=labels, patch_artist=True, widths=0.6)
+            colors = ['red', 'yellow', 'green']
+            for patch, color in zip(bp['boxes'], colors):
+                patch.set_facecolor(color)
+                patch.set_alpha(0.6)
+        ax7.set_ylabel('Speed (m/s)', fontsize=12, fontweight='bold')
+        ax7.set_xlabel('Traffic Light State', fontsize=12, fontweight='bold')
+        ax7.set_title('Speed Distribution by Traffic Light State', fontsize=14, fontweight='bold', pad=20)
+        ax7.grid(True, alpha=0.3, axis='y')
+        plt.tight_layout()
+        plt.savefig('analytics_7_speed_by_state.png', dpi=200, facecolor='white')
+        plt.close()
+
+        # Reaction times
+        fig8, ax8 = plt.subplots(figsize=(10, 6))
         if self.reaction_times:
-            ax7.hist(self.reaction_times, bins=20, color='blue', alpha=0.7, edgecolor='black')
+            ax8.hist(self.reaction_times, bins=20, color='blue', alpha=0.7, edgecolor='black')
             mean_rt = np.mean(self.reaction_times)
-            ax7.axvline(mean_rt, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_rt:.2f}s')
-            ax7.set_xlabel('Reaction Time (seconds)', fontsize=12, fontweight='bold')
-            ax7.set_ylabel('Frequency', fontsize=12, fontweight='bold')
-            ax7.set_title('Robot Reaction Time Distribution', fontsize=14, fontweight='bold', pad=20)
-            ax7.legend(fontsize=11)
+            ax8.axvline(mean_rt, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_rt:.2f}s')
+            ax8.set_xlabel('Reaction Time (seconds)', fontsize=12, fontweight='bold')
+            ax8.set_ylabel('Frequency', fontsize=12, fontweight='bold')
+            ax8.set_title('Robot Reaction Time Distribution', fontsize=14, fontweight='bold', pad=20)
+            ax8.legend(fontsize=11)
         else:
-            ax7.text(0.5, 0.5, 'No reaction time data', transform=ax7.transAxes, fontsize=14, ha='center')
-        ax7.grid(True, alpha=0.3)
+            ax8.text(0.5, 0.5, 'No reaction time data', transform=ax8.transAxes, fontsize=14, ha='center')
+        ax8.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_7_reaction_times.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_8_reaction_times.png', dpi=200, facecolor='white')
         plt.close()
-        
+
         # Summary stats
-        fig8, ax8 = plt.subplots(figsize=(12, 10))
-        ax8.axis('off')
-        
-        agreement = [1 if h == y else 0 for h, y in zip(self.hsv_state_history, self.yolo_state_history)]
-        agreement_pct = (sum(agreement) / len(agreement)) * 100
-        
+        fig9, ax9 = plt.subplots(figsize=(10, 8))
+        ax9.axis('off')
+
         stats_text = f"""HYBRID TRAFFIC LIGHT DETECTION - PERFORMANCE REPORT
-
-══════════════════════════════════════════════════════
-SPEED CONTROL METRICS
-══════════════════════════════════════════════════════
-Mean Speed:              {np.mean(self.speed_history):.3f} m/s
-Speed Variance:          {np.var(self.speed_history):.4f}
-Mean Tracking Error:     {np.mean(self.speed_error_history):.3f} m/s
-RMSE:                    {np.sqrt(np.mean(np.array(self.speed_error_history)**2)):.3f} m/s
-Max Speed:               {np.max(self.speed_history):.3f} m/s
-
-══════════════════════════════════════════════════════
-HSV DETECTION STATISTICS
-══════════════════════════════════════════════════════
-Red Light:               {np.mean(self.red_history):.2f}% ± {np.std(self.red_history):.2f}%
-Yellow Light:            {np.mean(self.yellow_history):.2f}% ± {np.std(self.yellow_history):.2f}%
-Green Light:             {np.mean(self.green_history):.2f}% ± {np.std(self.green_history):.2f}%
-
-══════════════════════════════════════════════════════
-YOLO DETECTION STATISTICS
-══════════════════════════════════════════════════════
-Red Light:               {np.mean(self.yolo_red_history):.2f}% ± {np.std(self.yolo_red_history):.2f}%
-Yellow Light:            {np.mean(self.yolo_yellow_history):.2f}% ± {np.std(self.yolo_yellow_history):.2f}%
-Green Light:             {np.mean(self.yolo_green_history):.2f}% ± {np.std(self.yolo_green_history):.2f}%
-
-══════════════════════════════════════════════════════
-HYBRID SYSTEM PERFORMANCE
-══════════════════════════════════════════════════════
-System Agreement:        {agreement_pct:.1f}%
-Average Confidence:      {np.mean(self.detection_confidence):.2f}
-State Changes:           {len([i for i in range(1, len(self.state_history)) if self.state_history[i] != self.state_history[i-1]])}
-
-══════════════════════════════════════════════════════
-RESPONSE CHARACTERISTICS
-══════════════════════════════════════════════════════
-Reaction Samples:        {len(self.reaction_times)}
-Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f}s
-Reaction StdDev:         {np.std(self.reaction_times) if self.reaction_times else 0:.2f}s
-
-══════════════════════════════════════════════════════
-SESSION INFO
-══════════════════════════════════════════════════════
-Duration:                {times[-1]:.1f}s
-Frames Processed:        {self.frame_count}
-Average FPS:             {self.frame_count/times[-1]:.1f}
-"""
-        
-        ax8.text(0.1, 0.95, stats_text, transform=ax8.transAxes, fontsize=10, 
-                verticalalignment='top', fontfamily='monospace',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
+        ══════════════════════════════════════════════════════
+        SPEED CONTROL METRICS
+        ══════════════════════════════════════════════════════
+        Mean Speed:              {np.mean(self.speed_history):.3f} m/s
+        Speed Variance:          {np.var(self.speed_history):.4f}
+        Mean Tracking Error:     {np.mean(self.speed_error_history):.3f} m/s
+        RMSE:                    {np.sqrt(np.mean(np.array(self.speed_error_history)**2)):.3f} m/s
+        Max Speed:               {np.max(self.speed_history):.3f} m/s
+        ══════════════════════════════════════════════════════
+        HSV DETECTION STATISTICS
+        ══════════════════════════════════════════════════════
+        Red Light:
+        Mean Ratio:            {np.mean(self.red_history):.2f}%
+        Std Deviation:         {np.std(self.red_history):.2f}%
+        Peak Ratio:            {np.max(self.red_history):.2f}%
+        Yellow Light:
+        Mean Ratio:            {np.mean(self.yellow_history):.2f}%
+        Std Deviation:         {np.std(self.yellow_history):.2f}%
+        Peak Ratio:            {np.max(self.yellow_history):.2f}%
+        Green Light:
+        Mean Ratio:            {np.mean(self.green_history):.2f}%
+        Std Deviation:         {np.std(self.green_history):.2f}%
+        Peak Ratio:            {np.max(self.green_history):.2f}%
+        ══════════════════════════════════════════════════════
+        YOLO DETECTION STATISTICS
+        ══════════════════════════════════════════════════════
+        Red Light:
+        Mean Confidence:       {np.mean(self.yolo_red_history):.2f}%
+        Std Deviation:         {np.std(self.yolo_red_history):.2f}%
+        Peak Confidence:       {np.max(self.yolo_red_history):.2f}%
+        Yellow Light:
+        Mean Confidence:       {np.mean(self.yolo_yellow_history):.2f}%
+        Std Deviation:         {np.std(self.yolo_yellow_history):.2f}%
+        Peak Confidence:       {np.max(self.yolo_yellow_history):.2f}%
+        Green Light:
+        Mean Confidence:       {np.mean(self.yolo_green_history):.2f}%
+        Std Deviation:         {np.std(self.yolo_green_history):.2f}%
+        Peak Confidence:       {np.max(self.yolo_green_history):.2f}%
+        Average Combined Confidence: {np.mean(self.detection_confidence):.2f}
+        ══════════════════════════════════════════════════════
+        SYSTEM AGREEMENT
+        ══════════════════════════════════════════════════════
+        Agreement Rate:          {sum(1 for h, y in zip(self.hsv_state_history, self.yolo_state_history) if h == y) / len(self.hsv_state_history) * 100:.1f}%
+        ══════════════════════════════════════════════════════
+        RESPONSE CHARACTERISTICS
+        ══════════════════════════════════════════════════════
+        Reaction Samples:        {len(self.reaction_times)}
+        Mean Reaction Time:      {np.mean(self.reaction_times) if self.reaction_times else 0:.2f}s
+        Reaction StdDev:         {np.std(self.reaction_times) if self.reaction_times else 0:.2f}s
+        ══════════════════════════════════════════════════════
+        SESSION INFO
+        ══════════════════════════════════════════════════════
+        Duration:                {times[-1]:.1f}s
+        Frames Processed:        {self.frame_count}
+        Average FPS:             {self.frame_count/times[-1]:.1f}
+        """
+        ax9.text(0.1, 0.95, stats_text, transform=ax9.transAxes, fontsize=9, verticalalignment='top', fontfamily='monospace')
         plt.tight_layout()
-        plt.savefig('hybrid_analytics_8_summary.png', dpi=200, facecolor='white')
+        plt.savefig('analytics_9_summary.png', dpi=200, facecolor='white')
         plt.close()
-        
+
         self.get_logger().info('Analytics saved')
 
 def main():
@@ -619,5 +627,6 @@ def main():
         node.destroy_node()
         rclpy.shutdown()
 
-if __name__ == '__main__':
-    main()
+if __name__ == 'main': main()
+
+
