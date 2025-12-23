@@ -24,6 +24,8 @@ setup(
             'controller_node = traffic_light_robot.controller_node:main',
             'visualizer_node = traffic_light_robot.visualizer_node:main',
             'debug_traffic = traffic_light_robot.debug_traffic:main',
+            'hsv_auto_tuner = traffic_light_robot.hsv_auto_tuner:main',
+            'interactive_hsv_tuner = traffic_light_robot.interactive_hsv_tuner:main',
         ],
     },
 )
