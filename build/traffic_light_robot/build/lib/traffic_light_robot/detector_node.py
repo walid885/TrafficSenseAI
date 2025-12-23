@@ -6,64 +6,39 @@ from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
-import json
-import os
 
 class TrafficLightDetectorV2(Node):
     def __init__(self):
         super().__init__('traffic_light_detector_v2')
         self.bridge = CvBridge()
         
-        # Load optimized parameters if available
-        self.load_optimized_params()
+        # FOCUSED ROI - upper center where traffic lights are
+        self.roi = {'y_start': 0.0, 'y_end': 0.6, 'x_start': 0.2, 'x_end': 0.8}
         
-        # ROI parameters
-        self.roi = {'y_start': 0.3, 'y_end': 0.7, 'x_start': 0.3, 'x_end': 0.7}
+        # HSV ranges tuned for Gazebo lighting
+        self.red_ranges = {
+            'h1': [0, 15], 's1': [150, 255], 'v1': [150, 255],
+            'h2': [165, 180], 's2': [150, 255], 'v2': [150, 255]
+        }
+        self.yellow_ranges = {'h': [18, 35], 's': [150, 255], 'v': [150, 255]}
+        self.green_ranges = {'h': [40, 80], 's': [100, 255], 'v': [100, 255]}
         
-        # Adaptive thresholding
-        self.detection_threshold = 0.003  # 0.3% of ROI pixels
-        self.confidence_history = {'RED': [], 'YELLOW': [], 'GREEN': []}
-        self.max_history = 10
+        # Detection parameters
+        self.min_contour_area = 50  # pixels
+        self.detection_threshold = 0.002  # 0.2% after contour filtering
         
-        # State filtering
-        self.last_state = "UNKNOWN"
-        self.state_persistence = 0
-        self.persistence_threshold = 3
+        # State smoothing
+        self.state_buffer = []
+        self.buffer_size = 5
+        self.last_published = "UNKNOWN"
         
         self.subscription = self.create_subscription(
             Image, '/front_camera/image_raw', self.image_callback, 10)
         
         self.publisher = self.create_publisher(String, '/traffic_light_state', 10)
-        self.get_logger().info('Optimized Traffic Light Detector v2 started')
+        self.get_logger().info('Traffic Light Detector V2 STARTED')
         
-    def load_optimized_params(self):
-        """Load optimized HSV parameters from JSON if available"""
-        try:
-            with open('hsv_optimized_params.json', 'r') as f:
-                data = json.load(f)
-                params = data['optimized_ranges']
-                
-                self.red_ranges = params['RED']
-                self.yellow_ranges = params['YELLOW']
-                self.green_ranges = params['GREEN']
-                
-                self.get_logger().info('Loaded optimized HSV parameters')
-                return
-        except FileNotFoundError:
-            self.get_logger().warn('No optimized params found, using defaults')
-        except Exception as e:
-            self.get_logger().error(f'Error loading params: {e}')
-        
-        # Fallback to enhanced default parameters
-        self.red_ranges = {
-            'h1': [0, 10], 's1': [100, 255], 'v1': [100, 255],
-            'h2': [170, 180], 's2': [100, 255], 'v2': [100, 255]
-        }
-        self.yellow_ranges = {'h': [20, 32], 's': [100, 255], 'v': [100, 255]}
-        self.green_ranges = {'h': [45, 75], 's': [100, 255], 'v': [100, 255]}
-    
     def extract_roi(self, img):
-        """Extract region of interest"""
         h, w = img.shape[:2]
         y1 = int(h * self.roi['y_start'])
         y2 = int(h * self.roi['y_end'])
@@ -71,120 +46,114 @@ class TrafficLightDetectorV2(Node):
         x2 = int(w * self.roi['x_end'])
         return img[y1:y2, x1:x2]
     
-    def preprocess(self, img):
-        """Preprocessing pipeline for robust detection"""
-        # Gaussian blur
-        blurred = cv2.GaussianBlur(img, (5, 5), 0)
+    def filter_by_shape(self, mask):
+        """Keep only circular/elliptical contours (traffic lights)"""
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        filtered_mask = np.zeros_like(mask)
         
-        # CLAHE contrast enhancement
-        lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-        l, a, b = cv2.split(lab)
-        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
-        l = clahe.apply(l)
-        enhanced = cv2.merge([l, a, b])
-        enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
+        for cnt in contours:
+            area = cv2.contourArea(cnt)
+            if area < self.min_contour_area:
+                continue
+            
+            # Check circularity
+            perimeter = cv2.arcLength(cnt, True)
+            if perimeter == 0:
+                continue
+            circularity = 4 * np.pi * area / (perimeter * perimeter)
+            
+            # Traffic lights are circular (circularity near 1.0)
+            if circularity > 0.5:
+                cv2.drawContours(filtered_mask, [cnt], -1, 255, -1)
         
-        return enhanced
+        return filtered_mask
     
-    def detect_with_morphology(self, mask):
-        """Apply morphological operations to clean mask"""
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    def detect_color(self, hsv, ranges):
+        """Detect color with shape filtering"""
+        if 'h1' in ranges:  # Red (dual range)
+            mask1 = cv2.inRange(hsv, 
+                               (ranges['h1'][0], ranges['s1'][0], ranges['v1'][0]),
+                               (ranges['h1'][1], ranges['s1'][1], ranges['v1'][1]))
+            mask2 = cv2.inRange(hsv,
+                               (ranges['h2'][0], ranges['s2'][0], ranges['v2'][0]),
+                               (ranges['h2'][1], ranges['s2'][1], ranges['v2'][1]))
+            mask = mask1 | mask2
+        else:
+            mask = cv2.inRange(hsv,
+                              (ranges['h'][0], ranges['s'][0], ranges['v'][0]),
+                              (ranges['h'][1], ranges['s'][1], ranges['v'][1]))
+        
+        # Shape filtering
+        mask = self.filter_by_shape(mask)
+        
+        # Morphology cleanup
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-        return mask
-    
-    def calculate_confidence(self, mask, roi_shape):
-        """Calculate detection confidence with smoothing"""
-        total_pixels = roi_shape[0] * roi_shape[1]
-        detected_pixels = cv2.countNonZero(mask)
-        ratio = detected_pixels / total_pixels
-        return ratio
-    
-    def smooth_confidence(self, color, new_confidence):
-        """Smooth confidence over time"""
-        self.confidence_history[color].append(new_confidence)
-        if len(self.confidence_history[color]) > self.max_history:
-            self.confidence_history[color].pop(0)
         
-        return np.mean(self.confidence_history[color]) if self.confidence_history[color] else 0
+        return mask
     
     def image_callback(self, msg):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
             
-            # Extract ROI and preprocess
+            # Extract ROI
             roi = self.extract_roi(cv_image)
-            processed = self.preprocess(roi)
-            hsv = cv2.cvtColor(processed, cv2.COLOR_BGR2HSV)
+            total_pixels = roi.shape[0] * roi.shape[1]
             
-            # Red detection (dual range)
-            r = self.red_ranges
-            red1 = cv2.inRange(hsv, 
-                              (r['h1'][0], r['s1'][0], r['v1'][0]),
-                              (r['h1'][1], r['s1'][1], r['v1'][1]))
-            red2 = cv2.inRange(hsv, 
-                              (r['h2'][0], r['s2'][0], r['v2'][0]),
-                              (r['h2'][1], r['s2'][1], r['v2'][1]))
-            red_mask = self.detect_with_morphology(red1 | red2)
+            # Preprocessing
+            blurred = cv2.GaussianBlur(roi, (5, 5), 0)
+            hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
             
-            # Yellow detection
-            y = self.yellow_ranges
-            yellow_mask = cv2.inRange(hsv,
-                                     (y['h'][0], y['s'][0], y['v'][0]),
-                                     (y['h'][1], y['s'][1], y['v'][1]))
-            yellow_mask = self.detect_with_morphology(yellow_mask)
+            # Detect each color
+            red_mask = self.detect_color(hsv, self.red_ranges)
+            yellow_mask = self.detect_color(hsv, self.yellow_ranges)
+            green_mask = self.detect_color(hsv, self.green_ranges)
             
-            # Green detection
-            g = self.green_ranges
-            green_mask = cv2.inRange(hsv,
-                                    (g['h'][0], g['s'][0], g['v'][0]),
-                                    (g['h'][1], g['s'][1], g['v'][1]))
-            green_mask = self.detect_with_morphology(green_mask)
+            # Calculate ratios
+            red_ratio = cv2.countNonZero(red_mask) / total_pixels
+            yellow_ratio = cv2.countNonZero(yellow_mask) / total_pixels
+            green_ratio = cv2.countNonZero(green_mask) / total_pixels
             
-            # Calculate and smooth confidences
-            red_conf = self.smooth_confidence('RED', 
-                                            self.calculate_confidence(red_mask, roi.shape))
-            yellow_conf = self.smooth_confidence('YELLOW',
-                                                self.calculate_confidence(yellow_mask, roi.shape))
-            green_conf = self.smooth_confidence('GREEN',
-                                               self.calculate_confidence(green_mask, roi.shape))
+            # Determine state
+            max_ratio = max(red_ratio, yellow_ratio, green_ratio)
             
-            # Determine state with hysteresis
-            max_conf = max(red_conf, yellow_conf, green_conf)
-            
-            if max_conf < self.detection_threshold:
-                detected_state = "UNKNOWN"
-            elif red_conf == max_conf:
-                detected_state = "RED"
-            elif yellow_conf == max_conf:
-                detected_state = "YELLOW"
+            if max_ratio < self.detection_threshold:
+                detected = "UNKNOWN"
+            elif red_ratio == max_ratio and red_ratio > yellow_ratio * 1.5:
+                detected = "RED"
+            elif yellow_ratio == max_ratio and yellow_ratio > red_ratio * 1.5:
+                detected = "YELLOW"
+            elif green_ratio == max_ratio:
+                detected = "GREEN"
             else:
-                detected_state = "GREEN"
+                detected = "UNKNOWN"
             
-            # State persistence filtering
-            if detected_state == self.last_state or detected_state == "UNKNOWN":
-                self.state_persistence += 1
-            else:
-                self.state_persistence = 0
+            # Buffer-based smoothing
+            self.state_buffer.append(detected)
+            if len(self.state_buffer) > self.buffer_size:
+                self.state_buffer.pop(0)
             
-            if self.state_persistence >= self.persistence_threshold:
-                final_state = detected_state
-            else:
-                final_state = self.last_state if self.last_state != "UNKNOWN" else detected_state
-            
-            # Publish
-            msg_out = String()
-            msg_out.data = final_state
-            self.publisher.publish(msg_out)
-            
-            if final_state != self.last_state and final_state != "UNKNOWN":
-                self.get_logger().info(
-                    f'State: {final_state} | R:{red_conf:.4f} Y:{yellow_conf:.4f} G:{green_conf:.4f}')
-                self.last_state = final_state
+            # Majority vote
+            if len(self.state_buffer) == self.buffer_size:
+                valid_states = [s for s in self.state_buffer if s != "UNKNOWN"]
+                if valid_states:
+                    final_state = max(set(valid_states), key=valid_states.count)
+                else:
+                    final_state = "UNKNOWN"
+                
+                # Publish if changed
+                if final_state != self.last_published:
+                    msg_out = String()
+                    msg_out.data = final_state
+                    self.publisher.publish(msg_out)
+                    
+                    self.get_logger().info(
+                        f'STATE: {final_state} | R:{red_ratio:.4f} Y:{yellow_ratio:.4f} G:{green_ratio:.4f}'
+                    )
+                    self.last_published = final_state
                 
         except Exception as e:
-            self.get_logger().error(f'Detection error: {str(e)}')
-
+            self.get_logger().error(f'Error: {str(e)}')
 
 def main():
     rclpy.init()
