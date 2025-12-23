@@ -1,0 +1,966 @@
+{
+  "calibration_timestamp": "2025-12-23T18:53:16.061997",
+  "total_detections": 160,
+  "detections": [
+    {
+      "timestamp": "2025-12-23T18:53:03.928587",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.038004",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.135851",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.212552",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.298492",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.366786",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.485522",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.548625",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.637503",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.704178",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.777381",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.823797",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:04.923539",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.044730",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.100865",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.191524",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.252327",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.318418",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.396151",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.477578",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.562935",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.646960",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.721919",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.781020",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.872346",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:05.980058",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.076786",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.118122",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.216450",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.287723",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.383406",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.462070",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.540253",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.620944",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.709710",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.792401",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.847278",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:06.939166",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.029024",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.122015",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.183752",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.261021",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.337078",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.398989",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.473007",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.564180",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.642201",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.700901",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.800322",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.876493",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:07.947468",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.024195",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.101790",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.169676",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.227480",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.325074",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.417425",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.522742",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.567325",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.651340",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.732501",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.812477",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.880404",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:08.936506",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.044344",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.081706",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.191581",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.254792",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.314147",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.395274",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.468764",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.574705",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.635138",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.717068",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.766051",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.844425",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:09.938384",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.053601",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.096918",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.202169",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.284437",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.355287",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.426519",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.513975",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.590601",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.655433",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.732559",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.816459",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.849541",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:10.944073",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.005416",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.076239",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.135560",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.196936",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.289667",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.358242",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.464502",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.529939",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.612047",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.686680",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.747268",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.817172",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.875627",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:11.956141",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.020527",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.094842",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.161740",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.233913",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.333890",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.383615",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.460944",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.567105",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.600429",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.666772",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.767934",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.815453",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.906197",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:12.971644",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.073580",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.118373",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.195331",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.290599",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.391290",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.424620",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.496553",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.575807",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.627169",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.713478",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.772400",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.848558",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.919397",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:13.978336",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.059901",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.143607",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.192303",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.313320",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.351329",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.454071",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.498920",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.594048",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.669243",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.739008",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.832923",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.909522",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:14.946388",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.042221",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.092837",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.222393",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.235529",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.320738",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.395826",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.493336",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.556872",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.620578",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.715842",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.769791",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.837173",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.890641",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:15.984239",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    },
+    {
+      "timestamp": "2025-12-23T18:53:16.061970",
+      "detected_color": null,
+      "confidence": 0,
+      "all_detections": {}
+    }
+  ]
+}

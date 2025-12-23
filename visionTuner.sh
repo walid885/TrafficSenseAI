@@ -35,16 +35,15 @@ echo "=== LAUNCHING GAZEBO ==="
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 launch robot_description autonomous.launch.py; exec bash" &
 sleep 8
 
-echo "=== LAUNCHING INTERACTIVE HSV TUNER ==="
+echo "=== LAUNCHING AUTO CALIBRATOR ==="
 gnome-terminal -- bash -c "cd $PROJECT_DIR && source install/setup.bash && ros2 run traffic_light_robot interactive_hsv_tuner; exec bash" &
 
 echo ""
 echo "═══════════════════════════════════════════════════════════"
-echo "INTERACTIVE HSV TUNER LAUNCHED"
+echo "AUTO HSV CALIBRATOR LAUNCHED"
 echo "═══════════════════════════════════════════════════════════"
-echo "Controls:"
-echo "  1 = Switch to RED tuning"
-echo "  2 = Switch to YELLOW tuning"
-echo "  3 = Switch to GREEN tuning"
-echo "  S = Save parameters"
-echo "  Q = Quit
+echo "Collecting 100 calibration frames..."
+echo "Press Q to quit after calibration"
+echo "═══════════════════════════════════════════════════════════"
+
+wait

@@ -7,216 +7,237 @@ import cv2
 import numpy as np
 import json
 from datetime import datetime
+from collections import defaultdict
 
-class InteractiveHSVTuner(Node):
+class AutoHSVCalibrator(Node):
     def __init__(self):
-        super().__init__('interactive_hsv_tuner')
+        super().__init__('auto_hsv_calibrator')
         self.bridge = CvBridge()
         
-        # DEFAULT RANGES
-        self.ranges = {
-            'RED': {
-                'h1': [0, 10], 's1': [100, 255], 'v1': [100, 255],
-                'h2': [170, 180], 's2': [100, 255], 'v2': [100, 255]
-            },
-            'YELLOW': {'h': [20, 35], 's': [100, 255], 'v': [100, 255]},
-            'GREEN': {'h': [45, 75], 's': [100, 255], 'v': [100, 255]}
-        }
-        
-        self.current_color = 'RED'
         self.current_image = None
+        self.calibration_data = defaultdict(list)
+        self.frame_count = 0
+        self.calibration_frames = 100
+        self.optimized_ranges = None
         
         self.image_sub = self.create_subscription(
-            Image, '/front_camera/image_raw', self.image_callback, 10)
+            Image, '/camera/image_raw', self.image_callback, 10)
         
-        cv2.namedWindow("HSV Tuner - Original")
-        cv2.namedWindow("HSV Tuner - Mask")
-        cv2.namedWindow("HSV Controls")
-        
-        self.create_trackbars()
-        
-        self.get_logger().info('='*80)
-        self.get_logger().info('INTERACTIVE HSV TUNER')
-        self.get_logger().info('='*80)
-        self.get_logger().info('Keys:')
-        self.get_logger().info('  1 = RED tuning mode')
-        self.get_logger().info('  2 = YELLOW tuning mode')
-        self.get_logger().info('  3 = GREEN tuning mode')
-        self.get_logger().info('  S = Save current parameters')
-        self.get_logger().info('  Q = Quit')
-        self.get_logger().info('='*80)
-    
-    def create_trackbars(self):
-        cv2.createTrackbar('H_min', 'HSV Controls', 0, 180, lambda x: None)
-        cv2.createTrackbar('H_max', 'HSV Controls', 180, 180, lambda x: None)
-        cv2.createTrackbar('S_min', 'HSV Controls', 0, 255, lambda x: None)
-        cv2.createTrackbar('S_max', 'HSV Controls', 255, 255, lambda x: None)
-        cv2.createTrackbar('V_min', 'HSV Controls', 0, 255, lambda x: None)
-        cv2.createTrackbar('V_max', 'HSV Controls', 255, 255, lambda x: None)
-        
-        # RED UPPER RANGE
-        cv2.createTrackbar('H2_min', 'HSV Controls', 160, 180, lambda x: None)
-        cv2.createTrackbar('H2_max', 'HSV Controls', 180, 180, lambda x: None)
-    
-    def update_trackbars(self):
-        color = self.current_color
-        
-        if color == 'RED':
-            r = self.ranges['RED']
-            cv2.setTrackbarPos('H_min', 'HSV Controls', r['h1'][0])
-            cv2.setTrackbarPos('H_max', 'HSV Controls', r['h1'][1])
-            cv2.setTrackbarPos('S_min', 'HSV Controls', r['s1'][0])
-            cv2.setTrackbarPos('S_max', 'HSV Controls', r['s1'][1])
-            cv2.setTrackbarPos('V_min', 'HSV Controls', r['v1'][0])
-            cv2.setTrackbarPos('V_max', 'HSV Controls', r['v1'][1])
-            cv2.setTrackbarPos('H2_min', 'HSV Controls', r['h2'][0])
-            cv2.setTrackbarPos('H2_max', 'HSV Controls', r['h2'][1])
-        else:
-            r = self.ranges[color]
-            cv2.setTrackbarPos('H_min', 'HSV Controls', r['h'][0])
-            cv2.setTrackbarPos('H_max', 'HSV Controls', r['h'][1])
-            cv2.setTrackbarPos('S_min', 'HSV Controls', r['s'][0])
-            cv2.setTrackbarPos('S_max', 'HSV Controls', r['s'][1])
-            cv2.setTrackbarPos('V_min', 'HSV Controls', r['v'][0])
-            cv2.setTrackbarPos('V_max', 'HSV Controls', r['v'][1])
+        self.get_logger().info('AUTO CALIBRATOR - Collecting 100 frames...')
     
     def image_callback(self, msg):
         try:
             self.current_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-            self.process_image()
+            
+            if self.optimized_ranges is None:
+                self.calibrate()
+            else:
+                self.detect()
+                
         except Exception as e:
             self.get_logger().error(f'Error: {e}')
     
-    def process_image(self):
-        if self.current_image is None:
-            return
-        
-        img = self.current_image.copy()
+    def calibrate(self):
+        img = self.current_image
         h, w = img.shape[:2]
         
-        # ROI
-        y1, y2 = int(h * 0.3), int(h * 0.7)
-        x1, x2 = int(w * 0.3), int(w * 0.7)
-        roi = img[y1:y2, x1:x2]
+        # Full image analysis for traffic lights
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         
-        hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+        # Detect bright saturated regions
+        mask_bright = (hsv[:,:,2] > 100) & (hsv[:,:,1] > 50)
         
-        # GET TRACKBAR VALUES
-        h_min = cv2.getTrackbarPos('H_min', 'HSV Controls')
-        h_max = cv2.getTrackbarPos('H_max', 'HSV Controls')
-        s_min = cv2.getTrackbarPos('S_min', 'HSV Controls')
-        s_max = cv2.getTrackbarPos('S_max', 'HSV Controls')
-        v_min = cv2.getTrackbarPos('V_min', 'HSV Controls')
-        v_max = cv2.getTrackbarPos('V_max', 'HSV Controls')
+        h_vals = hsv[:,:,0][mask_bright]
+        s_vals = hsv[:,:,1][mask_bright]
+        v_vals = hsv[:,:,2][mask_bright]
         
-        # CREATE MASK
-        if self.current_color == 'RED':
-            h2_min = cv2.getTrackbarPos('H2_min', 'HSV Controls')
-            h2_max = cv2.getTrackbarPos('H2_max', 'HSV Controls')
-            mask1 = cv2.inRange(hsv, (h_min, s_min, v_min), (h_max, s_max, v_max))
-            mask2 = cv2.inRange(hsv, (h2_min, s_min, v_min), (h2_max, s_max, v_max))
-            mask = mask1 | mask2
-        else:
-            mask = cv2.inRange(hsv, (h_min, s_min, v_min), (h_max, s_max, v_max))
+        if len(h_vals) > 100:
+            # RED: 0-15 and 165-180
+            red_mask = ((h_vals <= 15) | (h_vals >= 165))
+            if np.sum(red_mask) > 50:
+                self.calibration_data['RED'].append({
+                    'h': h_vals[red_mask],
+                    's': s_vals[red_mask],
+                    'v': v_vals[red_mask]
+                })
+            
+            # YELLOW: 15-35
+            yellow_mask = (h_vals >= 15) & (h_vals <= 35)
+            if np.sum(yellow_mask) > 50:
+                self.calibration_data['YELLOW'].append({
+                    'h': h_vals[yellow_mask],
+                    's': s_vals[yellow_mask],
+                    'v': v_vals[yellow_mask]
+                })
+            
+            # GREEN: 35-85
+            green_mask = (h_vals >= 35) & (h_vals <= 85)
+            if np.sum(green_mask) > 50:
+                self.calibration_data['GREEN'].append({
+                    'h': h_vals[green_mask],
+                    's': s_vals[green_mask],
+                    'v': v_vals[green_mask]
+                })
         
-        # CALCULATE DETECTION RATIO
-        ratio = cv2.countNonZero(mask) / (mask.shape[0] * mask.shape[1])
+        self.frame_count += 1
         
-        # DISPLAY
+        # Display progress
         display = img.copy()
-        cv2.rectangle(display, (x1, y1), (x2, y2), (0, 255, 0), 3)
+        cv2.putText(display, f"Calibrating: {self.frame_count}/{self.calibration_frames}", 
+                   (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(display, f"RED: {len(self.calibration_data['RED'])} | "
+                   f"YEL: {len(self.calibration_data['YELLOW'])} | "
+                   f"GRN: {len(self.calibration_data['GREEN'])}", 
+                   (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.imshow("Calibration", display)
+        cv2.waitKey(1)
         
-        # TEXT OVERLAY
-        text_y = 40
-        cv2.putText(display, f"Mode: {self.current_color}", (20, text_y), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 255), 3)
-        text_y += 50
-        cv2.putText(display, f"Detection: {ratio*100:.3f}%", (20, text_y), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-        text_y += 40
-        cv2.putText(display, f"H: [{h_min}, {h_max}]", (20, text_y), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
-        text_y += 35
-        cv2.putText(display, f"S: [{s_min}, {s_max}]", (20, text_y), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
-        text_y += 35
-        cv2.putText(display, f"V: [{v_min}, {v_max}]", (20, text_y), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+        if self.frame_count >= self.calibration_frames:
+            self.compute_ranges()
+    
+    def compute_ranges(self):
+        ranges = {}
         
-        # SHOW
-        cv2.imshow("HSV Tuner - Original", display)
+        for color in ['RED', 'YELLOW', 'GREEN']:
+            if len(self.calibration_data[color]) == 0:
+                continue
+            
+            all_h = np.concatenate([d['h'] for d in self.calibration_data[color]])
+            all_s = np.concatenate([d['s'] for d in self.calibration_data[color]])
+            all_v = np.concatenate([d['v'] for d in self.calibration_data[color]])
+            
+            if color == 'RED':
+                # Split into low (0-15) and high (165-180)
+                low_h = all_h[all_h <= 90]
+                high_h = all_h[all_h > 90]
+                
+                if len(low_h) > 0:
+                    h1_min = max(0, int(np.percentile(low_h, 5)))
+                    h1_max = min(20, int(np.percentile(low_h, 95)))
+                else:
+                    h1_min, h1_max = 0, 10
+                
+                if len(high_h) > 0:
+                    h2_min = max(160, int(np.percentile(high_h, 5)))
+                    h2_max = 180
+                else:
+                    h2_min, h2_max = 170, 180
+                
+                s_min = max(30, int(np.percentile(all_s, 5)) - 30)
+                v_min = max(50, int(np.percentile(all_v, 5)) - 50)
+                
+                ranges['RED'] = {
+                    'h1': [h1_min, h1_max],
+                    's1': [s_min, 255],
+                    'v1': [v_min, 255],
+                    'h2': [h2_min, h2_max],
+                    's2': [s_min, 255],
+                    'v2': [v_min, 255]
+                }
+            else:
+                h_min = max(0, int(np.percentile(all_h, 5)) - 10)
+                h_max = min(180, int(np.percentile(all_h, 95)) + 10)
+                s_min = max(30, int(np.percentile(all_s, 5)) - 30)
+                v_min = max(50, int(np.percentile(all_v, 5)) - 50)
+                
+                ranges[color] = {
+                    'h': [h_min, h_max],
+                    's': [s_min, 255],
+                    'v': [v_min, 255]
+                }
         
-        mask_display = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
-        cv2.imshow("HSV Tuner - Mask", mask_display)
+        self.optimized_ranges = ranges
+        self.save_calibration()
+        self.get_logger().info('CALIBRATION COMPLETE')
+        cv2.destroyWindow("Calibration")
+    
+    def detect(self):
+        img = self.current_image
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         
-        # KEYBOARD
+        detections = {}
+        masks = {}
+        
+        for color in ['RED', 'YELLOW', 'GREEN']:
+            if color not in self.optimized_ranges:
+                continue
+            
+            r = self.optimized_ranges[color]
+            
+            if color == 'RED':
+                mask1 = cv2.inRange(hsv, (r['h1'][0], r['s1'][0], r['v1'][0]), 
+                                   (r['h1'][1], r['s1'][1], r['v1'][1]))
+                mask2 = cv2.inRange(hsv, (r['h2'][0], r['s2'][0], r['v2'][0]), 
+                                   (r['h2'][1], r['s2'][1], r['v2'][1]))
+                mask = mask1 | mask2
+            else:
+                mask = cv2.inRange(hsv, (r['h'][0], r['s'][0], r['v'][0]), 
+                                  (r['h'][1], r['s'][1], r['v'][1]))
+            
+            ratio = cv2.countNonZero(mask) / (mask.shape[0] * mask.shape[1])
+            detections[color] = ratio
+            masks[color] = mask
+        
+        detected_color = max(detections, key=detections.get) if detections else None
+        confidence = detections.get(detected_color, 0) if detected_color else 0
+        
+        # Visualization
+        display = img.copy()
+        
+        color_bgr = {'RED': (0, 0, 255), 'YELLOW': (0, 255, 255), 'GREEN': (0, 255, 0)}
+        box_color = color_bgr.get(detected_color, (128, 128, 128))
+        
+        if detected_color and confidence > 0.001:
+            cv2.putText(display, f"{detected_color}: {confidence*100:.3f}%", 
+                       (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.2, box_color, 3)
+        else:
+            cv2.putText(display, "NO DETECTION", (20, 40), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 1.2, (128, 128, 128), 3)
+        
+        y_pos = 80
+        for color, ratio in detections.items():
+            cv2.putText(display, f"{color}: {ratio*100:.3f}%", 
+                       (20, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+            y_pos += 35
+        
+        # Show masks
+        mask_display = np.zeros_like(img)
+        if 'RED' in masks:
+            mask_display[:,:,2] = masks['RED']
+        if 'YELLOW' in masks:
+            mask_display[:,:,1] = cv2.bitwise_or(mask_display[:,:,1], masks['YELLOW'])
+            mask_display[:,:,2] = cv2.bitwise_or(mask_display[:,:,2], masks['YELLOW'])
+        if 'GREEN' in masks:
+            mask_display[:,:,1] = cv2.bitwise_or(mask_display[:,:,1], masks['GREEN'])
+        
+        combined = cv2.addWeighted(display, 0.7, mask_display, 0.3, 0)
+        
+        cv2.imshow("Detection", combined)
+        
         key = cv2.waitKey(1) & 0xFF
-        
-        if key == ord('1'):
-            self.current_color = 'RED'
-            self.update_trackbars()
-            self.get_logger().info('>>> Switched to RED')
-        elif key == ord('2'):
-            self.current_color = 'YELLOW'
-            self.update_trackbars()
-            self.get_logger().info('>>> Switched to YELLOW')
-        elif key == ord('3'):
-            self.current_color = 'GREEN'
-            self.update_trackbars()
-            self.get_logger().info('>>> Switched to GREEN')
-        elif key == ord('s') or key == ord('S'):
-            self.save_parameters()
-        elif key == ord('q') or key == ord('Q'):
-            self.save_parameters()
+        if key == ord('q') or key == ord('Q'):
             rclpy.shutdown()
     
-    def save_parameters(self):
-        color = self.current_color
-        
-        h_min = cv2.getTrackbarPos('H_min', 'HSV Controls')
-        h_max = cv2.getTrackbarPos('H_max', 'HSV Controls')
-        s_min = cv2.getTrackbarPos('S_min', 'HSV Controls')
-        s_max = cv2.getTrackbarPos('S_max', 'HSV Controls')
-        v_min = cv2.getTrackbarPos('V_min', 'HSV Controls')
-        v_max = cv2.getTrackbarPos('V_max', 'HSV Controls')
-        
-        if color == 'RED':
-            h2_min = cv2.getTrackbarPos('H2_min', 'HSV Controls')
-            h2_max = cv2.getTrackbarPos('H2_max', 'HSV Controls')
-            self.ranges['RED'] = {
-                'h1': [h_min, h_max],
-                's1': [s_min, s_max],
-                'v1': [v_min, v_max],
-                'h2': [h2_min, h2_max],
-                's2': [s_min, s_max],
-                'v2': [v_min, v_max]
-            }
-        else:
-            self.ranges[color] = {
-                'h': [h_min, h_max],
-                's': [s_min, s_max],
-                'v': [v_min, v_max]
-            }
-        
+    def save_calibration(self):
         output = {
             'timestamp': datetime.now().isoformat(),
-            'optimized_ranges': self.ranges
+            'method': 'auto_histogram',
+            'frames_analyzed': self.frame_count,
+            'optimized_ranges': self.optimized_ranges
         }
         
-        filename = 'hsv_optimized_params.json'
-        with open(filename, 'w') as f:
+        with open('hsv_optimized_params.json', 'w') as f:
             json.dump(output, f, indent=2)
         
-        self.get_logger().info(f'Parameters saved to {filename}')
         print("\n" + "="*80)
-        print("CURRENT HSV PARAMETERS")
+        print("CALIBRATED PARAMETERS")
         print("="*80)
-        print(json.dumps(self.ranges, indent=2))
+        print(json.dumps(self.optimized_ranges, indent=2))
         print("="*80 + "\n")
 
 def main():
     rclpy.init()
-    node = InteractiveHSVTuner()
+    node = AutoHSVCalibrator()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
