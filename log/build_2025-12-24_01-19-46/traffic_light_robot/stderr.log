@@ -1,0 +1,5 @@
+  File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node.py", line 355
+    ax2.set_xlabel('Time (seconds)', fontsize=12, fontweight='bold')tweight='bold')
+                                                                                  ^
+SyntaxError: unmatched ')'
+

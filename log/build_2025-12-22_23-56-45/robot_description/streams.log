@@ -1,0 +1,39 @@
+[0.015s] Invoking command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/raspb/Desktop/TrafficSenseAI/src/robot_description -DCMAKE_INSTALL_PREFIX=/home/raspb/Desktop/TrafficSenseAI/install/robot_description
+[0.295s] -- The C compiler identification is GNU 11.4.0
+[0.513s] -- The CXX compiler identification is GNU 11.4.0
+[0.548s] -- Detecting C compiler ABI info
+[0.708s] -- Detecting C compiler ABI info - done
+[0.716s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.717s] -- Detecting C compile features
+[0.721s] -- Detecting C compile features - done
+[0.729s] -- Detecting CXX compiler ABI info
+[0.863s] -- Detecting CXX compiler ABI info - done
+[0.875s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.875s] -- Detecting CXX compile features
+[0.875s] -- Detecting CXX compile features - done
+[0.881s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.080s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.274s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.363s] -- Configuring done
+[1.368s] -- Generating done
+[1.370s] -- Build files have been written to: /home/raspb/Desktop/TrafficSenseAI/build/robot_description
+[1.380s] Invoked command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/raspb/Desktop/TrafficSenseAI/src/robot_description -DCMAKE_INSTALL_PREFIX=/home/raspb/Desktop/TrafficSenseAI/install/robot_description
+[1.380s] Invoking command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/raspb/Desktop/TrafficSenseAI/build/robot_description -- -j5 -l5
+[1.445s] Invoked command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/raspb/Desktop/TrafficSenseAI/build/robot_description -- -j5 -l5
+[1.458s] Invoking command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/raspb/Desktop/TrafficSenseAI/build/robot_description
+[1.470s] -- Install configuration: ""
+[1.471s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch
+[1.471s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/gazebo.launch.py
+[1.471s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/autonomous.launch.py.backup.txt
+[1.472s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//launch/autonomous.launch.py
+[1.472s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//urdf
+[1.472s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//urdf/robot.urdf.xacro
+[1.472s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//worlds
+[1.473s] -- Installing: /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description//worlds/traffic_world.world
+[1.473s] [31mCMake Error at cmake_install.cmake:46 (file):
+[1.473s]   file INSTALL cannot find
+[1.473s]   "/home/raspb/Desktop/TrafficSenseAI/src/robot_description/meshes": No such
+[1.473s]   file or directory.
+[1.473s] 
+[1.473s] [0m
+[1.477s] Invoked command in '/home/raspb/Desktop/TrafficSenseAI/build/robot_description' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/raspb/Desktop/TrafficSenseAI/build/robot_description

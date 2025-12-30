@@ -1,0 +1,23 @@
+[1.553s] Invoking command in '/home/raspb/Desktop/TrafficSenseAI/src/traffic_light_robot': PYTHONPATH=/home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/traffic_light_robot build --build-base /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/build install --record /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/install.log --single-version-externally-managed install_data
+[2.209s] running egg_info
+[2.213s] writing ../../build/traffic_light_robot/traffic_light_robot.egg-info/PKG-INFO
+[2.217s] writing dependency_links to ../../build/traffic_light_robot/traffic_light_robot.egg-info/dependency_links.txt
+[2.217s] writing entry points to ../../build/traffic_light_robot/traffic_light_robot.egg-info/entry_points.txt
+[2.217s] writing requirements to ../../build/traffic_light_robot/traffic_light_robot.egg-info/requires.txt
+[2.218s] writing top-level names to ../../build/traffic_light_robot/traffic_light_robot.egg-info/top_level.txt
+[2.223s] reading manifest file '../../build/traffic_light_robot/traffic_light_robot.egg-info/SOURCES.txt'
+[2.229s] writing manifest file '../../build/traffic_light_robot/traffic_light_robot.egg-info/SOURCES.txt'
+[2.229s] running build
+[2.229s] running build_py
+[2.231s] running install
+[2.232s] running install_lib
+[2.236s] running install_data
+[2.238s] running install_egg_info
+[2.243s] removing '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info' (and everything under it)
+[2.245s] Copying ../../build/traffic_light_robot/traffic_light_robot.egg-info to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info
+[2.250s] running install_scripts
+[2.300s] Installing controller_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+[2.302s] Installing detector_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+[2.303s] Installing visualizer_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+[2.305s] writing list of installed files to '/home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/install.log'
+[2.352s] Invoked command in '/home/raspb/Desktop/TrafficSenseAI/src/traffic_light_robot' returned '0': PYTHONPATH=/home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/traffic_light_robot build --build-base /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/build install --record /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/install.log --single-version-externally-managed install_data

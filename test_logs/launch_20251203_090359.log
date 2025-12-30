@@ -1,0 +1,70 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-12-03-09-04-04-583519-Raspberry-4580
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [4588]
+[INFO] [gzclient-2]: process started with pid [4590]
+[INFO] [robot_state_publisher-3]: process started with pid [4592]
+[INFO] [spawn_entity.py-4]: process started with pid [4594]
+[INFO] [detector_node-5]: process started with pid [4596]
+[INFO] [controller_node-6]: process started with pid [4598]
+[robot_state_publisher-3] [WARN] [1764749046.063728044] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764749046.063862827] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764749046.088683442] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764749046.088746323] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764749046.088765569] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764749046.088781858] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764749046.088834695] [robot_state_publisher]: got segment right_wheel
+[controller_node-6] [INFO] [1764749046.581313359] [autonomous_controller]: Autonomous controller started
+[spawn_entity.py-4] [INFO] [1764749046.581882831] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764749046.586436937] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764749046.622497621] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-4] [INFO] [1764749046.731910489] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764749046.734711466] [spawn_entity]: Waiting for service /spawn_entity
+[detector_node-5] [INFO] [1764749046.923879969] [traffic_light_detector]: Enhanced traffic light detector started
+[spawn_entity.py-4] [INFO] [1764749048.664878131] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764749049.260405339] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [traffic_robot]
+[INFO] [spawn_entity.py-4]: process has finished cleanly [pid 4594]
+[gzserver-1] [INFO] [1764749050.643264897] [camera_controller]: Publishing camera info to [/front_camera/camera_info]
+[gzserver-1] [INFO] [1764749050.800697935] [differential_drive_controller]: Wheel pair 1 separation set to [0.250000m]
+[gzserver-1] [INFO] [1764749050.803056832] [differential_drive_controller]: Wheel pair 1 diameter set to [0.080000m]
+[gzserver-1] [INFO] [1764749050.817058406] [differential_drive_controller]: Subscribed to [/cmd_vel]
+[gzserver-1] [INFO] [1764749050.828818721] [differential_drive_controller]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1764749050.838710844] [differential_drive_controller]: Publishing odom transforms between [odom] and [base_link]
+[controller_node-6] [INFO] [1764749064.212398659] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[INFO] [gzclient-2]: process has finished cleanly [pid 4590]
+[robot_state_publisher-3] [INFO] [1764749118.685778960] [rclcpp]: signal_handler(signum=2)
+[detector_node-5] Traceback (most recent call last):
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node", line 33, in <module>
+[detector_node-5]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'detector_node')())
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node.py", line 134, in main
+[detector_node-5]     rclpy.spin(node)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[detector_node-5]     executor.spin_once()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[detector_node-5]     self._spin_once_impl(timeout_sec)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 740, in _spin_once_impl
+[detector_node-5]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 723, in wait_for_ready_callbacks
+[detector_node-5]     return next(self._cb_iter)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 624, in _wait_for_ready_callbacks
+[detector_node-5]     raise ExternalShutdownException()
+[detector_node-5] rclpy.executors.ExternalShutdownException
+[controller_node-6] Traceback (most recent call last):
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node", line 33, in <module>
+[controller_node-6]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'controller_node')())
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py", line 63, in main
+[controller_node-6]     rclpy.spin(node)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[controller_node-6]     executor.spin_once()
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[controller_node-6]     self._spin_once_impl(timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 740, in _spin_once_impl
+[controller_node-6]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 723, in wait_for_ready_callbacks
+[controller_node-6]     return next(self._cb_iter)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 624, in _wait_for_ready_callbacks
+[controller_node-6]     raise ExternalShutdownException()
+[controller_node-6] rclpy.executors.ExternalShutdownException
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 4592]
+[ERROR] [detector_node-5]: process has died [pid 4596, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node --ros-args -r __node:=traffic_light_detector'].
+[ERROR] [controller_node-6]: process has died [pid 4598, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node --ros-args -r __node:=autonomous_controller'].
+[INFO] [gzserver-1]: process has finished cleanly [pid 4588]

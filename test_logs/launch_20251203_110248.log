@@ -1,0 +1,265 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-12-03-11-02-49-835489-Raspberry-7025
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [7034]
+[INFO] [gzclient-2]: process started with pid [7037]
+[INFO] [robot_state_publisher-3]: process started with pid [7041]
+[INFO] [spawn_entity.py-4]: process started with pid [7043]
+[INFO] [detector_node-5]: process started with pid [7045]
+[INFO] [controller_node-6]: process started with pid [7048]
+[robot_state_publisher-3] [WARN] [1764756170.281699175] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764756170.282481451] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764756170.283050766] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764756170.283377319] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764756170.283674933] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764756170.283974040] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764756170.284262422] [robot_state_publisher]: got segment right_wheel
+[controller_node-6] [INFO] [1764756170.574668987] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756170.575180754] [autonomous_controller]: PID-ENHANCED AUTONOMOUS TRAFFIC LIGHT CONTROLLER
+[controller_node-6] [INFO] [1764756170.575465347] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756170.575751122] [autonomous_controller]: GREEN (MOVING):  Target=0.5 m/s | PID(Kp=2.0, Ki=0.5, Kd=0.1)
+[controller_node-6] [INFO] [1764756170.576031083] [autonomous_controller]: YELLOW (SLOWING): Target=0.3 m/s | PID(Kp=1.8, Ki=0.4, Kd=0.12)
+[controller_node-6] [INFO] [1764756170.576305872] [autonomous_controller]: RED (STOPPED):   Target=0.0 m/s | PID(Kp=2.5, Ki=0.6, Kd=0.2)
+[controller_node-6] [INFO] [1764756170.576686315] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756170.577048393] [autonomous_controller]: Autonomous controller started - awaiting traffic light detection...
+[detector_node-5] [INFO] [1764756170.583915303] [traffic_light_detector]: Enhanced traffic light detector started
+[spawn_entity.py-4] [INFO] [1764756170.590074631] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764756170.591886099] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764756170.594523404] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-4] [INFO] [1764756170.690961267] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764756170.691709758] [spawn_entity]: Waiting for service /spawn_entity
+[controller_node-6] [INFO] [1764756171.669240596] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.326 m/s | Error: +0.1814 | MAE: 0.2493 | RMSE: 0.2737 | Settled: ✗
+[spawn_entity.py-4] [INFO] [1764756171.676641855] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764756171.938553482] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [traffic_robot]
+[INFO] [spawn_entity.py-4]: process has finished cleanly [pid 7043]
+[gzserver-1] [INFO] [1764756172.366305810] [camera_controller]: Publishing camera info to [/front_camera/camera_info]
+[gzserver-1] [INFO] [1764756172.468878522] [differential_drive_controller]: Wheel pair 1 separation set to [0.250000m]
+[gzserver-1] [INFO] [1764756172.469059245] [differential_drive_controller]: Wheel pair 1 diameter set to [0.080000m]
+[gzserver-1] [INFO] [1764756172.471580263] [differential_drive_controller]: Subscribed to [/cmd_vel]
+[gzserver-1] [INFO] [1764756172.474576078] [differential_drive_controller]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1764756172.477692873] [differential_drive_controller]: Publishing odom transforms between [odom] and [base_link]
+[controller_node-6] [INFO] [1764756172.563393315] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.149 m/s | Error: +0.5001 | MAE: 0.1765 | RMSE: 0.2078 | Settled: ✗
+[controller_node-6] [INFO] [1764756173.567343717] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.421 m/s | Error: +0.0605 | MAE: 0.1576 | RMSE: 0.1905 | Settled: ✗
+[controller_node-6] [INFO] [1764756174.560194094] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.448 m/s | Error: +0.0627 | MAE: 0.0757 | RMSE: 0.0789 | Settled: ✗
+[controller_node-6] [INFO] [1764756175.558032974] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.446 m/s | Error: +0.0842 | MAE: 0.0609 | RMSE: 0.0655 | Settled: ✗
+[controller_node-6] [INFO] [1764756176.557015150] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.460 m/s | Error: +0.0389 | MAE: 0.0463 | RMSE: 0.0492 | Settled: ✗
+[controller_node-6] [INFO] [1764756177.561530137] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.465 m/s | Error: +0.0262 | MAE: 0.0407 | RMSE: 0.0448 | Settled: ✗
+[controller_node-6] [INFO] [1764756178.559991981] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.450 m/s | Error: +0.0706 | MAE: 0.0373 | RMSE: 0.0442 | Settled: ✗
+[controller_node-6] [INFO] [1764756179.561081014] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.464 m/s | Error: +0.0111 | MAE: 0.0297 | RMSE: 0.0364 | Settled: ✓
+[controller_node-6] [INFO] [1764756180.561493308] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.481 m/s | Error: -0.0124 | MAE: 0.0274 | RMSE: 0.0331 | Settled: ✓
+[controller_node-6] [INFO] [1764756181.556556744] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.481 m/s | Error: +0.0162 | MAE: 0.0282 | RMSE: 0.0328 | Settled: ✓
+[controller_node-6] [INFO] [1764756182.555401601] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.486 m/s | Error: +0.0146 | MAE: 0.0236 | RMSE: 0.0287 | Settled: ✓
+[controller_node-6] [INFO] [1764756183.067082376] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756183.067470466] [autonomous_controller]: 🚦 TRAFFIC LIGHT CHANGE: UNKNOWN → GREEN
+[controller_node-6] [INFO] [1764756183.067775177] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756183.563422155] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.346 m/s | Error: +0.1223 | MAE: 0.0648 | RMSE: 0.0884 | Settled: ✗
+[controller_node-6] [INFO] [1764756184.561376313] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.367 m/s | Error: +0.1417 | MAE: 0.1429 | RMSE: 0.1447 | Settled: ✗
+[controller_node-6] [INFO] [1764756185.560535161] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.385 m/s | Error: +0.1033 | MAE: 0.1180 | RMSE: 0.1209 | Settled: ✗
+[controller_node-6] [INFO] [1764756186.559503969] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.415 m/s | Error: +0.1043 | MAE: 0.1105 | RMSE: 0.1131 | Settled: ✗
+[controller_node-6] [INFO] [1764756187.561141238] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.408 m/s | Error: +0.1091 | MAE: 0.0893 | RMSE: 0.0922 | Settled: ✗
+[controller_node-6] [INFO] [1764756188.559808470] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.430 m/s | Error: +0.0688 | MAE: 0.0760 | RMSE: 0.0791 | Settled: ✗
+[controller_node-6] [INFO] [1764756189.559165893] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.431 m/s | Error: +0.0949 | MAE: 0.0630 | RMSE: 0.0663 | Settled: ✗
+[controller_node-6] [INFO] [1764756190.558481968] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.454 m/s | Error: +0.0566 | MAE: 0.0520 | RMSE: 0.0550 | Settled: ✗
+[controller_node-6] [INFO] [1764756191.579140923] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.459 m/s | Error: +0.0199 | MAE: 0.0515 | RMSE: 0.0576 | Settled: ✓
+[controller_node-6] [INFO] [1764756192.578191068] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.466 m/s | Error: +0.0135 | MAE: 0.0375 | RMSE: 0.0422 | Settled: ✓
+[controller_node-6] [INFO] [1764756193.556695082] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.480 m/s | Error: +0.0043 | MAE: 0.0382 | RMSE: 0.0440 | Settled: ✓
+[controller_node-6] [INFO] [1764756194.561061677] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.477 m/s | Error: +0.0388 | MAE: 0.0310 | RMSE: 0.0362 | Settled: ✗
+[controller_node-6] [INFO] [1764756195.558312794] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.485 m/s | Error: +0.0180 | MAE: 0.0237 | RMSE: 0.0261 | Settled: ✓
+[controller_node-6] [INFO] [1764756196.564073747] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.483 m/s | Error: +0.0347 | MAE: 0.0256 | RMSE: 0.0309 | Settled: ✗
+[controller_node-6] [INFO] [1764756197.563779695] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: +0.0091 | MAE: 0.0167 | RMSE: 0.0193 | Settled: ✓
+[controller_node-6] [INFO] [1764756198.557576619] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.476 m/s | Error: +0.0431 | MAE: 0.0199 | RMSE: 0.0232 | Settled: ✗
+[controller_node-6] [INFO] [1764756199.557230935] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: +0.0016 | MAE: 0.0235 | RMSE: 0.0288 | Settled: ✓
+[controller_node-6] [INFO] [1764756200.557215771] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.494 m/s | Error: +0.0191 | MAE: 0.0137 | RMSE: 0.0164 | Settled: ✓
+[controller_node-6] [INFO] [1764756201.557385249] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.490 m/s | Error: -0.0034 | MAE: 0.0236 | RMSE: 0.0296 | Settled: ✓
+[controller_node-6] [INFO] [1764756202.561662872] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.492 m/s | Error: +0.0088 | MAE: 0.0209 | RMSE: 0.0250 | Settled: ✓
+[controller_node-6] [INFO] [1764756203.556327171] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.495 m/s | Error: -0.0079 | MAE: 0.0137 | RMSE: 0.0176 | Settled: ✓
+[controller_node-6] [INFO] [1764756204.560749187] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.505 m/s | Error: -0.0193 | MAE: 0.0199 | RMSE: 0.0229 | Settled: ✓
+[controller_node-6] [INFO] [1764756205.559657492] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.500 m/s | Error: -0.0221 | MAE: 0.0153 | RMSE: 0.0185 | Settled: ✓
+[controller_node-6] [INFO] [1764756206.564852577] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: +0.0181 | MAE: 0.0212 | RMSE: 0.0258 | Settled: ✓
+[controller_node-6] [INFO] [1764756207.561116641] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.497 m/s | Error: -0.0128 | MAE: 0.0187 | RMSE: 0.0219 | Settled: ✓
+[controller_node-6] [INFO] [1764756208.563205261] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.497 m/s | Error: -0.0235 | MAE: 0.0196 | RMSE: 0.0235 | Settled: ✓
+[controller_node-6] [INFO] [1764756209.567448291] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.495 m/s | Error: +0.0212 | MAE: 0.0172 | RMSE: 0.0200 | Settled: ✓
+[controller_node-6] [INFO] [1764756210.559839540] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.486 m/s | Error: +0.0151 | MAE: 0.0125 | RMSE: 0.0170 | Settled: ✓
+[controller_node-6] [INFO] [1764756211.561899445] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.501 m/s | Error: +0.0152 | MAE: 0.0219 | RMSE: 0.0248 | Settled: ✓
+[controller_node-6] [INFO] [1764756212.558564567] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: -0.0043 | MAE: 0.0221 | RMSE: 0.0263 | Settled: ✓
+[controller_node-6] [INFO] [1764756213.561807516] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.498 m/s | Error: -0.0113 | MAE: 0.0165 | RMSE: 0.0216 | Settled: ✓
+[controller_node-6] [INFO] [1764756214.565822039] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.508 m/s | Error: -0.0164 | MAE: 0.0151 | RMSE: 0.0169 | Settled: ✓
+[controller_node-6] [INFO] [1764756215.558554158] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.508 m/s | Error: -0.0493 | MAE: 0.0213 | RMSE: 0.0270 | Settled: ✗
+[controller_node-6] [INFO] [1764756216.559564510] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.499 m/s | Error: +0.0322 | MAE: 0.0159 | RMSE: 0.0188 | Settled: ✗
+[controller_node-6] [INFO] [1764756217.565959835] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.493 m/s | Error: +0.0008 | MAE: 0.0167 | RMSE: 0.0209 | Settled: ✓
+[controller_node-6] [INFO] [1764756218.556942620] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.494 m/s | Error: -0.0181 | MAE: 0.0147 | RMSE: 0.0201 | Settled: ✓
+[controller_node-6] [INFO] [1764756219.558866361] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.500 m/s | Error: +0.0151 | MAE: 0.0130 | RMSE: 0.0181 | Settled: ✓
+[controller_node-6] [INFO] [1764756220.560253318] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.486 m/s | Error: +0.0094 | MAE: 0.0151 | RMSE: 0.0191 | Settled: ✓
+[controller_node-6] [INFO] [1764756221.585158640] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.501 m/s | Error: -0.0011 | MAE: 0.0169 | RMSE: 0.0207 | Settled: ✓
+[controller_node-6] [INFO] [1764756222.564160375] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.498 m/s | Error: +0.0113 | MAE: 0.0177 | RMSE: 0.0232 | Settled: ✓
+[controller_node-6] [INFO] [1764756223.560381502] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.511 m/s | Error: -0.0041 | MAE: 0.0190 | RMSE: 0.0239 | Settled: ✓
+[controller_node-6] [INFO] [1764756224.565962122] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.491 m/s | Error: +0.0054 | MAE: 0.0085 | RMSE: 0.0119 | Settled: ✓
+[controller_node-6] [INFO] [1764756225.563151205] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.500 m/s | Error: +0.0006 | MAE: 0.0216 | RMSE: 0.0274 | Settled: ✓
+[controller_node-6] [INFO] [1764756225.771027472] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756225.771701559] [autonomous_controller]: 🚦 TRAFFIC LIGHT CHANGE: UNKNOWN → YELLOW
+[controller_node-6] [INFO] [1764756225.772019271] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756225.806410501] [autonomous_controller]: STATE TRANSITION: MOVING → SLOWING (after 0.03s)
+[controller_node-6] [INFO] [1764756226.565546931] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.207 m/s | Error: +0.0804 | MAE: 0.0732 | RMSE: 0.0885 | Settled: ✗
+[controller_node-6] [INFO] [1764756227.565979104] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.214 m/s | Error: +0.0900 | MAE: 0.0973 | RMSE: 0.0984 | Settled: ✗
+[controller_node-6] [INFO] [1764756228.574010523] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.220 m/s | Error: +0.0923 | MAE: 0.0866 | RMSE: 0.0885 | Settled: ✗
+[controller_node-6] [INFO] [1764756229.562041246] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.226 m/s | Error: +0.0772 | MAE: 0.0637 | RMSE: 0.0672 | Settled: ✗
+[controller_node-6] [INFO] [1764756230.559858602] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.239 m/s | Error: +0.0813 | MAE: 0.0606 | RMSE: 0.0640 | Settled: ✗
+[controller_node-6] [INFO] [1764756231.566281568] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.248 m/s | Error: +0.0689 | MAE: 0.0611 | RMSE: 0.0640 | Settled: ✗
+[controller_node-6] [INFO] [1764756232.558371893] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.251 m/s | Error: +0.0655 | MAE: 0.0533 | RMSE: 0.0595 | Settled: ✗
+[controller_node-6] [INFO] [1764756233.560847763] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.258 m/s | Error: +0.0108 | MAE: 0.0397 | RMSE: 0.0456 | Settled: ✓
+[controller_node-6] [INFO] [1764756234.560672370] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.275 m/s | Error: +0.0081 | MAE: 0.0371 | RMSE: 0.0437 | Settled: ✓
+[controller_node-6] [INFO] [1764756235.557044361] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.263 m/s | Error: +0.0416 | MAE: 0.0324 | RMSE: 0.0372 | Settled: ✗
+[controller_node-6] [INFO] [1764756236.571790256] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.277 m/s | Error: +0.0485 | MAE: 0.0287 | RMSE: 0.0336 | Settled: ✗
+[controller_node-6] [INFO] [1764756237.576090501] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.277 m/s | Error: +0.0015 | MAE: 0.0293 | RMSE: 0.0368 | Settled: ✓
+[controller_node-6] [INFO] [1764756238.560280950] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.280 m/s | Error: +0.0223 | MAE: 0.0216 | RMSE: 0.0261 | Settled: ✗
+[controller_node-6] [INFO] [1764756239.558069064] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.281 m/s | Error: +0.0132 | MAE: 0.0263 | RMSE: 0.0311 | Settled: ✓
+[controller_node-6] [INFO] [1764756240.565159950] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.282 m/s | Error: +0.0503 | MAE: 0.0205 | RMSE: 0.0272 | Settled: ✗
+[controller_node-6] [INFO] [1764756241.570939636] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.283 m/s | Error: +0.0155 | MAE: 0.0214 | RMSE: 0.0262 | Settled: ✗
+[controller_node-6] [INFO] [1764756242.567627534] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.289 m/s | Error: +0.0300 | MAE: 0.0167 | RMSE: 0.0213 | Settled: ✗
+[controller_node-6] [INFO] [1764756243.565783464] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.295 m/s | Error: +0.0242 | MAE: 0.0149 | RMSE: 0.0191 | Settled: ✗
+[controller_node-6] [INFO] [1764756244.572683700] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.293 m/s | Error: +0.0193 | MAE: 0.0155 | RMSE: 0.0220 | Settled: ✗
+[controller_node-6] [INFO] [1764756245.555410489] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.300 m/s | Error: +0.0000 | MAE: 0.0109 | RMSE: 0.0145 | Settled: ✓
+[controller_node-6] [INFO] [1764756246.562395236] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.298 m/s | Error: -0.0046 | MAE: 0.0169 | RMSE: 0.0203 | Settled: ✓
+[controller_node-6] [INFO] [1764756247.558545484] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.302 m/s | Error: -0.0119 | MAE: 0.0148 | RMSE: 0.0174 | Settled: ✓
+[controller_node-6] [INFO] [1764756248.559316103] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.296 m/s | Error: +0.0165 | MAE: 0.0137 | RMSE: 0.0173 | Settled: ✗
+[controller_node-6] [INFO] [1764756249.558387500] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.305 m/s | Error: -0.0164 | MAE: 0.0199 | RMSE: 0.0240 | Settled: ✗
+[controller_node-6] [INFO] [1764756250.561497592] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.301 m/s | Error: -0.0175 | MAE: 0.0184 | RMSE: 0.0219 | Settled: ✗
+[controller_node-6] [INFO] [1764756251.564228396] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.302 m/s | Error: +0.0033 | MAE: 0.0165 | RMSE: 0.0216 | Settled: ✓
+[controller_node-6] [INFO] [1764756252.567509576] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.303 m/s | Error: -0.0334 | MAE: 0.0123 | RMSE: 0.0154 | Settled: ✗
+[controller_node-6] [INFO] [1764756253.564833814] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.308 m/s | Error: -0.0096 | MAE: 0.0193 | RMSE: 0.0254 | Settled: ✓
+[controller_node-6] [INFO] [1764756254.564286473] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.302 m/s | Error: -0.0064 | MAE: 0.0149 | RMSE: 0.0193 | Settled: ✓
+[controller_node-6] [INFO] [1764756255.559627513] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.302 m/s | Error: -0.0020 | MAE: 0.0116 | RMSE: 0.0155 | Settled: ✓
+[controller_node-6] [INFO] [1764756256.559592717] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.314 m/s | Error: -0.0015 | MAE: 0.0083 | RMSE: 0.0136 | Settled: ✓
+[controller_node-6] [INFO] [1764756257.566745393] [autonomous_controller]: 🚦 YELLOW  | State: SLOWING  | Target: 0.300 m/s | Current: 0.281 m/s | Error: +0.0323 | MAE: 0.0163 | RMSE: 0.0197 | Settled: ✗
+[controller_node-6] [INFO] [1764756258.282054400] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756258.282536346] [autonomous_controller]: 🚦 TRAFFIC LIGHT CHANGE: YELLOW → GREEN
+[controller_node-6] [INFO] [1764756258.282915375] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756258.310837057] [autonomous_controller]: STATE TRANSITION: SLOWING → MOVING (after 0.03s)
+[controller_node-6] [INFO] [1764756258.565474260] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.341 m/s | Error: +0.1406 | MAE: 0.0618 | RMSE: 0.0987 | Settled: ✗
+[controller_node-6] [INFO] [1764756259.572583753] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.370 m/s | Error: +0.1151 | MAE: 0.1510 | RMSE: 0.1533 | Settled: ✗
+[controller_node-6] [INFO] [1764756260.580904733] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.378 m/s | Error: +0.1145 | MAE: 0.1270 | RMSE: 0.1285 | Settled: ✗
+[controller_node-6] [INFO] [1764756261.557463403] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.412 m/s | Error: +0.1082 | MAE: 0.1059 | RMSE: 0.1080 | Settled: ✗
+[controller_node-6] [INFO] [1764756262.561298056] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.420 m/s | Error: +0.0649 | MAE: 0.0866 | RMSE: 0.0900 | Settled: ✗
+[controller_node-6] [INFO] [1764756263.563086677] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.423 m/s | Error: +0.0784 | MAE: 0.0766 | RMSE: 0.0809 | Settled: ✗
+[controller_node-6] [INFO] [1764756264.558404508] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.445 m/s | Error: +0.0706 | MAE: 0.0642 | RMSE: 0.0665 | Settled: ✗
+[controller_node-6] [INFO] [1764756265.570955902] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.448 m/s | Error: +0.0011 | MAE: 0.0479 | RMSE: 0.0541 | Settled: ✓
+[controller_node-6] [INFO] [1764756266.556535563] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.453 m/s | Error: +0.0574 | MAE: 0.0469 | RMSE: 0.0505 | Settled: ✗
+[controller_node-6] [INFO] [1764756267.582197786] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.464 m/s | Error: +0.0125 | MAE: 0.0364 | RMSE: 0.0412 | Settled: ✓
+[controller_node-6] [INFO] [1764756268.568148175] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.473 m/s | Error: +0.0364 | MAE: 0.0372 | RMSE: 0.0425 | Settled: ✗
+[controller_node-6] [INFO] [1764756269.569138287] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.469 m/s | Error: +0.0803 | MAE: 0.0313 | RMSE: 0.0376 | Settled: ✗
+[controller_node-6] [INFO] [1764756270.555769281] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.475 m/s | Error: +0.0376 | MAE: 0.0246 | RMSE: 0.0309 | Settled: ✗
+[controller_node-6] [INFO] [1764756271.564380886] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.483 m/s | Error: +0.0196 | MAE: 0.0205 | RMSE: 0.0250 | Settled: ✓
+[controller_node-6] [INFO] [1764756272.558725655] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.488 m/s | Error: +0.0209 | MAE: 0.0246 | RMSE: 0.0306 | Settled: ✓
+[controller_node-6] [INFO] [1764756273.557214170] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.488 m/s | Error: +0.0202 | MAE: 0.0183 | RMSE: 0.0236 | Settled: ✓
+[controller_node-6] [INFO] [1764756274.566152571] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.478 m/s | Error: +0.0238 | MAE: 0.0231 | RMSE: 0.0288 | Settled: ✓
+[controller_node-6] [INFO] [1764756275.569789436] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.502 m/s | Error: -0.0086 | MAE: 0.0123 | RMSE: 0.0159 | Settled: ✓
+[controller_node-6] [INFO] [1764756276.570174598] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: -0.0047 | MAE: 0.0180 | RMSE: 0.0243 | Settled: ✓
+[controller_node-6] [INFO] [1764756277.564485596] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: -0.0357 | MAE: 0.0180 | RMSE: 0.0216 | Settled: ✗
+[controller_node-6] [INFO] [1764756278.555827997] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: -0.0126 | MAE: 0.0184 | RMSE: 0.0233 | Settled: ✓
+[controller_node-6] [INFO] [1764756279.570701982] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.488 m/s | Error: +0.0346 | MAE: 0.0236 | RMSE: 0.0302 | Settled: ✗
+[controller_node-6] [INFO] [1764756280.563123446] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.488 m/s | Error: +0.0264 | MAE: 0.0194 | RMSE: 0.0228 | Settled: ✗
+[controller_node-6] [INFO] [1764756281.567387314] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.487 m/s | Error: -0.0018 | MAE: 0.0158 | RMSE: 0.0198 | Settled: ✓
+[controller_node-6] [INFO] [1764756282.577624184] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: +0.0084 | MAE: 0.0193 | RMSE: 0.0247 | Settled: ✓
+[controller_node-6] [INFO] [1764756283.591796120] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.502 m/s | Error: -0.0128 | MAE: 0.0198 | RMSE: 0.0229 | Settled: ✓
+[controller_node-6] [INFO] [1764756284.560460126] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: +0.0416 | MAE: 0.0185 | RMSE: 0.0230 | Settled: ✗
+[controller_node-6] [INFO] [1764756285.565600623] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.502 m/s | Error: -0.0010 | MAE: 0.0200 | RMSE: 0.0240 | Settled: ✓
+[controller_node-6] [INFO] [1764756286.557491098] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.485 m/s | Error: +0.0279 | MAE: 0.0192 | RMSE: 0.0254 | Settled: ✗
+[controller_node-6] [INFO] [1764756287.576835102] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.500 m/s | Error: -0.0081 | MAE: 0.0222 | RMSE: 0.0270 | Settled: ✓
+[controller_node-6] [INFO] [1764756288.565521437] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.494 m/s | Error: +0.0131 | MAE: 0.0167 | RMSE: 0.0211 | Settled: ✓
+[controller_node-6] [INFO] [1764756289.558589281] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.498 m/s | Error: +0.0346 | MAE: 0.0182 | RMSE: 0.0205 | Settled: ✗
+[controller_node-6] [INFO] [1764756290.556917515] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.502 m/s | Error: -0.0026 | MAE: 0.0104 | RMSE: 0.0131 | Settled: ✓
+[controller_node-6] [INFO] [1764756291.584226870] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: -0.0160 | MAE: 0.0222 | RMSE: 0.0258 | Settled: ✓
+[controller_node-6] [INFO] [1764756292.561793792] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.494 m/s | Error: -0.0116 | MAE: 0.0163 | RMSE: 0.0233 | Settled: ✓
+[controller_node-6] [INFO] [1764756293.559047613] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.492 m/s | Error: +0.0289 | MAE: 0.0217 | RMSE: 0.0286 | Settled: ✗
+[controller_node-6] [INFO] [1764756294.579130851] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.479 m/s | Error: +0.0609 | MAE: 0.0211 | RMSE: 0.0256 | Settled: ✗
+[controller_node-6] [INFO] [1764756295.559705889] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: +0.0219 | MAE: 0.0126 | RMSE: 0.0168 | Settled: ✓
+[controller_node-6] [INFO] [1764756296.570413775] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.501 m/s | Error: +0.0182 | MAE: 0.0182 | RMSE: 0.0212 | Settled: ✓
+[controller_node-6] [INFO] [1764756297.559952383] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: -0.0066 | MAE: 0.0226 | RMSE: 0.0259 | Settled: ✓
+[controller_node-6] [INFO] [1764756298.560407550] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.487 m/s | Error: -0.0149 | MAE: 0.0201 | RMSE: 0.0244 | Settled: ✓
+[controller_node-6] [INFO] [1764756299.314165477] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756299.314542641] [autonomous_controller]: 🚦 TRAFFIC LIGHT CHANGE: UNKNOWN → RED
+[controller_node-6] [INFO] [1764756299.314821670] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756299.357290367] [autonomous_controller]: STATE TRANSITION: MOVING → STOPPED (after 0.04s)
+[controller_node-6] [INFO] [1764756299.559115016] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.139 m/s | Error: -0.3519 | MAE: 0.1265 | RMSE: 0.2227 | Settled: ✗
+[controller_node-6] [INFO] [1764756300.565841596] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.020 m/s | Error: +0.0329 | MAE: 0.0851 | RMSE: 0.1260 | Settled: ✗
+[controller_node-6] [INFO] [1764756301.558632450] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.028 m/s | Error: +0.0296 | MAE: 0.0227 | RMSE: 0.0263 | Settled: ✗
+[controller_node-6] [INFO] [1764756302.560883513] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.021 m/s | Error: -0.0033 | MAE: 0.0219 | RMSE: 0.0285 | Settled: ✗
+[controller_node-6] [INFO] [1764756303.561148500] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.015 m/s | Error: -0.0026 | MAE: 0.0308 | RMSE: 0.0392 | Settled: ✗
+[controller_node-6] [INFO] [1764756304.559257613] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.006 m/s | Error: -0.0062 | MAE: 0.0196 | RMSE: 0.0266 | Settled: ✗
+[controller_node-6] [INFO] [1764756305.558629394] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.012 m/s | Error: +0.0151 | MAE: 0.0162 | RMSE: 0.0188 | Settled: ✗
+[controller_node-6] [INFO] [1764756306.569910253] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.009 m/s | Error: +0.0204 | MAE: 0.0187 | RMSE: 0.0229 | Settled: ✗
+[controller_node-6] [INFO] [1764756307.563890459] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.007 m/s | Error: +0.0004 | MAE: 0.0164 | RMSE: 0.0215 | Settled: ✗
+[controller_node-6] [INFO] [1764756308.571976153] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.010 m/s | Error: -0.0397 | MAE: 0.0180 | RMSE: 0.0243 | Settled: ✗
+[controller_node-6] [INFO] [1764756309.571681435] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.012 m/s | Error: +0.0205 | MAE: 0.0210 | RMSE: 0.0284 | Settled: ✗
+[controller_node-6] [INFO] [1764756310.561512777] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.005 m/s | Error: +0.0130 | MAE: 0.0191 | RMSE: 0.0250 | Settled: ✗
+[controller_node-6] [INFO] [1764756311.564287960] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: +0.0335 | MAE: 0.0171 | RMSE: 0.0226 | Settled: ✗
+[INFO] [gzclient-2]: process has finished cleanly [pid 7037]
+[controller_node-6] [INFO] [1764756312.561330119] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.001 m/s | Error: +0.0282 | MAE: 0.0198 | RMSE: 0.0228 | Settled: ✗
+[controller_node-6] [INFO] [1764756313.558074504] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.007 m/s | Error: -0.0115 | MAE: 0.0194 | RMSE: 0.0253 | Settled: ✗
+[controller_node-6] [INFO] [1764756314.556753116] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.001 m/s | Error: +0.0195 | MAE: 0.0211 | RMSE: 0.0256 | Settled: ✗
+[controller_node-6] [INFO] [1764756315.563377104] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.014 m/s | Error: -0.0434 | MAE: 0.0187 | RMSE: 0.0223 | Settled: ✗
+[controller_node-6] [INFO] [1764756316.561235261] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.005 m/s | Error: +0.0248 | MAE: 0.0271 | RMSE: 0.0301 | Settled: ✗
+[controller_node-6] [INFO] [1764756317.564662557] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0065 | MAE: 0.0177 | RMSE: 0.0227 | Settled: ✗
+[controller_node-6] [INFO] [1764756318.570996879] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.001 m/s | Error: -0.0015 | MAE: 0.0180 | RMSE: 0.0235 | Settled: ✗
+[controller_node-6] [INFO] [1764756319.569196719] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.000 m/s | Error: -0.0156 | MAE: 0.0195 | RMSE: 0.0228 | Settled: ✗
+[controller_node-6] [INFO] [1764756320.561820006] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.012 m/s | Error: -0.0174 | MAE: 0.0190 | RMSE: 0.0217 | Settled: ✗
+[controller_node-6] [INFO] [1764756321.562494701] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: +0.0260 | MAE: 0.0167 | RMSE: 0.0198 | Settled: ✗
+[controller_node-6] [INFO] [1764756322.559554573] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.010 m/s | Error: +0.0236 | MAE: 0.0256 | RMSE: 0.0295 | Settled: ✗
+[controller_node-6] [INFO] [1764756323.558081182] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.005 m/s | Error: +0.0103 | MAE: 0.0204 | RMSE: 0.0243 | Settled: ✗
+[controller_node-6] [INFO] [1764756324.561025863] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.001 m/s | Error: +0.0027 | MAE: 0.0170 | RMSE: 0.0215 | Settled: ✗
+[controller_node-6] [INFO] [1764756325.556731987] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.002 m/s | Error: -0.0126 | MAE: 0.0139 | RMSE: 0.0184 | Settled: ✗
+[controller_node-6] [INFO] [1764756326.558298991] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.005 m/s | Error: -0.0089 | MAE: 0.0208 | RMSE: 0.0252 | Settled: ✗
+[controller_node-6] [INFO] [1764756327.569284130] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.006 m/s | Error: -0.0189 | MAE: 0.0166 | RMSE: 0.0196 | Settled: ✗
+[controller_node-6] [INFO] [1764756328.556301041] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: -0.0099 | MAE: 0.0208 | RMSE: 0.0255 | Settled: ✗
+[controller_node-6] [INFO] [1764756329.556530039] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.006 m/s | Error: +0.0001 | MAE: 0.0179 | RMSE: 0.0231 | Settled: ✗
+[controller_node-6] [INFO] [1764756330.564755508] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.004 m/s | Error: -0.0247 | MAE: 0.0187 | RMSE: 0.0216 | Settled: ✗
+[controller_node-6] [INFO] [1764756331.581497412] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0056 | MAE: 0.0190 | RMSE: 0.0225 | Settled: ✗
+[controller_node-6] [INFO] [1764756332.557834838] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.009 m/s | Error: -0.0228 | MAE: 0.0213 | RMSE: 0.0255 | Settled: ✗
+[controller_node-6] [INFO] [1764756333.557697733] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.008 m/s | Error: -0.0047 | MAE: 0.0120 | RMSE: 0.0171 | Settled: ✗
+[controller_node-6] [INFO] [1764756334.566652001] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.008 m/s | Error: -0.0066 | MAE: 0.0169 | RMSE: 0.0219 | Settled: ✗
+[controller_node-6] [INFO] [1764756335.557328066] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.002 m/s | Error: -0.0101 | MAE: 0.0251 | RMSE: 0.0282 | Settled: ✗
+[controller_node-6] [INFO] [1764756336.561062463] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.000 m/s | Error: -0.0220 | MAE: 0.0221 | RMSE: 0.0236 | Settled: ✗
+[controller_node-6] [INFO] [1764756337.559782603] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.004 m/s | Error: +0.0257 | MAE: 0.0233 | RMSE: 0.0268 | Settled: ✗
+[controller_node-6] [INFO] [1764756338.558851367] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.015 m/s | Error: +0.0438 | MAE: 0.0179 | RMSE: 0.0215 | Settled: ✗
+[controller_node-6] [INFO] [1764756339.560048779] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.004 m/s | Error: +0.0122 | MAE: 0.0202 | RMSE: 0.0247 | Settled: ✗
+[controller_node-6] [INFO] [1764756340.556078071] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.015 m/s | Error: -0.0049 | MAE: 0.0245 | RMSE: 0.0285 | Settled: ✗
+[controller_node-6] [INFO] [1764756341.564983720] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0005 | MAE: 0.0114 | RMSE: 0.0146 | Settled: ✗
+[controller_node-6] [INFO] [1764756342.559178441] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.000 m/s | Error: -0.0259 | MAE: 0.0165 | RMSE: 0.0206 | Settled: ✗
+[controller_node-6] [INFO] [1764756343.558838598] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.005 m/s | Error: -0.0307 | MAE: 0.0207 | RMSE: 0.0237 | Settled: ✗
+[controller_node-6] [INFO] [1764756344.556077114] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.003 m/s | Error: -0.0213 | MAE: 0.0157 | RMSE: 0.0186 | Settled: ✗
+[controller_node-6] [INFO] [1764756345.555861295] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.009 m/s | Error: +0.0290 | MAE: 0.0201 | RMSE: 0.0224 | Settled: ✗
+[controller_node-6] [INFO] [1764756346.555747500] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.007 m/s | Error: +0.0343 | MAE: 0.0243 | RMSE: 0.0277 | Settled: ✗
+[controller_node-6] [INFO] [1764756347.566670274] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.004 m/s | Error: +0.0261 | MAE: 0.0174 | RMSE: 0.0221 | Settled: ✗
+[controller_node-6] [INFO] [1764756348.558992500] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.008 m/s | Error: +0.0375 | MAE: 0.0201 | RMSE: 0.0244 | Settled: ✗
+[controller_node-6] [INFO] [1764756349.565509261] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.000 m/s | Error: +0.0312 | MAE: 0.0173 | RMSE: 0.0219 | Settled: ✗
+[controller_node-6] [INFO] [1764756350.556054508] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.002 m/s | Error: -0.0009 | MAE: 0.0157 | RMSE: 0.0202 | Settled: ✗
+[controller_node-6] [INFO] [1764756351.567354971] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.011 m/s | Error: -0.0123 | MAE: 0.0149 | RMSE: 0.0183 | Settled: ✗
+[controller_node-6] [INFO] [1764756352.563024772] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.009 m/s | Error: +0.0106 | MAE: 0.0107 | RMSE: 0.0144 | Settled: ✗
+[controller_node-6] [INFO] [1764756353.559627140] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.003 m/s | Error: +0.0070 | MAE: 0.0182 | RMSE: 0.0226 | Settled: ✗
+[controller_node-6] [INFO] [1764756354.564161098] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.004 m/s | Error: -0.0047 | MAE: 0.0240 | RMSE: 0.0270 | Settled: ✗
+[controller_node-6] [INFO] [1764756355.560292881] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.001 m/s | Error: +0.0192 | MAE: 0.0181 | RMSE: 0.0210 | Settled: ✗
+[controller_node-6] [INFO] [1764756356.557757200] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.006 m/s | Error: -0.0148 | MAE: 0.0158 | RMSE: 0.0222 | Settled: ✗
+[controller_node-6] [INFO] [1764756357.556165437] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.001 m/s | Error: -0.0469 | MAE: 0.0172 | RMSE: 0.0215 | Settled: ✗
+[controller_node-6] [INFO] [1764756358.555712709] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.008 m/s | Error: +0.0256 | MAE: 0.0144 | RMSE: 0.0181 | Settled: ✗
+[controller_node-6] [INFO] [1764756359.555856912] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.005 m/s | Error: +0.0136 | MAE: 0.0182 | RMSE: 0.0222 | Settled: ✗
+[controller_node-6] [INFO] [1764756360.560817872] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.007 m/s | Error: +0.0079 | MAE: 0.0185 | RMSE: 0.0241 | Settled: ✗
+[controller_node-6] [INFO] [1764756361.562603026] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.007 m/s | Error: -0.0364 | MAE: 0.0274 | RMSE: 0.0305 | Settled: ✗
+[controller_node-6] [INFO] [1764756362.557099123] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.001 m/s | Error: -0.0483 | MAE: 0.0178 | RMSE: 0.0234 | Settled: ✗
+[controller_node-6] [INFO] [1764756363.555870720] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0472 | MAE: 0.0213 | RMSE: 0.0246 | Settled: ✗
+[controller_node-6] [INFO] [1764756364.557974843] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: -0.0052 | MAE: 0.0207 | RMSE: 0.0254 | Settled: ✗
+[controller_node-6] [INFO] [1764756365.565005016] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.001 m/s | Error: -0.0166 | MAE: 0.0157 | RMSE: 0.0212 | Settled: ✗
+[controller_node-6] [INFO] [1764756366.559575884] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.008 m/s | Error: -0.0209 | MAE: 0.0219 | RMSE: 0.0262 | Settled: ✗
+[controller_node-6] [INFO] [1764756367.561798917] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.001 m/s | Error: +0.0442 | MAE: 0.0200 | RMSE: 0.0262 | Settled: ✗
+[controller_node-6] [INFO] [1764756368.558319180] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.006 m/s | Error: +0.0329 | MAE: 0.0199 | RMSE: 0.0237 | Settled: ✗
+[controller_node-6] [INFO] [1764756369.555949696] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.000 m/s | Error: -0.0159 | MAE: 0.0162 | RMSE: 0.0214 | Settled: ✗
+[controller_node-6] [INFO] [1764756370.557267590] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.010 m/s | Error: +0.0244 | MAE: 0.0195 | RMSE: 0.0224 | Settled: ✗
+[controller_node-6] [INFO] [1764756371.558112694] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.004 m/s | Error: -0.0252 | MAE: 0.0181 | RMSE: 0.0213 | Settled: ✗
+[controller_node-6] [INFO] [1764756372.562338548] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: -0.0125 | MAE: 0.0240 | RMSE: 0.0286 | Settled: ✗
+[controller_node-6] [INFO] [1764756373.556003050] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.001 m/s | Error: -0.0588 | MAE: 0.0202 | RMSE: 0.0248 | Settled: ✗
+[controller_node-6] [INFO] [1764756374.556395379] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.007 m/s | Error: -0.0226 | MAE: 0.0138 | RMSE: 0.0179 | Settled: ✗
+[controller_node-6] [INFO] [1764756375.558330522] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.006 m/s | Error: +0.0023 | MAE: 0.0224 | RMSE: 0.0250 | Settled: ✗
+[controller_node-6] [INFO] [1764756376.556142901] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.004 m/s | Error: -0.0038 | MAE: 0.0148 | RMSE: 0.0195 | Settled: ✗
+[controller_node-6] [INFO] [1764756377.564616680] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.003 m/s | Error: +0.0055 | MAE: 0.0149 | RMSE: 0.0186 | Settled: ✗
+[controller_node-6] [INFO] [1764756378.555726494] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.002 m/s | Error: -0.0057 | MAE: 0.0211 | RMSE: 0.0256 | Settled: ✗
+[controller_node-6] [INFO] [1764756379.560491373] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0041 | MAE: 0.0158 | RMSE: 0.0189 | Settled: ✗
+[controller_node-6] [INFO] [1764756380.563059290] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: -0.009 m/s | Error: +0.0043 | MAE: 0.0172 | RMSE: 0.0207 | Settled: ✗
+[controller_node-6] [INFO] [1764756381.557804692] [autonomous_controller]: 🚦 RED     | State: STOPPED  | Target: 0.000 m/s | Current: 0.002 m/s | Error: +0.0148 | MAE: 0.0174 | RMSE: 0.0227 | Settled: ✗

@@ -1,0 +1,24 @@
+running develop
+running egg_info
+writing traffic_light_robot.egg-info/PKG-INFO
+writing dependency_links to traffic_light_robot.egg-info/dependency_links.txt
+writing entry points to traffic_light_robot.egg-info/entry_points.txt
+writing requirements to traffic_light_robot.egg-info/requires.txt
+writing top-level names to traffic_light_robot.egg-info/top_level.txt
+reading manifest file 'traffic_light_robot.egg-info/SOURCES.txt'
+writing manifest file 'traffic_light_robot.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic-light-robot.egg-link (link to .)
+Installing camera_debug script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing controller_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing detector_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing hsv_auto_tuner script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing hsv_tuner_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing pid_tuner script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing rviz_visu script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing traffic_light_detector script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing traffic_light_detector_v2 script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing visualizer_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+
+Installed /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot
+running symlink_data

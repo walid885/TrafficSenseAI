@@ -1,0 +1,31 @@
+running egg_info
+writing ../../build/traffic_light_robot/traffic_light_robot.egg-info/PKG-INFO
+writing dependency_links to ../../build/traffic_light_robot/traffic_light_robot.egg-info/dependency_links.txt
+writing entry points to ../../build/traffic_light_robot/traffic_light_robot.egg-info/entry_points.txt
+writing requirements to ../../build/traffic_light_robot/traffic_light_robot.egg-info/requires.txt
+writing top-level names to ../../build/traffic_light_robot/traffic_light_robot.egg-info/top_level.txt
+reading manifest file '../../build/traffic_light_robot/traffic_light_robot.egg-info/SOURCES.txt'
+writing manifest file '../../build/traffic_light_robot/traffic_light_robot.egg-info/SOURCES.txt'
+running build
+running build_py
+copying traffic_light_robot/controller_node.py -> /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/build/lib/traffic_light_robot
+running install
+running install_lib
+copying /home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/build/lib/traffic_light_robot/controller_node.py -> /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot
+byte-compiling /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py to controller_node.cpython-310.pyc
+running install_data
+running install_egg_info
+removing '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info' (and everything under it)
+Copying ../../build/traffic_light_robot/traffic_light_robot.egg-info to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot-0.0.1-py3.10.egg-info
+running install_scripts
+Installing camera_debug script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing controller_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing detector_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing hsv_auto_tuner script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing hsv_tuner_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing pid_tuner script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing rviz_visu script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing traffic_light_detector script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing traffic_light_detector_v2 script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+Installing visualizer_node script to /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot
+writing list of installed files to '/home/raspb/Desktop/TrafficSenseAI/build/traffic_light_robot/install.log'

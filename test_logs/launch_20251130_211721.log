@@ -1,0 +1,180 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-11-30-21-17-25-360316-Raspberry-31523
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [31539]
+[INFO] [gzclient-2]: process started with pid [31541]
+[INFO] [robot_state_publisher-3]: process started with pid [31543]
+[INFO] [spawn_entity.py-4]: process started with pid [31545]
+[INFO] [detector_node-5]: process started with pid [31547]
+[INFO] [controller_node-6]: process started with pid [31553]
+[robot_state_publisher-3] [WARN] [1764533846.614362572] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764533846.616190172] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764533846.616290174] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764533846.616305694] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764533846.616316906] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764533846.616331844] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764533846.616347805] [robot_state_publisher]: got segment right_wheel
+[spawn_entity.py-4] [INFO] [1764533847.427764359] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764533847.428805624] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764533847.433524182] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-4] [INFO] [1764533847.960877795] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764533847.964588587] [spawn_entity]: Waiting for service /spawn_entity
+[controller_node-6] [INFO] [1764533848.111084548] [autonomous_controller]: Autonomous controller started
+[detector_node-5] [INFO] [1764533848.148147753] [traffic_light_detector]: Enhanced traffic light detector started
+[spawn_entity.py-4] [INFO] [1764533849.331915055] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764533849.538618421] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [traffic_robot]
+[INFO] [spawn_entity.py-4]: process has finished cleanly [pid 31545]
+[gzserver-1] [INFO] [1764533850.221082339] [camera_controller]: Publishing camera info to [/front_camera/camera_info]
+[gzserver-1] [INFO] [1764533850.310141172] [differential_drive_controller]: Wheel pair 1 separation set to [0.250000m]
+[gzserver-1] [INFO] [1764533850.310267795] [differential_drive_controller]: Wheel pair 1 diameter set to [0.080000m]
+[gzserver-1] [INFO] [1764533850.315455837] [differential_drive_controller]: Subscribed to [/cmd_vel]
+[gzserver-1] [INFO] [1764533850.332671719] [differential_drive_controller]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1764533850.349464707] [differential_drive_controller]: Publishing odom transforms between [odom] and [base_link]
+[controller_node-6] [INFO] [1764533850.614642451] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533865.591183479] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533866.058915963] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533866.582357280] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533867.072441722] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533867.550575665] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533868.060671045] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533868.537686837] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533869.010202672] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533869.644868064] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533870.145825564] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533870.534616857] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533871.098287596] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533871.542361044] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533872.073456579] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533872.697273707] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533873.207322512] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533873.706573548] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533874.174063387] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533874.664952938] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533875.196589957] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533875.605875331] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533876.129157008] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533876.584621657] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533877.114724481] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533877.721838061] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533878.078386475] [autonomous_controller]: Light changed: UNKNOWN -> GREEN
+[controller_node-6] [INFO] [1764533882.071636698] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533882.763348226] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533883.029321812] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533883.544672776] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533884.061501461] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533884.579981780] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533885.026116249] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533885.484078184] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533886.049591516] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533886.507425636] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533891.142638893] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533891.512312178] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533892.020459841] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533892.496848097] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533892.960920816] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533893.514968757] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533894.202937546] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533894.678050751] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533895.049308723] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533895.641865980] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533895.953983917] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533896.535799848] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533897.060279195] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533897.531621883] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533897.974957777] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533898.605216183] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533899.907045849] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533900.126383753] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533900.564785843] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533901.078063414] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533901.619300216] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533901.999618901] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533902.511179329] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533903.144828266] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533903.572991967] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533904.383966206] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533904.630543828] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533905.234331635] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533905.667832282] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533906.013258496] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533906.604283594] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533907.338115041] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533907.741974376] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533908.268635529] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533908.622051020] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533909.142891107] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533909.732549827] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533910.095377230] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533910.830792629] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533911.083492554] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533911.650561813] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533911.997460705] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[gzclient-2] 
+[gzclient-2] libcurl: (6) Could not resolve host: fuel.ignitionrobotics.org
+[controller_node-6] [INFO] [1764533912.610163237] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533913.104873654] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533913.572071559] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533914.007072907] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533914.607148170] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533915.056797246] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533949.965895591] [autonomous_controller]: Light changed: YELLOW -> GREEN
+[controller_node-6] [INFO] [1764533950.020016969] [autonomous_controller]: Light changed: GREEN -> YELLOW
+[controller_node-6] [INFO] [1764533950.616417354] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533951.069341638] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533951.555359241] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533952.076419721] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533952.720818610] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533953.114533033] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533953.611639257] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533954.091517728] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533954.553596449] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533954.991465059] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533955.563592320] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533955.998475008] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533956.598092750] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533957.084525943] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533957.477841952] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533958.125921239] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533958.502488892] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533959.175985526] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533959.577335861] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533960.181735200] [autonomous_controller]: Light changed: UNKNOWN -> YELLOW
+[controller_node-6] [INFO] [1764533990.005353732] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[controller_node-6] [INFO] [1764533990.553454106] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[controller_node-6] [INFO] [1764533991.138646740] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[controller_node-6] [INFO] [1764533991.469481221] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[controller_node-6] [INFO] [1764533992.041483995] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[controller_node-6] [INFO] [1764533992.547582267] [autonomous_controller]: Light changed: UNKNOWN -> RED
+[INFO] [gzclient-2]: process has finished cleanly [pid 31541]
+[robot_state_publisher-3] [INFO] [1764533997.604378796] [rclcpp]: signal_handler(signum=2)
+[controller_node-6] Traceback (most recent call last):
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node", line 33, in <module>
+[controller_node-6]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'controller_node')())
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py", line 63, in main
+[controller_node-6]     rclpy.spin(node)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[controller_node-6]     executor.spin_once()
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[controller_node-6]     self._spin_once_impl(timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 740, in _spin_once_impl
+[controller_node-6]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 723, in wait_for_ready_callbacks
+[controller_node-6]     return next(self._cb_iter)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 624, in _wait_for_ready_callbacks
+[controller_node-6]     raise ExternalShutdownException()
+[controller_node-6] rclpy.executors.ExternalShutdownException
+[detector_node-5] Traceback (most recent call last):
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node", line 33, in <module>
+[detector_node-5]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'detector_node')())
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node.py", line 136, in main
+[detector_node-5]     rclpy.shutdown()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 130, in shutdown
+[detector_node-5]     _shutdown(context=context)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/utilities.py", line 58, in shutdown
+[detector_node-5]     return context.shutdown()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/context.py", line 102, in shutdown
+[detector_node-5]     self.__context.shutdown()
+[detector_node-5] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:241
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 31543]
+[ERROR] [controller_node-6]: process has died [pid 31553, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node --ros-args -r __node:=autonomous_controller'].
+[ERROR] [detector_node-5]: process has died [pid 31547, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node --ros-args -r __node:=traffic_light_detector'].
+[INFO] [gzserver-1]: process has finished cleanly [pid 31539]

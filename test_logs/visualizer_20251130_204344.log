@@ -1,0 +1,11 @@
+[ERROR] [1764531839.203664725] [hybrid_traffic_light_detector]: ❌ YOLOv4-Tiny model files NOT found!
+Traceback (most recent call last):
+  File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/visualizer_node", line 33, in <module>
+    sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'visualizer_node')())
+  File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node.py", line 176, in main
+    node = HybridTrafficLightDetector()
+  File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/visualizer_node.py", line 44, in __init__
+    self.yolo = cv2.dnn.readNetFromDarknet(cfg, weights)
+cv2.error: OpenCV(4.12.0) /io/opencv/modules/dnn/src/darknet/darknet_importer.cpp:210: error: (-212:Parsing error) Failed to open NetParameter file: /home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/share/traffic_light_robot/models/yolov4-tiny.cfg in function 'readNetFromDarknet'
+
+[ros2run]: Process exited with failure 1

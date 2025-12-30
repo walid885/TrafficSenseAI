@@ -1,0 +1,96 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-12-03-11-08-25-164890-Raspberry-8194
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [8198]
+[INFO] [gzclient-2]: process started with pid [8200]
+[INFO] [robot_state_publisher-3]: process started with pid [8202]
+[INFO] [spawn_entity.py-4]: process started with pid [8204]
+[INFO] [detector_node-5]: process started with pid [8206]
+[INFO] [controller_node-6]: process started with pid [8216]
+[robot_state_publisher-3] [WARN] [1764756505.770659855] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764756505.771437159] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764756505.772824626] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764756505.772836294] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764756505.772841106] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764756505.772845386] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764756505.772849446] [robot_state_publisher]: got segment right_wheel
+[spawn_entity.py-4] [INFO] [1764756506.078232142] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764756506.079415329] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764756506.083113318] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-4] [INFO] [1764756506.111746356] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764756506.112063046] [spawn_entity]: Waiting for service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764756506.141021076] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764756506.180439447] [spawn_entity]: Spawn status: Entity [traffic_robot] already exists.
+[spawn_entity.py-4] [ERROR] [1764756506.180802959] [spawn_entity]: Spawn service failed. Exiting.
+[ERROR] [gzserver-1]: process has died [pid 8198, exit code 255, cmd 'gzserver /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description/worlds/traffic_world.world -slibgazebo_ros_init.so -slibgazebo_ros_factory.so -slibgazebo_ros_force_system.so'].
+[controller_node-6] [INFO] [1764756506.229195977] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756506.233227194] [autonomous_controller]: PID-ENHANCED AUTONOMOUS TRAFFIC LIGHT CONTROLLER
+[controller_node-6] [INFO] [1764756506.233622161] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756506.233957516] [autonomous_controller]: GREEN (MOVING):  Target=0.5 m/s | PID(Kp=2.0, Ki=0.5, Kd=0.1)
+[controller_node-6] [INFO] [1764756506.234261876] [autonomous_controller]: YELLOW (SLOWING): Target=0.3 m/s | PID(Kp=1.8, Ki=0.4, Kd=0.12)
+[controller_node-6] [INFO] [1764756506.234548032] [autonomous_controller]: RED (STOPPED):   Target=0.0 m/s | PID(Kp=2.5, Ki=0.6, Kd=0.2)
+[controller_node-6] [INFO] [1764756506.234818270] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764756506.235087125] [autonomous_controller]: Autonomous controller started - awaiting traffic light detection...
+[detector_node-5] [INFO] [1764756506.261590086] [traffic_light_detector]: Enhanced traffic light detector started
+[ERROR] [spawn_entity.py-4]: process has died [pid 8204, exit code 1, cmd '/opt/ros/humble/lib/gazebo_ros/spawn_entity.py -topic robot_description -entity traffic_robot -x 0.0 -y 0.0 -z 0.2 --ros-args'].
+[controller_node-6] [INFO] [1764756507.183440572] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.196 m/s | Error: +0.4369 | MAE: 0.4656 | RMSE: 0.4675 | Settled: ✗
+[controller_node-6] [INFO] [1764756508.184776984] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.178 m/s | Error: +0.4671 | MAE: 0.3450 | RMSE: 0.3645 | Settled: ✗
+[controller_node-6] [INFO] [1764756509.184353658] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.115 m/s | Error: +0.5370 | MAE: 0.4962 | RMSE: 0.4969 | Settled: ✗
+[controller_node-6] [INFO] [1764756510.191885328] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.214 m/s | Error: +0.4154 | MAE: 0.4395 | RMSE: 0.4415 | Settled: ✗
+[controller_node-6] [INFO] [1764756511.196805719] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.221 m/s | Error: +0.4146 | MAE: 0.3885 | RMSE: 0.3901 | Settled: ✗
+[controller_node-6] [INFO] [1764756512.191005923] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.275 m/s | Error: +0.3392 | MAE: 0.4121 | RMSE: 0.4142 | Settled: ✗
+[controller_node-6] [INFO] [1764756513.189920368] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.235 m/s | Error: +0.3752 | MAE: 0.3501 | RMSE: 0.3509 | Settled: ✗
+[controller_node-6] [INFO] [1764756514.185562013] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.191 m/s | Error: +0.4368 | MAE: 0.4220 | RMSE: 0.4228 | Settled: ✗
+[controller_node-6] [INFO] [1764756515.184655100] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.173 m/s | Error: +0.4746 | MAE: 0.4480 | RMSE: 0.4485 | Settled: ✗
+[controller_node-6] [INFO] [1764756516.188615371] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.170 m/s | Error: +0.4762 | MAE: 0.3814 | RMSE: 0.3833 | Settled: ✗
+[controller_node-6] [INFO] [1764756517.182726250] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.246 m/s | Error: +0.3782 | MAE: 0.4587 | RMSE: 0.4607 | Settled: ✗
+[controller_node-6] [INFO] [1764756518.190044218] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.247 m/s | Error: +0.3567 | MAE: 0.3486 | RMSE: 0.3492 | Settled: ✗
+[controller_node-6] [INFO] [1764756519.183747300] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.212 m/s | Error: +0.4186 | MAE: 0.3827 | RMSE: 0.3855 | Settled: ✗
+[controller_node-6] [INFO] [1764756520.185191800] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.067 m/s | Error: +0.5962 | MAE: 0.5153 | RMSE: 0.5189 | Settled: ✗
+[controller_node-6] [INFO] [1764756521.195984998] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.048 m/s | Error: +0.6365 | MAE: 0.5933 | RMSE: 0.5937 | Settled: ✗
+[controller_node-6] [INFO] [1764756522.187489386] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.080 m/s | Error: +0.5882 | MAE: 0.6128 | RMSE: 0.6132 | Settled: ✗
+[controller_node-6] [INFO] [1764756523.186864305] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.103 m/s | Error: +0.5695 | MAE: 0.5627 | RMSE: 0.5630 | Settled: ✗
+[controller_node-6] [INFO] [1764756524.192074858] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.070 m/s | Error: +0.6083 | MAE: 0.5841 | RMSE: 0.5852 | Settled: ✗
+[controller_node-6] [INFO] [1764756525.189707744] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.109 m/s | Error: +0.5480 | MAE: 0.5768 | RMSE: 0.5770 | Settled: ✗
+[controller_node-6] [INFO] [1764756526.182967214] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.096 m/s | Error: +0.5667 | MAE: 0.5363 | RMSE: 0.5367 | Settled: ✗
+[controller_node-6] [INFO] [1764756527.189240074] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.146 m/s | Error: +0.5080 | MAE: 0.5468 | RMSE: 0.5473 | Settled: ✗
+[controller_node-6] [INFO] [1764756528.199306590] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.121 m/s | Error: +0.5310 | MAE: 0.5318 | RMSE: 0.5338 | Settled: ✗
+[controller_node-6] [INFO] [1764756529.198393039] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.146 m/s | Error: +0.5120 | MAE: 0.5142 | RMSE: 0.5146 | Settled: ✗
+[controller_node-6] [INFO] [1764756530.194119564] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.129 m/s | Error: +0.5256 | MAE: 0.5442 | RMSE: 0.5447 | Settled: ✗
+[controller_node-6] [INFO] [1764756531.185302495] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.187 m/s | Error: +0.4513 | MAE: 0.4917 | RMSE: 0.4919 | Settled: ✗
+[controller_node-6] [INFO] [1764756532.182919148] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.156 m/s | Error: +0.4899 | MAE: 0.4971 | RMSE: 0.4981 | Settled: ✗
+[controller_node-6] [INFO] [1764756533.185794963] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.188 m/s | Error: +0.4490 | MAE: 0.5024 | RMSE: 0.5035 | Settled: ✗
+[controller_node-6] [INFO] [1764756534.185670975] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.125 m/s | Error: +0.5299 | MAE: 0.5252 | RMSE: 0.5258 | Settled: ✗
+[controller_node-6] [INFO] [1764756535.197678197] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.156 m/s | Error: +0.4988 | MAE: 0.5338 | RMSE: 0.5343 | Settled: ✗
+[controller_node-6] [INFO] [1764756536.184230245] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.165 m/s | Error: +0.4812 | MAE: 0.5189 | RMSE: 0.5194 | Settled: ✗
+[controller_node-6] [INFO] [1764756537.182909597] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.140 m/s | Error: +0.5200 | MAE: 0.4716 | RMSE: 0.4728 | Settled: ✗
+[controller_node-6] [INFO] [1764756538.187727635] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.156 m/s | Error: +0.4830 | MAE: 0.5083 | RMSE: 0.5094 | Settled: ✗
+[robot_state_publisher-3] [INFO] [1764756538.950121314] [rclcpp]: signal_handler(signum=2)
+[controller_node-6] [INFO] [1764756538.955213323] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.955548236] [autonomous_controller]: FINAL PERFORMANCE STATISTICS
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.955838572] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.956119396] [autonomous_controller]: Total runtime: 32.77 seconds
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.957933116] [autonomous_controller]: Data points collected: 200
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.958273051] [autonomous_controller]: Average velocity: 0.1416 m/s
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.958600135] [autonomous_controller]: Average absolute error: 0.5107 m/s
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756538.958880578] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[detector_node-5] Traceback (most recent call last):
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node", line 33, in <module>
+[detector_node-5]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'detector_node')())
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node.py", line 134, in main
+[detector_node-5]     rclpy.spin(node)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[detector_node-5]     executor.spin_once()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[detector_node-5]     self._spin_once_impl(timeout_sec)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 740, in _spin_once_impl
+[detector_node-5]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 723, in wait_for_ready_callbacks
+[detector_node-5]     return next(self._cb_iter)

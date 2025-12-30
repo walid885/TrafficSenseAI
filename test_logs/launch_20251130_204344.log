@@ -1,0 +1,27 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-11-30-20-43-47-773018-Raspberry-26021
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [26037]
+[INFO] [gzclient-2]: process started with pid [26039]
+[INFO] [robot_state_publisher-3]: process started with pid [26041]
+[INFO] [spawn_entity.py-4]: process started with pid [26043]
+[INFO] [detector_node-5]: process started with pid [26045]
+[INFO] [controller_node-6]: process started with pid [26047]
+[ERROR] [gzserver-1]: process has died [pid 26037, exit code 255, cmd 'gzserver /home/raspb/Desktop/TrafficSenseAI/install/robot_description/share/robot_description/worlds/traffic_world.world -slibgazebo_ros_init.so -slibgazebo_ros_factory.so -slibgazebo_ros_force_system.so'].
+[robot_state_publisher-3] [WARN] [1764531829.681523173] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764531829.681649735] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764531829.681814240] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764531829.681838136] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764531829.681848165] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764531829.681856972] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764531829.681913460] [robot_state_publisher]: got segment right_wheel
+[spawn_entity.py-4] [INFO] [1764531829.863923402] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764531829.864383102] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764531829.891064400] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-4] [INFO] [1764531829.903116987] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764531829.903727946] [spawn_entity]: Waiting for service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764531829.910111470] [spawn_entity]: Calling service /spawn_entity
+[controller_node-6] [INFO] [1764531829.913131459] [autonomous_controller]: Autonomous controller started
+[detector_node-5] [INFO] [1764531829.919413214] [traffic_light_detector]: Enhanced traffic light detector started
+[spawn_entity.py-4] [INFO] [1764531829.943820482] [spawn_entity]: Spawn status: Entity [traffic_robot] already exists.
+[spawn_entity.py-4] [ERROR] [1764531829.944459865] [spawn_entity]: Spawn service failed. Exiting.
+[ERROR] [spawn_entity.py-4]: process has died [pid 26043, exit code 1, cmd '/opt/ros/humble/lib/gazebo_ros/spawn_entity.py -topic robot_description -entity traffic_robot -x 0.0 -y 0.0 -z 0.2 --ros-args'].

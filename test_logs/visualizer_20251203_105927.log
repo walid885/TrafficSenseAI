@@ -1,0 +1,3 @@
+[INFO] [1764755982.427902109] [hybrid_yolo_visualizer]: ✅ YOLO loaded successfully - using hybrid detection
+[INFO] [1764755982.464862827] [hybrid_yolo_visualizer]: Hybrid YOLO+HSV Visualizer started - Press Q to quit
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/usr/local/lib/python3.10/dist-packages/cv2/qt/plugins"

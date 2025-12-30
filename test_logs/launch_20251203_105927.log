@@ -1,0 +1,146 @@
+[INFO] [launch]: All log files can be found below /home/raspb/.ros/log/2025-12-03-10-59-29-876027-Raspberry-6102
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [6114]
+[INFO] [gzclient-2]: process started with pid [6116]
+[INFO] [robot_state_publisher-3]: process started with pid [6118]
+[INFO] [spawn_entity.py-4]: process started with pid [6120]
+[INFO] [detector_node-5]: process started with pid [6122]
+[INFO] [controller_node-6]: process started with pid [6124]
+[robot_state_publisher-3] [WARN] [1764755970.454837422] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1764755970.454933573] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1764755970.455334625] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1764755970.455349079] [robot_state_publisher]: got segment caster_back
+[robot_state_publisher-3] [INFO] [1764755970.455353831] [robot_state_publisher]: got segment caster_front
+[robot_state_publisher-3] [INFO] [1764755970.455358091] [robot_state_publisher]: got segment left_wheel
+[robot_state_publisher-3] [INFO] [1764755970.455361990] [robot_state_publisher]: got segment right_wheel
+[spawn_entity.py-4] [INFO] [1764755970.800937329] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1764755970.801586817] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-4] [INFO] [1764755970.806989165] [spawn_entity]: Waiting for entity xml on robot_description
+[controller_node-6] [INFO] [1764755970.888843006] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764755970.890235756] [autonomous_controller]: PID-ENHANCED AUTONOMOUS TRAFFIC LIGHT CONTROLLER
+[controller_node-6] [INFO] [1764755970.891173906] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764755970.891971148] [autonomous_controller]: GREEN (MOVING):  Target=0.5 m/s | PID(Kp=2.0, Ki=0.5, Kd=0.1)
+[controller_node-6] [INFO] [1764755970.893284898] [autonomous_controller]: YELLOW (SLOWING): Target=0.3 m/s | PID(Kp=1.8, Ki=0.4, Kd=0.12)
+[controller_node-6] [INFO] [1764755970.894175975] [autonomous_controller]: RED (STOPPED):   Target=0.0 m/s | PID(Kp=2.5, Ki=0.6, Kd=0.2)
+[controller_node-6] [INFO] [1764755970.894987953] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764755970.895850782] [autonomous_controller]: Autonomous controller started - awaiting traffic light detection...
+[spawn_entity.py-4] [INFO] [1764755970.899859354] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-4] [INFO] [1764755970.900768685] [spawn_entity]: Waiting for service /spawn_entity
+[detector_node-5] [INFO] [1764755970.925660753] [traffic_light_detector]: Enhanced traffic light detector started
+[controller_node-6] [INFO] [1764755971.928016721] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.351 m/s | Error: +0.1646 | MAE: 0.2426 | RMSE: 0.2704 | Settled: ✗
+[spawn_entity.py-4] [INFO] [1764755971.938542253] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-4] [INFO] [1764755972.182641619] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [traffic_robot]
+[INFO] [spawn_entity.py-4]: process has finished cleanly [pid 6120]
+[gzserver-1] [INFO] [1764755972.629998543] [camera_controller]: Publishing camera info to [/front_camera/camera_info]
+[gzserver-1] [INFO] [1764755972.724570574] [differential_drive_controller]: Wheel pair 1 separation set to [0.250000m]
+[gzserver-1] [INFO] [1764755972.724696105] [differential_drive_controller]: Wheel pair 1 diameter set to [0.080000m]
+[gzserver-1] [INFO] [1764755972.729539922] [differential_drive_controller]: Subscribed to [/cmd_vel]
+[gzserver-1] [INFO] [1764755972.734719299] [differential_drive_controller]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1764755972.738685280] [differential_drive_controller]: Publishing odom transforms between [odom] and [base_link]
+[controller_node-6] [INFO] [1764755972.866714726] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.150 m/s | Error: +0.5003 | MAE: 0.1885 | RMSE: 0.2298 | Settled: ✗
+[controller_node-6] [INFO] [1764755973.868610780] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.424 m/s | Error: +0.0473 | MAE: 0.1738 | RMSE: 0.2147 | Settled: ✗
+[controller_node-6] [INFO] [1764755974.877975891] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.437 m/s | Error: +0.0621 | MAE: 0.0762 | RMSE: 0.0790 | Settled: ✗
+[controller_node-6] [INFO] [1764755975.868986088] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.447 m/s | Error: +0.0254 | MAE: 0.0634 | RMSE: 0.0682 | Settled: ✗
+[controller_node-6] [INFO] [1764755976.868744449] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.460 m/s | Error: +0.0249 | MAE: 0.0496 | RMSE: 0.0569 | Settled: ✓
+[controller_node-6] [INFO] [1764755977.869652901] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.462 m/s | Error: +0.0266 | MAE: 0.0452 | RMSE: 0.0497 | Settled: ✗
+[controller_node-6] [INFO] [1764755978.881392278] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.469 m/s | Error: +0.0275 | MAE: 0.0363 | RMSE: 0.0412 | Settled: ✗
+[controller_node-6] [INFO] [1764755979.881011332] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.469 m/s | Error: +0.0520 | MAE: 0.0313 | RMSE: 0.0382 | Settled: ✗
+[controller_node-6] [INFO] [1764755980.865736046] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.476 m/s | Error: +0.0366 | MAE: 0.0266 | RMSE: 0.0321 | Settled: ✗
+[controller_node-6] [INFO] [1764755982.021692170] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.474 m/s | Error: +0.0001 | MAE: 0.0271 | RMSE: 0.0328 | Settled: ✓
+[controller_node-6] [INFO] [1764755982.872863104] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.483 m/s | Error: +0.0221 | MAE: 0.0253 | RMSE: 0.0326 | Settled: ✓
+[controller_node-6] [INFO] [1764755983.866690769] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.487 m/s | Error: -0.0014 | MAE: 0.0180 | RMSE: 0.0227 | Settled: ✓
+[controller_node-6] [INFO] [1764755983.871282537] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764755983.871747983] [autonomous_controller]: 🚦 TRAFFIC LIGHT CHANGE: UNKNOWN → GREEN
+[controller_node-6] [INFO] [1764755983.872052053] [autonomous_controller]: ======================================================================
+[controller_node-6] [INFO] [1764755984.868137493] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.355 m/s | Error: +0.1689 | MAE: 0.1227 | RMSE: 0.1331 | Settled: ✗
+[controller_node-6] [INFO] [1764755985.864015031] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.374 m/s | Error: +0.1643 | MAE: 0.1443 | RMSE: 0.1471 | Settled: ✗
+[controller_node-6] [INFO] [1764755986.874317762] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.391 m/s | Error: +0.1472 | MAE: 0.1156 | RMSE: 0.1174 | Settled: ✗
+[controller_node-6] [INFO] [1764755987.869803864] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.409 m/s | Error: +0.0928 | MAE: 0.0947 | RMSE: 0.0990 | Settled: ✗
+[controller_node-6] [INFO] [1764755988.884602771] [autonomous_controller]: 🚦 GREEN   | State: MOVING   | Target: 0.500 m/s | Current: 0.419 m/s | Error: +0.0748 | MAE: 0.0860 | RMSE: 0.0886 | Settled: ✗
+[controller_node-6] [INFO] [1764755989.889254416] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.434 m/s | Error: +0.0631 | MAE: 0.0677 | RMSE: 0.0712 | Settled: ✗
+[controller_node-6] [INFO] [1764755990.869335325] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.444 m/s | Error: +0.0552 | MAE: 0.0611 | RMSE: 0.0661 | Settled: ✗
+[controller_node-6] [INFO] [1764755991.866125021] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.455 m/s | Error: +0.0503 | MAE: 0.0484 | RMSE: 0.0507 | Settled: ✗
+[controller_node-6] [INFO] [1764755992.863846742] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.470 m/s | Error: +0.0296 | MAE: 0.0417 | RMSE: 0.0452 | Settled: ✗
+[controller_node-6] [INFO] [1764755993.869316617] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.461 m/s | Error: +0.0488 | MAE: 0.0382 | RMSE: 0.0436 | Settled: ✗
+[controller_node-6] [INFO] [1764755994.867506931] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.473 m/s | Error: +0.0368 | MAE: 0.0297 | RMSE: 0.0357 | Settled: ✗
+[INFO] [gzclient-2]: process has finished cleanly [pid 6116]
+[controller_node-6] [INFO] [1764755995.865910974] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.489 m/s | Error: -0.0011 | MAE: 0.0274 | RMSE: 0.0351 | Settled: ✓
+[controller_node-6] [INFO] [1764755996.878218115] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.485 m/s | Error: -0.0016 | MAE: 0.0235 | RMSE: 0.0309 | Settled: ✓
+[controller_node-6] [INFO] [1764755997.865101749] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.481 m/s | Error: +0.0235 | MAE: 0.0191 | RMSE: 0.0219 | Settled: ✓
+[controller_node-6] [INFO] [1764755998.871159713] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.486 m/s | Error: +0.0109 | MAE: 0.0213 | RMSE: 0.0256 | Settled: ✓
+[controller_node-6] [INFO] [1764755999.864289038] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.483 m/s | Error: -0.0016 | MAE: 0.0201 | RMSE: 0.0256 | Settled: ✓
+[controller_node-6] [INFO] [1764756000.869304770] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.496 m/s | Error: -0.0112 | MAE: 0.0210 | RMSE: 0.0258 | Settled: ✓
+[controller_node-6] [INFO] [1764756001.874049142] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.492 m/s | Error: +0.0008 | MAE: 0.0163 | RMSE: 0.0235 | Settled: ✓
+[controller_node-6] [INFO] [1764756002.869985616] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.507 m/s | Error: -0.0266 | MAE: 0.0163 | RMSE: 0.0191 | Settled: ✗
+[controller_node-6] [INFO] [1764756003.866100144] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.491 m/s | Error: +0.0220 | MAE: 0.0204 | RMSE: 0.0248 | Settled: ✓
+[controller_node-6] [INFO] [1764756004.866430829] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.499 m/s | Error: -0.0193 | MAE: 0.0169 | RMSE: 0.0199 | Settled: ✓
+[controller_node-6] [INFO] [1764756005.871274728] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.505 m/s | Error: -0.0140 | MAE: 0.0210 | RMSE: 0.0259 | Settled: ✓
+[controller_node-6] [INFO] [1764756006.872449780] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.487 m/s | Error: +0.0096 | MAE: 0.0146 | RMSE: 0.0187 | Settled: ✓
+[controller_node-6] [INFO] [1764756007.872044429] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.500 m/s | Error: +0.0142 | MAE: 0.0141 | RMSE: 0.0184 | Settled: ✓
+[controller_node-6] [INFO] [1764756008.867735023] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.504 m/s | Error: -0.0027 | MAE: 0.0147 | RMSE: 0.0195 | Settled: ✓
+[controller_node-6] [INFO] [1764756009.867168907] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.506 m/s | Error: -0.0168 | MAE: 0.0178 | RMSE: 0.0225 | Settled: ✓
+[controller_node-6] [INFO] [1764756010.867727876] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.503 m/s | Error: -0.0396 | MAE: 0.0220 | RMSE: 0.0252 | Settled: ✗
+[controller_node-6] [INFO] [1764756011.867675744] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.491 m/s | Error: +0.0071 | MAE: 0.0142 | RMSE: 0.0201 | Settled: ✓
+[controller_node-6] [INFO] [1764756012.865682075] [autonomous_controller]: 🚦 UNKNOWN | State: MOVING   | Target: 0.500 m/s | Current: 0.493 m/s | Error: +0.0073 | MAE: 0.0244 | RMSE: 0.0283 | Settled: ✓
+[robot_state_publisher-3] [INFO] [1764756013.602879363] [rclcpp]: signal_handler(signum=2)
+[controller_node-6] [INFO] [1764756013.610688832] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.611298945] [autonomous_controller]: FINAL PERFORMANCE STATISTICS
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.611966015] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.612409759] [autonomous_controller]: Total runtime: 42.72 seconds
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.612825116] [autonomous_controller]: Data points collected: 200
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.613327781] [autonomous_controller]: Average velocity: 0.4981 m/s
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.613855978] [autonomous_controller]: Average absolute error: 0.0181 m/s
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[controller_node-6] [INFO] [1764756013.631508934] [autonomous_controller]: ======================================================================
+[controller_node-6] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[detector_node-5] Traceback (most recent call last):
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node", line 33, in <module>
+[detector_node-5]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'detector_node')())
+[detector_node-5]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/detector_node.py", line 136, in main
+[detector_node-5]     rclpy.shutdown()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 130, in shutdown
+[detector_node-5]     _shutdown(context=context)
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/utilities.py", line 58, in shutdown
+[detector_node-5]     return context.shutdown()
+[detector_node-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/context.py", line 102, in shutdown
+[detector_node-5]     self.__context.shutdown()
+[detector_node-5] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:241
+[controller_node-6] Traceback (most recent call last):
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py", line 379, in main
+[controller_node-6]     rclpy.spin(node)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[controller_node-6]     executor.spin_once()
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[controller_node-6]     self._spin_once_impl(timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 740, in _spin_once_impl
+[controller_node-6]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 723, in wait_for_ready_callbacks
+[controller_node-6]     return next(self._cb_iter)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 624, in _wait_for_ready_callbacks
+[controller_node-6]     raise ExternalShutdownException()
+[controller_node-6] rclpy.executors.ExternalShutdownException
+[controller_node-6] 
+[controller_node-6] During handling of the above exception, another exception occurred:
+[controller_node-6] 
+[controller_node-6] Traceback (most recent call last):
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node", line 33, in <module>
+[controller_node-6]     sys.exit(load_entry_point('traffic-light-robot==0.0.1', 'console_scripts', 'controller_node')())
+[controller_node-6]   File "/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/python3.10/site-packages/traffic_light_robot/controller_node.py", line 403, in main
+[controller_node-6]     rclpy.shutdown()
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 130, in shutdown
+[controller_node-6]     _shutdown(context=context)
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/utilities.py", line 58, in shutdown
+[controller_node-6]     return context.shutdown()
+[controller_node-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/context.py", line 102, in shutdown
+[controller_node-6]     self.__context.shutdown()
+[controller_node-6] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:241
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 6118]
+[ERROR] [controller_node-6]: process has died [pid 6124, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/controller_node --ros-args -r __node:=autonomous_controller'].
+[ERROR] [detector_node-5]: process has died [pid 6122, exit code 1, cmd '/home/raspb/Desktop/TrafficSenseAI/install/traffic_light_robot/lib/traffic_light_robot/detector_node --ros-args -r __node:=traffic_light_detector'].
+[INFO] [gzserver-1]: process has finished cleanly [pid 6114]

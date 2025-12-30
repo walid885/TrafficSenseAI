@@ -1,0 +1,3 @@
+[INFO] [1764531254.566218938] [hybrid_yolo_visualizer]: YOLO not found - using HSV-only detection
+[INFO] [1764531254.581944551] [hybrid_yolo_visualizer]: HSV-only Visualizer started - Press Q to quit
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/usr/local/lib/python3.10/dist-packages/cv2/qt/plugins"

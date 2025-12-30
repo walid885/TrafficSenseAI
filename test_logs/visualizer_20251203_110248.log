@@ -1,0 +1,4 @@
+[INFO] [1764756182.353035016] [hybrid_yolo_visualizer]: ✅ YOLO loaded successfully - using hybrid detection
+[INFO] [1764756182.362415260] [hybrid_yolo_visualizer]: Hybrid YOLO+HSV Visualizer started - Press Q to quit
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/usr/local/lib/python3.10/dist-packages/cv2/qt/plugins"
+[INFO] [1764756322.332309074] [hybrid_yolo_visualizer]: Plot saved: hybrid_traffic_light_analysis.png
