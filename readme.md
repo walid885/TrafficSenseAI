@@ -1,6 +1,11 @@
 # TrafficSenseAI - ROS2 Traffic Light Detection System
 
+
+## NOTE : to check the latest version that I am sure that it is working correctly , check out to the 
+feature-from-old-commit branch 
+
 ## Prerequisites
+
 - Ubuntu 22.04
 - Internet connection
 - Root/sudo access
@@ -8,14 +13,17 @@
 ## Setup Instructions
 
 ### 1. Add User to Sudoers (if needed)
+
 ```bash
 su -
 usermod -aG sudo <your-username>
 exit
 ```
-Log out and log back in for changes to take effect.
+
+**Note:** Log out and log back in for changes to take effect.
 
 ### 2. Clean Existing Conflicts (if any)
+
 ```bash
 sudo rm -f /etc/apt/sources.list.d/vscode.list
 sudo rm -f /etc/apt/keyrings/packages.microsoft.gpg
@@ -24,30 +32,36 @@ sudo apt update
 ```
 
 ### 3. Run Setup Script
-Navigate to project directory and run:
+
+Navigate to the project directory and execute the configuration script:
+
 ```bash
 cd ~/Desktop/TrafficSenseAI
 sudo bash ./bashScriptCOnfig.sh
 ```
 
-The script will:
-- Install ROS2 Humble
-- Install Gazebo simulator
-- Install Python tools (numpy, scipy, matplotlib, pandas)
-- Install robotics packages (URDF, XACRO, robot state publisher)
-- Build the workspace
-- Configure environment
+The script performs the following operations:
+- Installs ROS2 Humble
+- Installs Gazebo simulator
+- Installs Python tools (numpy, scipy, matplotlib, pandas)
+- Installs robotics packages (URDF, XACRO, robot state publisher)
+- Builds the workspace
+- Configures the environment
 
 ### 4. Source Environment
+
 ```bash
 source ~/.bashrc
 ```
-Or manually:
+
+Alternatively, source manually:
+
 ```bash
 source install/setup.bash
 ```
 
 ### 5. Build Workspace (if needed)
+
 ```bash
 cd ~/Desktop/TrafficSenseAI
 colcon build
@@ -57,6 +71,7 @@ source install/setup.bash
 ## Running the Simulation
 
 ### Launch Gazebo with Robot
+
 ```bash
 cd ~/Desktop/TrafficSenseAI
 source install/setup.bash
@@ -64,6 +79,7 @@ ros2 launch robot_description gazebo.launch.py
 ```
 
 ### Run Traffic Detection (in new terminal)
+
 ```bash
 cd ~/Desktop/TrafficSenseAI
 source install/setup.bash
@@ -71,6 +87,7 @@ python3 src/traffic_light_robot/traffic_detector.py
 ```
 
 ## Project Structure
+
 ```
 TrafficSenseAI/
 ├── src/
@@ -86,10 +103,79 @@ TrafficSenseAI/
 └── bashScriptCOnfig.sh        # Setup script
 ```
 
+## Operation Modes
+
+### Building the Packages
+
+```bash
+cd ~/Desktop/TrafficSenseAI
+colcon build --symlink-install
+source install/setup.bash
+```
+
+### Autonomous Mode
+
+```bash
+ros2 launch robot_description autonomous.launch.py
+```
+
+### Teleop Mode (AZERTY)
+
+**Terminal 1 - Launch Gazebo:**
+```bash
+ros2 launch robot_description gazebo.launch.py
+```
+
+**Terminal 2 - Run Teleop:**
+```bash
+source ~/Desktop/TrafficSenseAI/install/setup.bash
+ros2 run robot_description azerty_teleop.py
+```
+
+If `azerty_teleop` is not executable:
+```bash
+chmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleop.py
+```
+
+### Keyboard Control Installation
+
+```bash
+sudo apt install ros-humble-teleop-twist-keyboard xterm -y
+```
+
+## Visualization
+
+### Rebuild Traffic Light Robot Package
+
+```bash
+cd ~/Desktop/TrafficSenseAI
+colcon build --packages-select traffic_light_robot
+source install/setup.bash
+```
+
+### Run Visualizer
+
+```bash
+ros2 launch robot_description autonomous.launch.py
+```
+
+In a new terminal:
+```bash
+ros2 run traffic_light_robot visualizer_node
+```
+
+## Controller Tuning
+
+```bash
+cd ~/Desktop/TrafficSenseAI
+colcon build --packages-select traffic_light_robot
+./auto_tune.sh
+```
+
 ## Troubleshooting
 
 ### Permission Denied
-Ensure user is in sudo group and logged out/in after adding.
+Ensure the user is added to the sudo group and has logged out and back in after the change.
 
 ### Package Not Found
 ```bash
@@ -97,14 +183,14 @@ sudo apt update
 source /opt/ros/humble/setup.bash
 ```
 
-### Gazebo Won't Launch
-Check if workspace is sourced:
+### Gazebo Launch Issues
+Verify that the workspace is properly sourced:
 ```bash
 source install/setup.bash
 ```
 
 ### Build Errors
-Clean and rebuild:
+Clean and rebuild the workspace:
 ```bash
 rm -rf build install log
 colcon build
@@ -138,6 +224,7 @@ ros2 topic list
 ```
 
 ## Dependencies
+
 - ROS2 Humble
 - Gazebo
 - Python 3.10+
@@ -145,70 +232,11 @@ ros2 topic list
 - robot_state_publisher, joint_state_publisher
 - XACRO, URDF tools
 
-## Launching the simulation :
-bashcd ~/Desktop/TrafficSenseAI
-source install/setup.bash
-ros2 launch robot_description gazebo.launch.py
+## Development Roadmap
 
-
-
-## being able to connect and drive the robot using the keybord.
-sudo apt install ros-humble-teleop-twist-keyboard xterm -y
-
-
-
-
-
-# < commands to be able to run the different type of simulations that we can use to develop  this project here >
-# Build the packages first:
-bashcd ~/Desktop/TrafficSenseAI
-colcon build --symlink-install
-source install/setup.bash
-Autonomous mode:
-bashros2 launch robot_description autonomous.launch.py
-Teleop mode (AZERTY script):
-bash# Terminal 1 - Launch Gazebo:
-ros2 launch robot_description gazebo.launch.py
-
-# Terminal 2 - Run teleop:
-source ~/Desktop/TrafficSenseAI/install/setup.bash
-ros2 run robot_description azerty_teleop.py
-If azerty_teleop not executable:
-bashchmod +x ~/Desktop/TrafficSenseAI/src/robot_description/scripts/azerty_teleop.py
-
-
-the git issue , testing if it is solved 
-
-Rebuild:
-
-bash 
-cd ~/Desktop/TrafficSenseAI
-colcon build --packages-select traffic_light_robot
-source install/setup.bash
-Run:
-bash
-ros2 launch robot_description autonomous.launch.py
-# New terminal:
-
-ros2 run traffic_light_robot visualizer_node
-
-
-
-
-# launching the controlla-Tunaa 
-cd ~/Desktop/TrafficSenseAI
-colcon build --packages-select traffic_light_robot
-./auto_tune.sh
-
-
-#implmenting a custom build gazebo data set collector, trainer , and implmentation
-
-
-New work planification : 
-1/ implmentation of the Yolo small version of this system 
-2/ testing the yolo of this system 
-3/ implmenting the hybrid version YOLO +HSV 
-4/ adding those walking person for the world implemntation 
-5/ refactoring the world into a slighlty better version 
-6/ setting up the rapport of the system + documenting the different iterations of this sysetm 
-
+1. Implementation of YOLO small version
+2. Testing of YOLO system
+3. Implementation of hybrid version (YOLO + HSV)
+4. Addition of pedestrian entities to world implementation
+5. Refactoring of world into improved version
+6. System documentation and iteration reporting
